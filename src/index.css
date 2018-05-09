@@ -195,6 +195,13 @@ body {
   margin-top: 30px;
   margin-bottom: 40px;
   text-align: center;
+  cursor: default;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
 }
 
 .home-sec-2 img {
@@ -210,7 +217,14 @@ body {
   overflow: hidden;
   background-image: url('images/example-portrait-1.jpeg');
   background-size: cover;
-  z-index: -2;
+  z-index: 0;
+}
+.artist-divider-left:hover .artist-divider-left-overlay {
+  opacity: 0;
+}
+.artist-divider-left:hover h2 {
+  opacity: 1;
+  mix-blend-mode: overlay;
 }
 
 .artist-divider-right {
@@ -219,7 +233,14 @@ body {
   overflow: hidden;
   background-image: url('images/example-portrait-2.jpeg');
   background-size: cover;
-  z-index: -2;
+  z-index: 0;
+}
+.artist-divider-right:hover .artist-divider-right-overlay {
+  opacity: 0;
+}
+.artist-divider-right:hover h2 {
+  opacity: 1;
+  mix-blend-mode: overlay;
 }
 
 .artist-divider-left-overlay {
