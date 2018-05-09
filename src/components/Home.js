@@ -63,7 +63,7 @@ class Home extends Component {
             </Col>
           </Row>
         </Grid>
-        <Footer/>
+        <Footer email='ehg11240@gmail.com' phone='858-245-6799'/>
       </div>
     );
   }
