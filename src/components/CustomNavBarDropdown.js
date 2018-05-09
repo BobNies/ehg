@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { DropdownButton } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 class CustomNavBarDropdown extends Component {
   constructor(props) {

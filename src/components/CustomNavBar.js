@@ -15,12 +15,17 @@ class CustomNavBar extends Component {
       <div className='ehg-navbar'>
         {/* <h2><Link to='/artists/fred-briscoe' className='ehg-navbar-link'>FRED BRISCOE</Link></h2> */}
         <CustomNavBarDropdown title='FRED BRISCOE' key={1} id='dropdown-1'>
-          <MenuItem eventKey='1'>Action 1</MenuItem>
-          <MenuItem eventKey='2'>Action 2</MenuItem>
-          <MenuItem eventKey='3'>Action 3</MenuItem>
+          <LinkContainer to='/artists/fred-briscoe'><MenuItem eventKey='1'>GALLERY</MenuItem></LinkContainer>
+          <LinkContainer to='/artists/fred-briscoe'><MenuItem eventKey='2'>ABOUT</MenuItem></LinkContainer>
+          <LinkContainer to='/artists/fred-briscoe'><MenuItem eventKey='3'>CONTACT</MenuItem></LinkContainer>
         </CustomNavBarDropdown>
         <h1><Link to='/' className='ehg-navbar-title'>EUCALYPTUS HILLS GALLERY</Link></h1>
-        <h2><Link to='/artists/michael-roser' className='ehg-navbar-link'>MICHAEL ROSER</Link></h2>
+        {/* <h2><Link to='/artists/michael-roser' className='ehg-navbar-link'>MICHAEL ROSER</Link></h2> */}
+        <CustomNavBarDropdown title='MICHAEL ROSER' key={2} id='dropdown-2'>
+          <LinkContainer to='/artists/michael-roser'><MenuItem eventKey='1'>GALLERY</MenuItem></LinkContainer>
+          <LinkContainer to='/artists/michael-roser'><MenuItem eventKey='2'>ABOUT</MenuItem></LinkContainer>
+          <LinkContainer to='/artists/michael-roser'><MenuItem eventKey='3'>CONTACT</MenuItem></LinkContainer>
+        </CustomNavBarDropdown>
       </div>
     );
   }

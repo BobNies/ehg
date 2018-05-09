@@ -109,7 +109,7 @@ body {
   transition: 0.25s;
 }
 
-.dropdown-menu > li >a {
+.dropdown-menu > li > a {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   font-weight: 300;
