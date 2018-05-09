@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import CustomNavBar from './CustomNavBar'
 
 class Gallery extends Component {
 
@@ -12,7 +13,10 @@ class Gallery extends Component {
 
   render () {
     return(
-      <p>Gallery of {this.state.artistName}</p>
+      <div>
+        <CustomNavBar/>
+        <p>Gallery of {this.state.artistName}</p>
+      </div>
     );
   }
 }

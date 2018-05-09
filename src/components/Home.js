@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import CustomNavBar from './CustomNavBar'
 
 class Home extends Component {
   render () {
     return(
       <div>
-        <p>Home component here</p>
+        <CustomNavBar/>
       </div>
     );
   }
