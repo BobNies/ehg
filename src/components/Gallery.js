@@ -11,6 +11,13 @@ class Gallery extends Component {
     };
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    // Update state to sync with router changes
+    if (nextProps.match.params.artistName !== this.state.artistName) {
+      this.setState({ artistName: nextProps.match.params.artistName });
+    }
+  }
+
   render () {
     return(
       <div>
