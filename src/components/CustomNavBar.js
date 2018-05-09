@@ -5,11 +5,6 @@ import { MenuItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 class CustomNavBar extends Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   render () {
     return(
       <div className='ehg-navbar'>

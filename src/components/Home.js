@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
 import HeaderImg from '../images/example-photo-3.jpeg'
+import Footer from './Footer'
 
 class Home extends Component {
   render () {
@@ -62,6 +63,7 @@ class Home extends Component {
             </Col>
           </Row>
         </Grid>
+        <Footer/>
       </div>
     );
   }
