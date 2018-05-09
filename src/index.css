@@ -5,6 +5,8 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+/* NAVBAR */
+
 .ehg-navbar {
   display: flex;
   width: 100%;
@@ -38,6 +40,10 @@ body {
   text-decoration: none;
   color: #222;
 }
+.ehg-navbar-title:active {
+  text-decoration: none;
+  color: #222;
+}
 
 .ehg-navbar h2 {
   font-size: 15px;
@@ -62,13 +68,13 @@ body {
   transition: 0.25s;
 }
 .ehg-navbar-link:hover {
-  /*color: #a44646;*/
   color: #c7a891;
   text-decoration: none;
 }
 
-.ehg-navbar-dropdown {
-
+.btn-link:focus, .btn-link:hover {
+  color: #c7a891;
+  text-decoration: none;
 }
 
 .dropdown-toggle {
@@ -119,21 +125,49 @@ body {
   background-color: rgba(0,0,0,0);
 }
 
-.home-img-1-crop {
-  position: absolute;
-  top: 140px;
-  left: 50px;
-  overflow: hidden;
-}
+/* HOME */
 
 .home-img-1 {
-  width: 50%;
+  width: 100%;
+  animation-name: homeMainImageIntro;
+  animation-duration: 1s;
+}
+
+@keyframes homeMainImageIntro {
+  from {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .home-title-1 {
   font-size: 60px;
   font-weight: 300;
-  position: absolute;
-  top: 160px;
-  right: 0;
+  margin-top: 50px;
+  opacity: 0; /* Starts out at zero for animation */
+  animation-name: homeMainTitleIntro;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+
+.home-title-1-bold {
+  font-weight: 500;
+}
+
+@keyframes homeMainTitleIntro {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.home-sec-1 {
+  margin-top: 100px;
 }

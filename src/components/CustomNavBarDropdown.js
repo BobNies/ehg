@@ -13,9 +13,9 @@ class CustomNavBarDropdown extends Component {
     return(
       <div>
         <DropdownButton
-          bsStyle='ehg-navbar-dropdown'
+          bsStyle='link'
           title={this.props.title}
-          key={this.props.key}
+          key={this.props.dropKey}
           id={this.props.id}
         >
           {this.props.children}
