@@ -188,14 +188,14 @@ body {
 }
 
 .home-sec-2 h2 {
-  font-size: 80px;
+  font-size: 70px;
   font-weight: 300;
   color: #fff;
   opacity: 0.5;
   margin-top: 30px;
   margin-bottom: 40px;
   text-align: center;
-  cursor: default;
+  cursor: pointer;
 
   -o-transition: 0.25s;
   -ms-transition: 0.25s;
@@ -275,6 +275,10 @@ body {
   -moz-transition: 0.25s;
   -webkit-transition: 0.25s;
   transition: 0.25s;
+}
+
+.artist-link {
+  z-index: 2;
 }
 
 .noselect {
