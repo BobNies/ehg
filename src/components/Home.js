@@ -15,7 +15,7 @@ class Home extends Component {
               <Img className='home-img-1' src='example-photo-3.jpeg'/>
             </Col>
             <Col xs={12} md={6}>
-              <h2 className='home-title-1'>A collective <span className='home-title-1-bold'>gallery</span> of mixed media art.</h2>
+              <h2 className='home-title-1 noselect'>A collective <span className='home-title-1-bold'>gallery</span> of mixed media art.</h2>
             </Col>
           </Row>
         </Grid>
