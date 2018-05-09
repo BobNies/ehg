@@ -40,7 +40,7 @@ body {
   text-decoration: none;
   color: #222;
 }
-.ehg-navbar-title:active {
+.ehg-navbar-title:active, .ehg-navbar-title:focus {
   text-decoration: none;
   color: #222;
 }
@@ -69,6 +69,10 @@ body {
 }
 .ehg-navbar-link:hover {
   color: #c7a891;
+  text-decoration: none;
+}
+.ehg-navbar-link:active, .ehg-navbar-link:focus {
+  color: #555;
   text-decoration: none;
 }
 
