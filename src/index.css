@@ -118,3 +118,22 @@ body {
   color: #c7a891;
   background-color: rgba(0,0,0,0);
 }
+
+.home-img-1-crop {
+  position: absolute;
+  top: 140px;
+  left: 50px;
+  overflow: hidden;
+}
+
+.home-img-1 {
+  width: 50%;
+}
+
+.home-title-1 {
+  font-size: 60px;
+  font-weight: 300;
+  position: absolute;
+  top: 160px;
+  right: 0;
+}
