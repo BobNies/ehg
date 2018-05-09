@@ -20,6 +20,17 @@ class Home extends Component {
               <h2 className='home-title-1 noselect'>A collective <span className='home-title-1-bold'>gallery</span> of mixed media art.</h2>
             </Col>
           </Row>
+          <Row className='home-sec-2'>
+            <h1>Our Artists</h1>
+            <Col className='artist-divider-left' xs={12} md={6}>
+              <h2>FRED BRISCOE</h2>
+              <Img src='example-portrait-1.jpeg'/>
+            </Col>
+            <Col className='artist-divider-right' xs={12} md={6}>
+              <h2>MIKE ROSER</h2>
+              <Img src='example-portrait-2.jpeg'/>
+            </Col>
+          </Row>
         </Grid>
       </div>
     );

@@ -1,7 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -175,6 +174,42 @@ body {
 
 .home-sec-1 {
   margin-top: 100px;
+}
+
+.home-sec-2 {
+  margin-top: 200px;
+}
+
+.home-sec-2 h1 {
+  font-size: 50px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.home-sec-2 h2 {
+  font-size: 40px;
+  font-weight: 300;
+  color: #fff;
+  margin-top: 50px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.home-sec-2 img {
+  width: 350px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.artist-divider-left {
+  background-color: #c7a891;
+  height: 400px;
+}
+
+.artist-divider-right {
+  background-color: #b39681;
+  height: 400px;
 }
 
 .noselect {
