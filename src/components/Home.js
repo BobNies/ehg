@@ -23,12 +23,12 @@ class Home extends Component {
           <Row className='home-sec-2'>
             <h1>Our Artists</h1>
             <Col className='artist-divider-left' xs={12} md={6}>
+              <div className='artist-divider-left-overlay'></div>
               <h2>FRED BRISCOE</h2>
-              <Img src='example-portrait-1.jpeg'/>
             </Col>
             <Col className='artist-divider-right' xs={12} md={6}>
               <h2>MIKE ROSER</h2>
-              <Img src='example-portrait-2.jpeg'/>
+              <div className='artist-divider-right-overlay'></div>
             </Col>
           </Row>
         </Grid>
