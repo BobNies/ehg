@@ -178,7 +178,6 @@ body {
 
 .home-sec-2 {
   margin-top: 200px;
-  margin-bottom: 100px;
 }
 
 .home-sec-2 h1 {
@@ -277,8 +276,60 @@ body {
   transition: 0.25s;
 }
 
-.artist-link {
-  z-index: 2;
+.home-sec-2-addon {
+  margin-bottom: 100px;
+}
+
+.home-sec-2-addon .col-md-4 {
+  padding: 0;
+}
+
+.home-sec-2-addon .artist-button-bar-left .btn {
+  width: 100%;
+  border-radius: 0;
+  border: 0;
+  color: #fff;
+  background-color: #c7a891;
+  opacity: 0.6;
+  font-size: 25px;
+  font-weight: 300;
+  padding: 4px;
+  box-sizing: border-box;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.home-sec-2-addon .artist-button-bar-left .btn:hover {
+  background-color: #937b6a;
+}
+
+.home-sec-2-addon .artist-button-bar-right .btn {
+  width: 100%;
+  border-radius: 0;
+  border: 0;
+  color: #fff;
+  background-color: #b39681;
+  opacity: 0.6;
+  font-size: 25px;
+  font-weight: 300;
+  padding: 4px;
+  box-sizing: border-box;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.home-sec-2-addon .artist-button-bar-right .btn:hover {
+  background-color: #937b6a;
+}
+
+.artist-button-bar-left, .artist-button-bar-right {
+  padding: 0;
 }
 
 .noselect {

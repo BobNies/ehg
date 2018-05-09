@@ -4,7 +4,7 @@ class ScrollIndicator extends Component {
   render () {
     return(
       <div className='scroll-indicator'>
-        <p>|</p>
+        <p className='noselect'>|</p>
       </div>
     );
   }
