@@ -185,3 +185,29 @@ body {
         -ms-user-select: none;
             user-select: none;
 }
+
+/* SCROLL INDICATOR */
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  font-size: 30px;
+  animation-name: scrollIndicator;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes scrollIndicator {
+  0% {
+    opacity: 0;
+    bottom: 40px;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    bottom: 5px;
+  }
+}

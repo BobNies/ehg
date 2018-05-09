@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import CustomNavBar from './CustomNavBar'
 import Img from 'react-image'
 import { Grid, Row, Col } from 'react-bootstrap'
+import CustomNavBar from './CustomNavBar'
+import ScrollIndicator from './ScrollIndicator'
 
 class Home extends Component {
   render () {
     return(
       <div>
         <CustomNavBar/>
+        <ScrollIndicator/>
         <Grid>
           <Row className='home-sec-1'>
             <Col xs={12} md={6}>
