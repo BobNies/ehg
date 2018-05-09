@@ -17,6 +17,15 @@ body {
   font-size: 30px;
   font-weight: 300;
   text-align: center;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.navbar h1:hover {
+  transform: translateY(5px);
 }
 
 .navbar-title {
