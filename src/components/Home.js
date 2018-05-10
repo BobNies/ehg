@@ -75,7 +75,7 @@ class Home extends Component {
             <Col xs={12} md={6}>
               <h2 className='noselect'>See what we're up to.</h2>
             </Col>
-            <Col xs={12} md={6}>
+            <Col className='social-widget-instagram' xs={12} md={6}>
               <InstagramEmbed
                 url='https://www.instagram.com/p/BiilLAUBOr-/?taken-by=eucalyptus.gallery'
                 maxWidth={400}
@@ -90,14 +90,21 @@ class Home extends Component {
             </Col>
           </Row>
           <Row className='social-sec-2'>
-            <Col className='social-widget-center' xs={12} md={6}>
+            <MediaQuery query="(max-width: 1224px)">
+              <Col xs={12} md={6}>
+                <h2 className='noselect'>Like us?  Show your love.</h2>
+              </Col>
+            </MediaQuery>
+            <Col className='social-widget-facebook' xs={12} md={6}>
               <FacebookProvider appId="204707493667261">
                 <Page href="https://www.facebook.com/Eucalyptus-Hills-Gallery-185642548871091/" tabs="timeline" height='650' width='400'/>
               </FacebookProvider>
             </Col>
-            <Col xs={12} md={6}>
-              <h2 className='noselect'>Like us?  Show your love.</h2>
-            </Col>
+            <MediaQuery query="(min-width: 1224px)">
+              <Col xs={12} md={6}>
+                <h2 className='noselect'>Like us?  Show your love.</h2>
+              </Col>
+            </MediaQuery>
           </Row>
         </Grid>
         <Footer email='ehg11240@gmail.com' phone='858-245-6799'/>
