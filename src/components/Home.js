@@ -9,7 +9,7 @@ import MediaQuery from 'react-responsive';
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
 import Footer from './Footer'
-import HeaderImg from '../images/header.jpg'
+import HeaderImg from '../images/Art Show Envision 2018.jpg'
 
 class Home extends Component {
   render () {
