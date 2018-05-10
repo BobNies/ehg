@@ -9,7 +9,7 @@ import MediaQuery from 'react-responsive';
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
 import Footer from './Footer'
-import HeaderImg from '../images/Art Show Envision 2018.jpg'
+import HeaderImg from '../images/header.jpg'
 
 class Home extends Component {
   render () {
@@ -45,30 +45,32 @@ class Home extends Component {
               </Col>
             </Link>
           </Row>
-          <Row className='home-sec-2-addon'>
-            <Col xs={12} md={6} className='artist-button-bar-left'>
-              <Col xs={12} md={4}>
-                <LinkContainer to='/artists/fred-briscoe/gallery'><Button>GALLERY</Button></LinkContainer>
+          <MediaQuery query="(min-width: 1224px)">
+            <Row className='home-sec-2-addon'>
+              <Col xs={12} md={6} className='artist-button-bar-left'>
+                <Col xs={12} md={4}>
+                  <LinkContainer to='/artists/fred-briscoe/gallery'><Button>GALLERY</Button></LinkContainer>
+                </Col>
+                <Col xs={12} md={4}>
+                  <LinkContainer to='/artists/fred-briscoe/about'><Button>ABOUT</Button></LinkContainer>
+                </Col>
+                <Col xs={12} md={4}>
+                  <LinkContainer to='/artists/fred-briscoe/contact'><Button>CONTACT</Button></LinkContainer>
+                </Col>
               </Col>
-              <Col xs={12} md={4}>
-                <LinkContainer to='/artists/fred-briscoe/about'><Button>ABOUT</Button></LinkContainer>
+              <Col xs={12} md={6} className='artist-button-bar-right'>
+                <Col xs={12} md={4}>
+                  <LinkContainer to='/artists/michael-roser/gallery'><Button>GALLERY</Button></LinkContainer>
+                </Col>
+                <Col xs={12} md={4}>
+                  <LinkContainer to='/artists/michael-roser/about'><Button>ABOUT</Button></LinkContainer>
+                </Col>
+                <Col xs={12} md={4}>
+                  <LinkContainer to='/artists/michael-roser/contact'><Button>CONTACT</Button></LinkContainer>
+                </Col>
               </Col>
-              <Col xs={12} md={4}>
-                <LinkContainer to='/artists/fred-briscoe/contact'><Button>CONTACT</Button></LinkContainer>
-              </Col>
-            </Col>
-            <Col xs={12} md={6} className='artist-button-bar-right'>
-              <Col xs={12} md={4}>
-                <LinkContainer to='/artists/michael-roser/gallery'><Button>GALLERY</Button></LinkContainer>
-              </Col>
-              <Col xs={12} md={4}>
-                <LinkContainer to='/artists/michael-roser/about'><Button>ABOUT</Button></LinkContainer>
-              </Col>
-              <Col xs={12} md={4}>
-                <LinkContainer to='/artists/michael-roser/contact'><Button>CONTACT</Button></LinkContainer>
-              </Col>
-            </Col>
-          </Row>
+            </Row>
+          </MediaQuery>
           <Row className='social-sec-1'>
             <Col xs={12} md={6}>
               <h2 className='noselect'>See what we're up to.</h2>

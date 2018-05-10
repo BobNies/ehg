@@ -131,19 +131,35 @@ body {
 /* MOBILE NAVBAR (BOOTSTRAP) */
 
 .navbar-default {
-  background-color: #fafafa;
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
 }
 
 .navbar-default .navbar-brand {
   font-family: 'Roboto', sans-serif;
-  color: #444;
+  font-weight: 300;
+  color: #222;
 }
 
-.navbar-default .navbar-nav>.open>a,
-.navbar-default .navbar-nav>.open>a:focus,
-.navbar-default .navbar-nav>.open>a:hover {
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
   background-color: #c7a891;
   color: #fff;
+}
+
+.navbar-default .navbar-toggle:active,
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+  background-color: #c7a891;
+  border-color: #fff;
+}
+
+.navbar-default .navbar-toggle:hover .icon-bar,
+.navbar-default .navbar-toggle:active .icon-bar,
+.navbar-default .navbar-toggle:focus .icon-bar {
+  background-color: #fff;
 }
 
 /* HOME */
@@ -196,6 +212,10 @@ body {
 
 .home-sec-2 {
   margin-top: 300px;
+}
+
+.home-sec-2-title-m {
+  margin-left: 15px;
 }
 
 .home-sec-2 h1 {
@@ -384,6 +404,10 @@ body {
   margin-top: 200px;
 }
 
+.social-sec-1-m {
+  margin-top: 100px;
+}
+
 .social-sec-1 h2 {
   font-size: 50px;
   font-weight: 300;
@@ -503,4 +527,15 @@ body {
   font-weight: 300;
   line-height: 15px;
   margin-left: 20px;
+}
+
+/* MOBILE OVERRIDES */
+@media screen and (max-width: 1224px) {
+  .social-sec-1 {
+    margin-top: 0;
+  }
+
+  .home-sec-2 h1 {
+    margin-left: 15px;
+  }
 }
