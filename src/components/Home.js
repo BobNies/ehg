@@ -5,18 +5,27 @@ import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import InstagramEmbed from 'react-instagram-embed'
 import FacebookProvider, { Page } from 'react-facebook';
+import MediaQuery from 'react-responsive';
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
-//import HeaderImg from '../images/example-photo-3.jpeg'
-import HeaderImg from '../images/header.jpg'
 import Footer from './Footer'
+import HeaderImg from '../images/header.jpg'
+
+/*
+const Desktop = props => <Responsive {...props} minWidth={992} />;
+const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
+const Mobile = props => <Responsive {...props} maxWidth={767} />;
+const Default = props => <Responsive {...props} minWidth={768} />;
+*/
 
 class Home extends Component {
   render () {
     return(
       <div>
         <CustomNavBar/>
-        <ScrollIndicator/>
+        <MediaQuery query="(min-width: 1224px)">
+          <ScrollIndicator/>
+        </MediaQuery>
         <Grid>
           <Row className='home-sec-1'>
             <Col xs={12} md={6}>
