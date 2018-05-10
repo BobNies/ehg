@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import Img from 'react-image'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import InstagramEmbed from 'react-instagram-embed'
+import FacebookProvider, { Page, Feed } from 'react-facebook';
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
 import HeaderImg from '../images/example-photo-3.jpeg'
@@ -60,6 +62,34 @@ class Home extends Component {
               <Col xs={12} md={4}>
                 <LinkContainer to='/artists/michael-roser/contact'><Button>CONTACT</Button></LinkContainer>
               </Col>
+            </Col>
+          </Row>
+          <Row className='social-sec-1'>
+            <Col xs={12} md={6}>
+              <h2 className='noselect'>See what we're up to.</h2>
+            </Col>
+            <Col xs={12} md={6}>
+              <InstagramEmbed
+                url='https://www.instagram.com/p/Bh5iABABEyU'
+                maxWidth={400}
+                hideCaption={false}
+                containerTagName='div'
+                protocol=''
+                onLoading={() => {}}
+                onSuccess={() => {}}
+                onAfterRender={() => {}}
+                onFailure={() => {}}
+              />
+            </Col>
+          </Row>
+          <Row className='social-sec-2'>
+            <Col xs={12} md={6} className='social-facebook-center'>
+              <FacebookProvider appId="204707493667261">
+                <Page href="https://www.facebook.com/Eucalyptus-Hills-Gallery-185642548871091/" tabs="timeline" height='650' width='400'/>
+              </FacebookProvider>
+            </Col>
+            <Col xs={12} md={6}>
+              <h2 className='noselect'>Like us?  Show your love.</h2>
             </Col>
           </Row>
         </Grid>
