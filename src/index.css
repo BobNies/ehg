@@ -177,7 +177,7 @@ body {
 }
 
 .home-sec-2 {
-  margin-top: 200px;
+  margin-top: 300px;
 }
 
 .home-sec-2 h1 {
@@ -214,7 +214,7 @@ body {
   /*background-color: #c7a891;*/
   height: 400px;
   overflow: hidden;
-  background-image: url('images/example-portrait-1.jpeg');
+  background-image: url('images/artist-portrait-fred-briscoe.JPG');
   background-size: cover;
   z-index: 0;
 }
@@ -230,7 +230,7 @@ body {
   /*background-color: #b39681;*/
   height: 400px;
   overflow: hidden;
-  background-image: url('images/example-portrait-2.jpeg');
+  background-image: url('images/artist-portrait-michael-roser.JPG');
   background-size: cover;
   z-index: 0;
 }
@@ -354,6 +354,12 @@ body {
 
 .social-facebook-center {
   text-align: center;
+}
+
+.snapwidget-widget {
+  border: none;
+  overflow: hidden;
+  width: 100%;
 }
 
 /* UTILITIES */

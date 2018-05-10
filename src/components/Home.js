@@ -4,11 +4,11 @@ import Img from 'react-image'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import InstagramEmbed from 'react-instagram-embed'
-import Instafeed from 'react-instafeed'
 import FacebookProvider, { Page, Feed } from 'react-facebook';
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
-import HeaderImg from '../images/example-photo-3.jpeg'
+//import HeaderImg from '../images/example-photo-3.jpeg'
+import HeaderImg from '../images/header.jpg'
 import Footer from './Footer'
 
 class Home extends Component {
@@ -71,7 +71,7 @@ class Home extends Component {
             </Col>
             <Col xs={12} md={6}>
               <InstagramEmbed
-                url='https://www.instagram.com/p/Bh5iABABEyU'
+                url='https://www.instagram.com/p/BiilLAUBOr-/?taken-by=eucalyptus.gallery'
                 maxWidth={400}
                 hideCaption={false}
                 containerTagName='div'
