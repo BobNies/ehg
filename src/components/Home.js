@@ -4,6 +4,7 @@ import Img from 'react-image'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import InstagramEmbed from 'react-instagram-embed'
+import Instafeed from 'react-instafeed'
 import FacebookProvider, { Page, Feed } from 'react-facebook';
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
