@@ -446,9 +446,9 @@ body {
 /* FOOTER */
 
 .footer {
-  margin-top: 200px;
+  margin-top: 20rem;
   background-color: #c7ae9b;
-  height: 400px;
+  height: 40rem;
 }
 
 .footer h1 {
@@ -537,6 +537,10 @@ body {
 
   .social-widget-instagram iframe {
     margin: 0 auto !important;
+  }
+
+  .footer {
+    height: 60rem;
   }
 }
 
