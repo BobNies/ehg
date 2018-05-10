@@ -211,11 +211,10 @@ body {
 }
 
 .artist-divider-left {
-  /*background-color: #c7a891;*/
   height: 400px;
   overflow: hidden;
-  background-image: url('images/artist-portrait-fred-briscoe.JPG');
-  background-size: cover;
+  /*background-image: url('images/artist-portrait-fred-briscoe.JPG');
+  background-size: cover;*/
   z-index: 0;
 }
 .artist-divider-left:hover .artist-divider-left-overlay {
@@ -225,13 +224,28 @@ body {
   opacity: 1;
   mix-blend-mode: overlay;
 }
+.artist-divider-left:hover .artist-divider-left-image {
+  filter: grayscale(0);
+}
+
+.artist-divider-left-image {
+  background-image: url('images/artist-portrait-fred-briscoe.JPG');
+  background-size: cover;
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -1;
+  filter: grayscale(1);
+}
 
 .artist-divider-right {
-  /*background-color: #b39681;*/
   height: 400px;
   overflow: hidden;
-  background-image: url('images/artist-portrait-michael-roser.JPG');
-  background-size: cover;
+  /*background-image: url('images/artist-portrait-michael-roser.JPG');
+  background-size: cover;*/
   z-index: 0;
 }
 .artist-divider-right:hover .artist-divider-right-overlay {
@@ -240,6 +254,9 @@ body {
 .artist-divider-right:hover h2 {
   opacity: 1;
   mix-blend-mode: overlay;
+}
+.artist-divider-right:hover .artist-divider-right-image {
+  filter: grayscale(0);
 }
 
 .artist-divider-left-overlay {
@@ -274,6 +291,19 @@ body {
   -moz-transition: 0.25s;
   -webkit-transition: 0.25s;
   transition: 0.25s;
+}
+
+.artist-divider-right-image {
+  background-image: url('images/artist-portrait-michael-roser.JPG');
+  background-size: cover;
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -1;
+  filter: grayscale(1);
 }
 
 .home-sec-2-addon {

@@ -30,12 +30,14 @@ class Home extends Component {
             <h1 className='noselect'>Our Artists</h1>
             <Link to='/artists/fred-briscoe/gallery'>
               <Col className='artist-divider-left' xs={12} md={6}>
+                <div className='artist-divider-left-image'></div>
                 <h2 className='noselect'>FRED BRISCOE</h2>
                 <div className='artist-divider-left-overlay'></div>
               </Col>
             </Link>
             <Link to='/artists/michael-roser/gallery'>
               <Col className='artist-divider-right' xs={12} md={6}>
+                <div className='artist-divider-right-image'></div>
                 <h2 className='noselect'>MICHAEL ROSER</h2>
                 <div className='artist-divider-right-overlay'></div>
               </Col>
