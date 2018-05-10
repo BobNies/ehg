@@ -19,9 +19,9 @@ class Home extends Component {
         <MediaQuery query="(min-width: 1224px)">
           <ScrollIndicator/>
         </MediaQuery>
-        <Grid>
+        <Grid fluid>
           <Row className='home-sec-1'>
-            <Col xs={12} md={6}>
+            <Col className='home-img-1-wrap' xs={12} md={6}>
               <Img className='home-img-1 noselect' src={HeaderImg}/>
             </Col>
             <Col xs={12} md={6}>
@@ -90,7 +90,7 @@ class Home extends Component {
             </Col>
           </Row>
           <Row className='social-sec-2'>
-            <Col xs={12} md={6} className='social-facebook-center'>
+            <Col className='social-widget-center' xs={12} md={6}>
               <FacebookProvider appId="204707493667261">
                 <Page href="https://www.facebook.com/Eucalyptus-Hills-Gallery-185642548871091/" tabs="timeline" height='650' width='400'/>
               </FacebookProvider>
