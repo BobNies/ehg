@@ -128,6 +128,24 @@ body {
   background-color: rgba(0,0,0,0);
 }
 
+/* MOBILE NAVBAR (BOOTSTRAP) */
+
+.navbar-default {
+  background-color: #fafafa;
+}
+
+.navbar-default .navbar-brand {
+  font-family: 'Roboto', sans-serif;
+  color: #444;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover {
+  background-color: #c7a891;
+  color: #fff;
+}
+
 /* HOME */
 
 .home-img-1 {
