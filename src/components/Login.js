@@ -17,18 +17,6 @@ class Login extends Component {
     }
   }
 
-  /*
-  logIn() {
-    // Grab this comp's state
-    const { email, password } = this.state;
-    // Log in with Firebase
-    firebaseApp.auth().signInWithEmailAndPassword(email, password)
-      .catch(error => {
-        this.setState({error});
-      })
-  }
-  */
-
   render () {
     return(
       <Consumer>
@@ -40,7 +28,7 @@ class Login extends Component {
               <Grid fluid>
                 <Row className='login'>
                   <Col className='login-form' xs={12} md={4} mdOffset={4}>
-                    <h1 className='noselect'>Logged in as {user}.</h1>
+                    <h1 className='noselect'>Logged in as {user.email}.</h1>
                   </Col>
                 </Row>
               </Grid>
@@ -73,7 +61,7 @@ class Login extends Component {
                       bsStyle='danger'
                       onClick={() => logOut()}
                       >
-                      Debug Log Out
+                      DEBUG Log Out
                     </Button>
                   </Col>
                 </Row>
