@@ -505,6 +505,36 @@ body {
   margin-top: 30rem;
 }
 
+/* ADMIN */
+
+.login {
+  margin-top: 10rem;
+}
+
+.login-form {
+  background-color: #fafafa;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.login-form h1 {
+  font-size: 25px;
+  font-weight: 300;
+  color: #222;
+  margin-top: 0;
+  margin-bottom: 5rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.login-form input {
+  margin-bottom: 1rem;
+}
+
+.login-form .btn {
+  width: 100%;
+}
+
 /* MOBILE OVERRIDES */
 @media screen and (max-width: 1224px) {
   .home-sec-1 {
@@ -550,18 +580,6 @@ body {
   .admin-link {
     margin-top: 5rem;
   }
-}
-
-/* ADMIN */
-
-.login {
-  margin-top: 10rem;
-}
-
-.login-form {
-  background-color: #f4f4f4;
-  border-radius: 1rem;
-  padding: 2rem;
 }
 
 /* LARGE MONITOR OVERRIDES */
