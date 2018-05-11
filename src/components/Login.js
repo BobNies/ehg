@@ -21,7 +21,7 @@ class Login extends Component {
     return(
       <Consumer>
         {value => {
-          const { user, logIn, logOut } = value;
+          const { user, logIn } = value;
           return user ? (
             <div>
               <CustomNavBar/>
@@ -41,6 +41,9 @@ class Login extends Component {
                 <Row className='login'>
                   <Col className='login-form' xs={12} md={4} mdOffset={4}>
                     <h1 className='noselect'>ADMIN LOGIN</h1>
+                    {this.state.error &&
+                      <p>{this.state.error.message}</p>
+                    }
                     <FormControl
                       type='email'
                       placeholder='Email'
@@ -56,12 +59,6 @@ class Login extends Component {
                       onClick={() => logIn(this.state.email, this.state.password)}
                       >
                       Log In
-                    </Button>
-                    <Button
-                      bsStyle='danger'
-                      onClick={() => logOut()}
-                      >
-                      DEBUG Log Out
                     </Button>
                   </Col>
                 </Row>
