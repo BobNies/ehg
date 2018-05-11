@@ -4,8 +4,8 @@ import Img from 'react-image'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import InstagramEmbed from 'react-instagram-embed'
-import FacebookProvider, { Page } from 'react-facebook';
-import MediaQuery from 'react-responsive';
+import FacebookProvider, { Page } from 'react-facebook'
+import MediaQuery from 'react-responsive'
 import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
 import Footer from './Footer'
@@ -107,7 +107,7 @@ class Home extends Component {
             </MediaQuery>
           </Row>
         </Grid>
-        <Footer email='ehg11240@gmail.com' phone='858-245-6799'/>
+        <Footer/>
       </div>
     );
   }

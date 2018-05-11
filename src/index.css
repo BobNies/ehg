@@ -552,6 +552,18 @@ body {
   }
 }
 
+/* ADMIN */
+
+.login {
+  margin-top: 10rem;
+}
+
+.login-form {
+  background-color: #f4f4f4;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
 /* LARGE MONITOR OVERRIDES */
 @media screen and (min-width: 1824px) {
   .home-sec-1 {

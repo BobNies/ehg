@@ -11,8 +11,8 @@ class Footer extends Component {
             <h1 className='noselect'>EUCALYPTUS HILLS GALLERY</h1>
             <p>11240 MANZANITA RD</p>
             <p>LAKESIDE, CA 92040</p>
-            <p>{this.props.email}</p>
-            <p>{this.props.phone}</p>
+            <p>ehg11240@gmail.com</p>
+            <p>858-245-6799</p>
           </Col>
           <Col xs={12} md={6}>
             <Col xs={12} md={6}>
