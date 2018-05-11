@@ -501,6 +501,10 @@ body {
   margin-left: 20px;
 }
 
+.admin-link {
+  margin-top: 30rem;
+}
+
 /* MOBILE OVERRIDES */
 @media screen and (max-width: 1224px) {
   .home-sec-1 {
@@ -542,8 +546,13 @@ body {
   .footer {
     height: 60rem;
   }
+
+  .admin-link {
+    margin-top: 5rem;
+  }
 }
 
+/* LARGE MONITOR OVERRIDES */
 @media screen and (min-width: 1824px) {
   .home-sec-1 {
     margin-top: 150px;

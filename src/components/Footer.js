@@ -15,7 +15,7 @@ class Footer extends Component {
             <p>{this.props.phone}</p>
           </Col>
           <Col xs={12} md={6}>
-            <Col xs={6} md={6}>
+            <Col xs={12} md={6}>
               <h2 className='noselect'>ARTISTS</h2>
               <h3>MICHAEL ROSER</h3>
               <Link to='/artists/michael-roser/gallery'><h4>GALLERY</h4></Link>
@@ -25,6 +25,9 @@ class Footer extends Component {
               <Link to='/artists/fred-briscoe/gallery'><h4>GALLERY</h4></Link>
               <Link to='/artists/fred-briscoe/about'><h4>ABOUT</h4></Link>
               <Link to='/artists/fred-briscoe/contact'><h4>CONTACT</h4></Link>
+            </Col>
+            <Col xs={12} md={6}>
+              <Link to='/login'><h4 className='admin-link'>ADMIN</h4></Link>
             </Col>
           </Col>
         </Row>
