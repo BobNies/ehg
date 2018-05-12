@@ -535,6 +535,39 @@ body {
   width: 100%;
 }
 
+.admin-shortcut {
+  position: fixed;
+  top: 5rem;
+  right: 0;
+  background-color: #2da0ff;
+  border-top-left-radius: 3rem;
+  border-bottom-left-radius: 3rem;
+  z-index: 9999;
+  cursor: pointer;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.admin-shortcut:hover {
+  background-color: #258de3;
+}
+.admin-shortcut:hover a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.admin-shortcut h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #fff;
+  padding: 3rem;
+  margin: 0;
+  text-decoration: none;
+}
+
 /* MOBILE OVERRIDES */
 @media screen and (max-width: 1224px) {
   .home-sec-1 {

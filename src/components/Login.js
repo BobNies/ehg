@@ -10,10 +10,7 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: '',
-      error: {
-        message: ''
-      }
+      password: ''
     }
   }
 
@@ -25,14 +22,17 @@ class Login extends Component {
     return(
       <Consumer>
         {value => {
-          const { user, logIn } = value;
-          return user ? (
+          const { user, logIn, error } = value;
+          return user && user.email != null ? (
             <div>
               <CustomNavBar/>
               <Grid fluid>
                 <Row className='login'>
                   <Col className='login-form' xs={12} md={4} mdOffset={4}>
-                    <h1 className='noselect'>Logged in as {user.email}.</h1>
+                    <h1 className='noselect'>Welcome back, {user.email}.</h1>
+                    {error &&
+                      <p>{error.message}</p>
+                    }
                   </Col>
                 </Row>
               </Grid>
@@ -45,8 +45,8 @@ class Login extends Component {
                 <Row className='login'>
                   <Col className='login-form' xs={12} md={4} mdOffset={4}>
                     <h1 className='noselect'>ADMIN LOGIN</h1>
-                    {this.state.error &&
-                      <p>{this.state.error.message}</p>
+                    {error &&
+                      <p>{error.message}</p>
                     }
                     <FormControl
                       type='email'

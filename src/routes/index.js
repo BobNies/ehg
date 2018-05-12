@@ -6,6 +6,7 @@ import Contact from '../components/Contact'
 import NotFound from '../components/NotFound'
 import Login from '../components/Login'
 import SignOut from '../components/SignOut'
+import AdminPanel from '../components/AdminPanel'
 
 export default () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ export default () => (
       <Route path='/artists/:artistName/contact' component={Contact} />
       <Route path='/login' component={Login} />
       <Route path='/signout' component={SignOut} />
+      <Route path='/admin' component={AdminPanel} />
       <Route component={NotFound}/>
     </Switch>
   </BrowserRouter>

@@ -46,6 +46,7 @@ export class Provider extends Component {
           user: this.state.user,
           logIn: this.logIn,
           logOut: this.logOut,
+          error: this.state.error,
         }}>
         {this.props.children}
       </MyContext.Provider>
