@@ -11,6 +11,7 @@ import CustomNavBar from './CustomNavBar'
 import ScrollIndicator from './ScrollIndicator'
 import Footer from './Footer'
 import HeaderImg from '../images/header.jpg'
+import AdminShortcut from '../components/AdminShortcut'
 
 class Home extends Component {
   render () {
@@ -20,11 +21,7 @@ class Home extends Component {
           const { user } = value;
           return (
             <div>
-              { user &&
-                <div className='admin-shortcut'>
-                  <Link to='/admin'><h1>ADMIN</h1></Link>
-                </div>
-              }
+              <AdminShortcut />
               <CustomNavBar/>
               <MediaQuery query="(min-width: 1224px)">
                 <ScrollIndicator/>
