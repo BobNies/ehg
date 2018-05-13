@@ -37,7 +37,6 @@ class Gallery extends Component {
       })
 
       this.setState({ galleryItemArray: newItems });
-      console.log('Combined array', this.state.galleryItemArray);
     })
   }
 
@@ -46,10 +45,6 @@ class Gallery extends Component {
     if (nextProps.match.params.artistName !== this.state.artistName) {
       this.setState({ artistName: nextProps.match.params.artistName });
     }
-  }
-
-  renderAllItems() {
-
   }
 
   render () {
@@ -63,7 +58,6 @@ class Gallery extends Component {
               <CustomNavBar/>
               <h1>{this.state.artistName}</h1>
               <div className='gallery'>
-                {/* this.renderAllItems() */}
                 {
                   this.state.galleryItemArray.map((item, index) => {
                     console.log('item', item);

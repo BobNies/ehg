@@ -21,7 +21,6 @@ class GalleryItem extends Component {
     const storageRef = firebaseApp.storage().ref('');
     storageRef.child(this.props.imagePath).getDownloadURL().then((url) => {
       this.setState({ imageSrc: url });
-      console.log('Image downloaded from', url);
     })
   }
 
