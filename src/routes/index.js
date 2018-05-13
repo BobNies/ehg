@@ -7,12 +7,14 @@ import NotFound from '../components/NotFound'
 import Login from '../components/Login'
 import SignOut from '../components/SignOut'
 import AdminPanel from '../components/AdminPanel'
+import GalleryItemPage from '../components/GalleryItemPage'
 
 export default () => (
   <BrowserRouter>
     <Switch>
       <Route exact path='/' component={Home} />
-      <Route path='/artists/:artistName/gallery' component={Gallery} />
+      <Route exact path='/artists/:artistName/gallery' component={Gallery} />
+      <Route exact path='/artists/:artistName/gallery/:timestamp' component={GalleryItemPage} />
       <Route path='/artists/:artistName/contact' component={Contact} />
       <Route path='/login' component={Login} />
       <Route path='/signout' component={SignOut} />

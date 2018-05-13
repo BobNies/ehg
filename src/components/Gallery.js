@@ -50,8 +50,8 @@ class Gallery extends Component {
 
       if (galleryItems != null) {
         Object.keys(galleryItems).map((item, index) => {
-          const { name, artist, description, imagePath, sold } = galleryItems[item];
-          newItems.push([name, artist, description, sold, imagePath]);
+          const { name, artist, description, sold, imagePath, timestamp } = galleryItems[item];
+          newItems.push([name, artist, description, sold, imagePath, timestamp]);
         })
       }
 
@@ -69,16 +69,11 @@ class Gallery extends Component {
               <AdminShortcut />
               <CustomNavBar/>
               { this.state.artistName === 'michael-roser' ? (
-                <h1>Michael Roser</h1>
+                <h1 className='gallery-title'>MICHAEL ROSER</h1>
               ) : (
-                <h1>Fred Briscoe</h1>
+                <h1 className='gallery-title'>FRED BRISCOE</h1>
               )}
-              <Masonry
-                className={'gallery'}
-                options={masonryOptions}
-                disableImagesLoaded={false}
-                updateOnEachImageLoad={true}
-                >
+              <div className='gallery'>
                 {
                   this.state.galleryItemArray.map((item, index) => {
                     return (
@@ -89,11 +84,12 @@ class Gallery extends Component {
                         description={item[2]}
                         sold={item[3]}
                         imagePath={item[4]}
+                        timestamp={item[5]}
                         />
                     )
                   })
                 }
-              </Masonry>
+              </div>
               <Footer />
             </div>
           )

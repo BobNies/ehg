@@ -6,6 +6,7 @@ import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
 import Img from 'react-image'
+import { Link } from 'react-router-dom'
 
 class GalleryItem extends Component {
 
@@ -30,7 +31,11 @@ class GalleryItem extends Component {
         {value => {
           const { user } = value;
           return (
-            <Img className='gallery-item-img' src={this.state.imageSrc} />
+            <div className='gallery-item'>
+              <Link to={'gallery/' + this.props.timestamp}>
+                <Img src={this.state.imageSrc} />
+              </Link>
+            </div>
           )
         }}
       </Consumer>

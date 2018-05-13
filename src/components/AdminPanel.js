@@ -89,8 +89,10 @@ class AdminPanel extends Component {
 
       () => {
         this.setState({ isUploading: false });
-        //const imageUrl = imageRef.toString();
-        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath });
+        let d = new Date();
+        let timestamp = d.getTime();
+
+        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath, timestamp });
 
         produceNotification('Gallery Item Added', 'Successfully', 'success');
       }
