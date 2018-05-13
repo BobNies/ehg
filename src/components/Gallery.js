@@ -20,29 +20,38 @@ class Gallery extends Component {
       galleryItems: [],
       galleryItemArray: []
     };
+
+    this.updateGallery.bind(this);
   }
 
   componentDidMount() {
-    firebaseApp.database().ref('gallery').once('value').then((snapshot) => {
-      this.setState({ galleryItems: snapshot.val() });
-
-      const galleryItems = this.state.galleryItems[this.state.artistName];
-      let newItems = [];
-
-      Object.keys(galleryItems).map((item, index) => {
-        const { name, artist, description, imagePath, sold } = galleryItems[item];
-        newItems.push([name, artist, description, sold, imagePath]);
-      })
-
-      this.setState({ galleryItemArray: newItems });
-    })
+    this.updateGallery();
   }
 
   componentWillUpdate(nextProps, nextState) {
     // Update state to sync with router changes
     if (nextProps.match.params.artistName !== this.state.artistName) {
       this.setState({ artistName: nextProps.match.params.artistName });
+      this.updateGallery();
     }
+  }
+
+  updateGallery() {
+    firebaseApp.database().ref('gallery').once('value').then((snapshot) => {
+      this.setState({ galleryItems: snapshot.val() });
+
+      const galleryItems = this.state.galleryItems[this.state.artistName];
+      let newItems = [];
+
+      if (galleryItems != null) {
+        Object.keys(galleryItems).map((item, index) => {
+          const { name, artist, description, imagePath, sold } = galleryItems[item];
+          newItems.push([name, artist, description, sold, imagePath]);
+        })
+      }
+
+      this.setState({ galleryItemArray: newItems });
+    })
   }
 
   render () {
@@ -54,7 +63,11 @@ class Gallery extends Component {
             <div>
               <AdminShortcut />
               <CustomNavBar/>
-              <h1>{this.state.artistName}</h1>
+              { this.state.artistName === 'michael-roser' ? (
+                <h1>Michael Roser</h1>
+              ) : (
+                <h1>Fred Briscoe</h1>
+              )}
               <div className='gallery'>
                 {
                   this.state.galleryItemArray.map((item, index) => {
