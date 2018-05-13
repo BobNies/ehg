@@ -17,7 +17,6 @@ class AdminPanel extends Component {
       inputGalleryItem: {
         name: '',
         artist: 'Select Artist...',
-        image: '',
         description: '',
         sold: false,
         image: null
