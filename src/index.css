@@ -626,6 +626,29 @@ body {
   border-radius: 1rem;
 }
 
+.gallery-page-main .btn-default {
+  margin-bottom: 3rem;
+  width: 100%;
+  border: 0;
+  background-color: #c7a891;
+  color: #fff;
+  border-radius: 0;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.gallery-page-main .btn-default:hover {
+  background-color: #a89282;
+}
+.gallery-page-main .btn-default:focus,
+.gallery-page-main .btn-default:active {
+  color: #fff;
+  background-color: #a89282;
+}
+
 .loading {
   margin-top: 20rem;
 }
@@ -638,6 +661,17 @@ body {
   text-align: center;
   padding: 0;
   margin: 0;
+  animation: loadingIntro;
+  animation-duration: 0.5s;
+}
+
+@keyframes loadingIntro {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ADMIN */

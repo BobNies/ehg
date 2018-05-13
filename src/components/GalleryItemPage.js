@@ -68,6 +68,7 @@ class GalleryItemPage extends Component {
                       ) : (
                         <h4>by Fred Briscoe</h4>
                       )}
+                      <Button bsStyle='default'>PURCHASE</Button>
                       <p>{this.state.item.description}</p>
                     </Col>
                   </Row>
