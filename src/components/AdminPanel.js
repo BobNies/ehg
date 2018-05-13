@@ -19,8 +19,9 @@ class AdminPanel extends Component {
         artist: 'Select Artist...',
         description: '',
         sold: false,
-        image: null
+        imageRef: ''
       },
+      igiImage: null,
       isUploading: false,
       uploadProgress: 0,
       uploadError: null
@@ -42,20 +43,18 @@ class AdminPanel extends Component {
   }
 
   updateGalleryItemImage(newImage) {
-    let igi = this.state.inputGalleryItem;
-    igi.image = newImage;
-    this.setState({ inputGalleryItem: igi });
+    this.setState({ igiImage: newImage });
   }
 
   artistSelect(eventKey) {
     if (eventKey === 1) {
       let igi = this.state.inputGalleryItem;
-      igi.artist = 'Michael Roser';
+      igi.artist = 'michael-roser';
       this.setState({ inputGalleryItem: igi });
     }
     if (eventKey === 2) {
       let igi = this.state.inputGalleryItem;
-      igi.artist = 'Fred Briscoe';
+      igi.artist = 'fred-briscoe';
       this.setState({ inputGalleryItem: igi });
     }
 
@@ -73,7 +72,32 @@ class AdminPanel extends Component {
   }
 
   addGalleryItem() {
-    console.log('Adding gallery item:', this.state.inputGalleryItem);
+    const { name, artist, description, sold } = this.state.inputGalleryItem;
+
+    // File image upload
+    let file = this.state.igiImage;
+    const imageRef = firebaseApp.storage().ref('gallery/' + artist + '/' + file.name);
+    let task = imageRef.put(file);
+    let imagePath = imageRef.fullPath;
+    this.setState({ isUploading: true });
+    task.on('state_changed',
+      (snapshot) => {
+        let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        //this.uploadProgressBar.current.value = percentage;
+        this.setState({ uploadProgress: percentage });
+      },
+
+      (err) => {
+        this.setState({ uploadError: err });
+      },
+
+      () => {
+        this.setState({ isUploading: false });
+        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath });
+
+        console.log('gallery item successfully added');
+      }
+    );
   }
 
   render () {
