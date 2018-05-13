@@ -20,8 +20,6 @@ class Gallery extends Component {
       galleryItems: [],
       galleryItemArray: []
     };
-
-    this.renderAllItems.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +58,6 @@ class Gallery extends Component {
               <div className='gallery'>
                 {
                   this.state.galleryItemArray.map((item, index) => {
-                    console.log('item', item);
                     return (
                       <GalleryItem
                         key={index}
