@@ -39,7 +39,6 @@ export class Provider extends Component {
     // Instagram post listener
     instagramPostRef.on('value', snapshot => {
       this.setState({ instagramPost: snapshot.val() });
-      console.log('updated instagramPost to ', this.state.instagramPost);
     })
   }
 

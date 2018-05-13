@@ -3,7 +3,7 @@ import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
 import { Redirect } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormControl, DropdownButton, MenuItem } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import NotificationSystem from 'react-notification-system'
@@ -16,7 +16,7 @@ class AdminPanel extends Component {
       inputInstaPost: '',
       inputGalleryItem: {
         name: '',
-        artist: '',
+        artist: 'Select Artist...',
         imageLink: '',
         description: '',
         sold: false,
@@ -42,6 +42,27 @@ class AdminPanel extends Component {
 
   addGalleryItem() {
     console.log('Adding gallery item with name of', this.state.inputGalleryItem.name);
+  }
+
+  updateGalleryItemName(newName) {
+    let igi = this.state.inputGalleryItem;
+    igi.name = newName;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  artistSelect(eventKey) {
+    if (eventKey === 1) {
+      let igi = this.state.inputGalleryItem;
+      igi.artist = 'Michael Roser';
+      this.setState({ inputGalleryItem: igi });
+    }
+    if (eventKey === 2) {
+      let igi = this.state.inputGalleryItem;
+      igi.artist = 'Fred Briscoe';
+      this.setState({ inputGalleryItem: igi });
+    }
+
+    console.log(eventKey);
   }
 
   render () {
@@ -88,7 +109,7 @@ class AdminPanel extends Component {
                         ref={this.instagramPostControl}
                         type='text'
                         placeholder='Name'
-                        onChange={event => this.setState({ inputGalleryItem: {name: event.target.value} })}
+                        onChange={event => this.updateGalleryItemName(event.target.value)}
                         />
                     </Col>
                   </Row>
@@ -97,12 +118,16 @@ class AdminPanel extends Component {
                       <h4>Artist</h4>
                     </Col>
                     <Col xs={6} md={4}>
-                      <FormControl
-                        ref={this.instagramPostControl}
-                        type='text'
-                        placeholder='Artist'
-                        onChange={event => this.setState({ inputGalleryItem: {artist: event.target.value} })}
-                        />
+                      <DropdownButton
+                        bsStyle='default'
+                        title={this.state.inputGalleryItem.artist}
+                        key={1}
+                        id='dropdown-artist'
+                        onSelect={eventKey => this.artistSelect(eventKey)}
+                      >
+                        <MenuItem eventKey={1}>Michael Roser</MenuItem>
+                        <MenuItem eventKey={2}>Fred Briscoe</MenuItem>
+                      </DropdownButton>
                     </Col>
                   </Row>
                   <Row className='admin-row'>
