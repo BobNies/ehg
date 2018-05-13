@@ -51,7 +51,8 @@ class Gallery extends Component {
       if (galleryItems != null) {
         Object.keys(galleryItems).map((item, index) => {
           const { name, artist, description, sold, imagePath, timestamp } = galleryItems[item];
-          newItems.push([name, artist, description, sold, imagePath, timestamp]);
+          //let fireRef = firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + item);
+          newItems.push([name, artist, description, sold, imagePath, timestamp, item]);
         })
       }
 
@@ -85,6 +86,7 @@ class Gallery extends Component {
                         sold={item[3]}
                         imagePath={item[4]}
                         timestamp={item[5]}
+                        itemKey={item[6]}
                         />
                     )
                   })

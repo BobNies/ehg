@@ -32,7 +32,7 @@ class GalleryItem extends Component {
           const { user } = value;
           return (
             <div className='gallery-item'>
-              <Link to={'gallery/' + this.props.timestamp}>
+              <Link to={'gallery/' + this.props.itemKey}>
                 <Img src={this.state.imageSrc} />
               </Link>
             </div>

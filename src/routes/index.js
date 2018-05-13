@@ -14,7 +14,7 @@ export default () => (
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/artists/:artistName/gallery' component={Gallery} />
-      <Route exact path='/artists/:artistName/gallery/:timestamp' component={GalleryItemPage} />
+      <Route exact path='/artists/:artistName/gallery/:itemKey' component={GalleryItemPage} />
       <Route path='/artists/:artistName/contact' component={Contact} />
       <Route path='/login' component={Login} />
       <Route path='/signout' component={SignOut} />

@@ -592,9 +592,17 @@ body {
     margin: 0;
   }
 
-  .galley {
+  .gallery {
     padding: 0;
   }
+}
+
+.gallery-page-main {
+
+}
+
+.gallery-page-main img {
+  
 }
 
 /* ADMIN */
