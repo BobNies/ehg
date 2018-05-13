@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
+import NotificationSystem from 'react-notification-system'
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -14,13 +15,22 @@ class AdminPanel extends Component {
     this.state = {
       inputInstaPost: ''
     }
+
+    //this.notificationSystem = React.createRef();
   }
 
   applySettings(setIntagramPost) {
     if (this.state.inputInstaPost != '') {
       setIntagramPost(this.state.inputInstaPost);
-      console.log('set instagram post in database');
     }
+
+    /*
+    this.notificationSystem.current.addNotification({
+      title: 'Update Successful',
+      message: 'Yay!',
+      level: 'success'
+    });
+    */
   }
 
   render () {
@@ -30,6 +40,7 @@ class AdminPanel extends Component {
           const { user, logOut, setIntagramPost } = value;
           return user ? (
             <div>
+              {/* <NotificationSystem ref={this.notificationSystem} /> */}
               <CustomNavBar />
               <div className='admin'>
                 <h1>ADMIN PANEL</h1>

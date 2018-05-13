@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { firebaseApp, instagramPostRef } from './firebase';
+import NotificationSystem from 'react-notification-system';
 
 const MyContext = React.createContext();
 
@@ -14,11 +15,24 @@ export class Provider extends Component {
       },
       instagramPost: ''
     }
+
+    this.notificationSystem = React.createRef();
   }
 
   componentDidMount() {
     // Auth listener
     this.authSubscription = firebaseApp.auth().onAuthStateChanged(user => {
+      // If signed out
+      if (user === null && this.state.user !== null) {
+        this.produceNotification('Signed Out', 'Successfully', 'info');
+        window.scrollTo(0, 0);
+      }
+
+      // If signed in
+      if (user !== null && this.state.user === null) {
+        this.produceNotification('Signed In', 'Successfully', 'success');
+      }
+
       this.setState({ user });
     })
 
@@ -47,6 +61,14 @@ export class Provider extends Component {
     this.setState({ user: null });
   }
 
+  produceNotification = (newTitle, newMessage, newLevel) => {
+    this.notificationSystem.current.addNotification({
+      title: newTitle,
+      message: newMessage,
+      level: newLevel
+    });
+  }
+
   setIntagramPost = (newInstaPost) => {
     firebaseApp.database().ref('settings').set({ instagramPost: newInstaPost });
   }
@@ -61,6 +83,7 @@ export class Provider extends Component {
           instagramPost: this.state.instagramPost,
           setIntagramPost: this.setIntagramPost,
         }}>
+        <NotificationSystem ref={this.notificationSystem} />
         {this.props.children}
       </MyContext.Provider>
     )
