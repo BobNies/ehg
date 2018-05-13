@@ -17,7 +17,7 @@ class AdminPanel extends Component {
       inputGalleryItem: {
         name: '',
         artist: 'Select Artist...',
-        imageLink: '',
+        image: '',
         description: '',
         sold: false,
         image: null
@@ -30,23 +30,21 @@ class AdminPanel extends Component {
     this.instagramPostControl = React.createRef();
   }
 
-  applySettings(produceNotification, setIntagramPost) {
-    // Update instagram post
-    if (this.state.inputInstaPost !== null && this.state.inputInstaPost !== '') {
-      setIntagramPost(this.state.inputInstaPost);
-    }
-
-    // Produce notification
-    produceNotification('Update Successful', 'Yay!', 'success');
-  }
-
-  addGalleryItem() {
-    console.log('Adding gallery item with name of', this.state.inputGalleryItem.name);
-  }
-
   updateGalleryItemName(newName) {
     let igi = this.state.inputGalleryItem;
     igi.name = newName;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemDescription(newDesc) {
+    let igi = this.state.inputGalleryItem;
+    igi.description = newDesc;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemImage(newImage) {
+    let igi = this.state.inputGalleryItem;
+    igi.image = newImage;
     this.setState({ inputGalleryItem: igi });
   }
 
@@ -63,6 +61,20 @@ class AdminPanel extends Component {
     }
 
     console.log(eventKey);
+  }
+
+  applySettings(produceNotification, setIntagramPost) {
+    // Update instagram post
+    if (this.state.inputInstaPost !== null && this.state.inputInstaPost !== '') {
+      setIntagramPost(this.state.inputInstaPost);
+    }
+
+    // Produce notification
+    produceNotification('Update Successful', 'Yay!', 'success');
+  }
+
+  addGalleryItem() {
+    console.log('Adding gallery item:', this.state.inputGalleryItem);
   }
 
   render () {
@@ -139,7 +151,7 @@ class AdminPanel extends Component {
                         ref={this.instagramPostControl}
                         type='text'
                         placeholder='Description'
-                        onChange={event => this.setState({ inputGalleryItem: {description: event.target.value} })}
+                        onChange={event => this.updateGalleryItemDescription(event.target.value)}
                         />
                     </Col>
                   </Row>
@@ -148,7 +160,7 @@ class AdminPanel extends Component {
                       <h4>Image</h4>
                     </Col>
                     <Col xs={6} md={4}>
-                      <input type='file' onChange={event => this.setState({ inputGalleryItem: {image: event.target.files[0]} })} />
+                      <input type='file' onChange={event => this.updateGalleryItemImage(event.target.files[0])} />
                     </Col>
                   </Row>
                   <Row className='admin-row'>
