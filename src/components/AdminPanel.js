@@ -56,8 +56,6 @@ class AdminPanel extends Component {
       igi.artist = 'fred-briscoe';
       this.setState({ inputGalleryItem: igi });
     }
-
-    console.log(eventKey);
   }
 
   applySettings(produceNotification, setIntagramPost) {

@@ -31,7 +31,6 @@ class GalleryItem extends Component {
           const { user } = value;
           return (
             <div className='gallery-item'>
-              <p>Here is an item</p>
               <h2>{this.state.name}</h2>
               <Img src={this.state.imageSrc} />
             </div>
