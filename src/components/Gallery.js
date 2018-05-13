@@ -12,7 +12,6 @@ const masonryOptions = {
   transitionDuration: 0
 };
 
-// hello
 class Gallery extends Component {
 
   constructor(props) {
