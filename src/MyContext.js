@@ -80,6 +80,7 @@ export class Provider extends Component {
           logIn: this.logIn,
           logOut: this.logOut,
           error: this.state.error,
+          produceNotification: this.produceNotification,
           instagramPost: this.state.instagramPost,
           setIntagramPost: this.setIntagramPost,
         }}>

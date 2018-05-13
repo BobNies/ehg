@@ -15,29 +15,23 @@ class AdminPanel extends Component {
     this.state = {
       inputInstaPost: ''
     }
-
-    //this.notificationSystem = React.createRef();
   }
 
-  applySettings(setIntagramPost) {
-    if (this.state.inputInstaPost != '') {
+  applySettings(produceNotification, setIntagramPost) {
+    // Update instagram post
+    if (this.state.inputInstaPost !== null && this.state.inputInstaPost !== '') {
       setIntagramPost(this.state.inputInstaPost);
     }
 
-    /*
-    this.notificationSystem.current.addNotification({
-      title: 'Update Successful',
-      message: 'Yay!',
-      level: 'success'
-    });
-    */
+    // Produce notification
+    produceNotification('Update Successful', 'Yay!', 'success');
   }
 
   render () {
     return (
       <Consumer>
         {value => {
-          const { user, logOut, setIntagramPost } = value;
+          const { user, logOut, produceNotification, setIntagramPost } = value;
           return user ? (
             <div>
               {/* <NotificationSystem ref={this.notificationSystem} /> */}
@@ -61,7 +55,7 @@ class AdminPanel extends Component {
                   <Row className='admin-row-end'>
                     <Button
                       bsStyle='primary'
-                      onClick={() => this.applySettings(setIntagramPost)}
+                      onClick={() => this.applySettings(produceNotification, setIntagramPost)}
                       >
                       Update
                     </Button>
