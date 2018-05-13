@@ -14,7 +14,8 @@ class GalleryItemPage extends Component {
       itemKey: this.props.match.params.itemKey,
       artistName: this.props.match.params.artistName,
       imageSrc: '',
-      item: null
+      item: null,
+      loading: true
     };
   }
 
@@ -26,6 +27,8 @@ class GalleryItemPage extends Component {
       storageRef.child(this.state.item.imagePath).getDownloadURL().then((url) => {
         this.setState({ imageSrc: url });
       })
+
+      this.setState({ loading: false });
     })
   }
 
@@ -49,14 +52,26 @@ class GalleryItemPage extends Component {
             <div>
               <CustomNavBar />
               <Grid>
-                <Row className='gallery-page-main'>
-                  <Col xs={12} md={8}>
-                    <Img src={this.state.imageSrc} />
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <h3>Item Key: {this.state.itemKey}</h3>
-                  </Col>
-                </Row>
+                { this.state.loading ? (
+                  <div className='loading'>
+                    <h1>LOADING, PLEASE WAIT...</h1>
+                  </div>
+                ) : (
+                  <Row className='gallery-page-main'>
+                    <Col xs={12} md={8}>
+                      <Img src={this.state.imageSrc} />
+                    </Col>
+                    <Col xs={12} md={4}>
+                      <h3>{this.state.item.name}</h3>
+                      { this.state.artistName === 'michael-roser' ? (
+                        <h4>by Michael Roser</h4>
+                      ) : (
+                        <h4>by Fred Briscoe</h4>
+                      )}
+                      <p>{this.state.item.description}</p>
+                    </Col>
+                  </Row>
+                )}
               </Grid>
               <Footer />
             </div>

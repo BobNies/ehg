@@ -552,6 +552,8 @@ body {
   font-size: 40px;
   font-weight: 300;
   color: #222;
+  margin-left: 3rem;
+  margin-top: 5rem;
 }
 
 .gallery {
@@ -598,12 +600,44 @@ body {
 }
 
 .gallery-page-main {
+  margin-top: 4rem;
+}
 
+.gallery-page-main h3 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+.gallery-page-main h4 {
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 0;
+  margin-bottom: 3rem;
+}
+
+.gallery-page-main p {
+  font-size: 1.5rem;
 }
 
 .gallery-page-main img {
   width: 100%;
   height: auto;
+  border-radius: 1rem;
+}
+
+.loading {
+  margin-top: 20rem;
+}
+
+.loading h1 {
+  font-size: 5rem;
+  font-weight: 300;
+  color: #222;
+  vertical-align: center;
+  text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
 /* ADMIN */
