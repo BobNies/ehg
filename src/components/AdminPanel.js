@@ -3,7 +3,7 @@ import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
 import { Redirect } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Grid, Row, Col, Button, FormControl, DropdownButton, MenuItem } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormControl, DropdownButton, MenuItem, ProgressBar } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import NotificationSystem from 'react-notification-system'
@@ -71,7 +71,7 @@ class AdminPanel extends Component {
     produceNotification('Update Successful', 'Yay!', 'success');
   }
 
-  addGalleryItem() {
+  addGalleryItem(produceNotification) {
     const { name, artist, description, sold } = this.state.inputGalleryItem;
 
     // File image upload
@@ -83,7 +83,6 @@ class AdminPanel extends Component {
     task.on('state_changed',
       (snapshot) => {
         let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        //this.uploadProgressBar.current.value = percentage;
         this.setState({ uploadProgress: percentage });
       },
 
@@ -95,7 +94,7 @@ class AdminPanel extends Component {
         this.setState({ isUploading: false });
         firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath });
 
-        console.log('gallery item successfully added');
+        produceNotification('Gallery Item Added', 'Successfully', 'success');
       }
     );
   }
@@ -186,11 +185,18 @@ class AdminPanel extends Component {
                       <input type='file' onChange={event => this.updateGalleryItemImage(event.target.files[0])} />
                     </Col>
                   </Row>
+                  { this.state.isUploading &&
+                    <Row className='admin-row'>
+                      <Col xs={6} md={4} mdOffset={6}>
+                        <ProgressBar active now={this.state.uploadProgress} />
+                      </Col>
+                    </Row>
+                  }
                   <Row className='admin-row'>
                     <Col xs={6} md={4} mdOffset={6}>
                       <Button
                         bsStyle='primary'
-                        onClick={() => this.addGalleryItem()}
+                        onClick={() => this.addGalleryItem(produceNotification)}
                         >
                         Add
                       </Button>
