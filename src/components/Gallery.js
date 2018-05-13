@@ -3,6 +3,7 @@ import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
+import AdminShortcut from './AdminShortcut'
 
 class Gallery extends Component {
 
@@ -55,6 +56,7 @@ class Gallery extends Component {
           const { user } = value;
           return (
             <div>
+              <AdminShortcut />
               <CustomNavBar/>
               <h1>{this.state.artistName}</h1>
               {user &&

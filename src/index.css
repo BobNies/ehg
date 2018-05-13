@@ -568,6 +568,49 @@ body {
   text-decoration: none;
 }
 
+.admin {
+
+}
+
+.admin h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #222;
+  margin-bottom: 5rem;
+  margin-left: 7rem;
+  margin-top: 5rem;
+}
+
+.admin h4 {
+  font-size: 15px;
+  font-weight: 300;
+  color: #222;
+}
+
+.admin-grid {
+  background-color: #fafafa;
+}
+
+.admin-row {
+
+}
+
+.admin-row-first {
+  margin-top: 5rem;
+}
+
+.admin-row-end {
+  background-color: #eee;
+  height: 5.5rem;
+}
+
+.admin-row-end .btn {
+  float: right;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 3rem;
+}
+
 /* MOBILE OVERRIDES */
 @media screen and (max-width: 1224px) {
   .home-sec-1 {

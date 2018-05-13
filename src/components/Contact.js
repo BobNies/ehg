@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import CustomNavBar from './CustomNavBar'
+import Footer from './Footer'
+import AdminShortcut from './AdminShortcut'
 
 class Contact extends Component {
 
@@ -21,8 +23,10 @@ class Contact extends Component {
   render () {
     return(
       <div>
+        <AdminShortcut />
         <CustomNavBar/>
         <p>Contact page for {this.state.artistName}</p>
+        <Footer />
       </div>
     );
   }

@@ -18,7 +18,7 @@ class Home extends Component {
     return(
       <Consumer>
         {value => {
-          const { user } = value;
+          const { user, instagramPost } = value;
           return (
             <div>
               <AdminShortcut />
@@ -83,17 +83,19 @@ class Home extends Component {
                     <h2 className='noselect'>See what we're up to.</h2>
                   </Col>
                   <Col className='social-widget-instagram' xs={12} md={6}>
-                    <InstagramEmbed
-                      url='https://www.instagram.com/p/BiilLAUBOr-/?taken-by=eucalyptus.gallery'
-                      maxWidth={400}
-                      hideCaption={false}
-                      containerTagName='div'
-                      protocol=''
-                      onLoading={() => {}}
-                      onSuccess={() => {}}
-                      onAfterRender={() => {}}
-                      onFailure={() => {}}
-                    />
+                    { instagramPost != '' &&
+                      <InstagramEmbed
+                        url={instagramPost}
+                        maxWidth={400}
+                        hideCaption={false}
+                        containerTagName='div'
+                        protocol=''
+                        onLoading={() => {}}
+                        onSuccess={() => {}}
+                        onAfterRender={() => {}}
+                        onFailure={() => {}}
+                      />
+                    }
                   </Col>
                 </Row>
                 <Row className='social-sec-2'>
