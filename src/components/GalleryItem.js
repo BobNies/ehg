@@ -30,10 +30,7 @@ class GalleryItem extends Component {
         {value => {
           const { user } = value;
           return (
-            <div className='gallery-item'>
-              <h2>{this.state.name}</h2>
-              <Img src={this.state.imageSrc} />
-            </div>
+            <Img className='gallery-item-img' src={this.state.imageSrc} />
           )
         }}
       </Consumer>
