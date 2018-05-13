@@ -31,6 +31,7 @@ class Gallery extends Component {
 
   componentDidMount() {
     this.updateGallery();
+    console.log('did mount');
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -51,7 +52,6 @@ class Gallery extends Component {
       if (galleryItems != null) {
         Object.keys(galleryItems).map((item, index) => {
           const { name, artist, description, sold, imagePath, timestamp } = galleryItems[item];
-          //let fireRef = firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + item);
           newItems.push([name, artist, description, sold, imagePath, timestamp, item]);
         })
       }
