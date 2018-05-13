@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
+import { Grid, Row, Col } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
+import GalleryItem from './GalleryItem'
 
 class Gallery extends Component {
 
@@ -14,10 +16,29 @@ class Gallery extends Component {
       artistName: this.props.match.params.artistName,
       isUploading: false,
       uploadProgress: 0,
-      uploadError: null
+      uploadError: null,
+      galleryItems: [],
+      galleryItemArray: []
     };
 
-    this.uploadProgressBar = React.createRef();
+    this.renderAllItems.bind(this);
+  }
+
+  componentDidMount() {
+    firebaseApp.database().ref('gallery').once('value').then((snapshot) => {
+      this.setState({ galleryItems: snapshot.val() });
+
+      const galleryItems = this.state.galleryItems[this.state.artistName];
+      let newItems = [];
+
+      Object.keys(galleryItems).map((item, index) => {
+        const { name, artist, description, imagePath, sold } = galleryItems[item];
+        newItems.push([name, artist, description, sold, imagePath]);
+      })
+
+      this.setState({ galleryItemArray: newItems });
+      console.log('Combined array', this.state.galleryItemArray);
+    })
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -27,26 +48,8 @@ class Gallery extends Component {
     }
   }
 
-  imageChange = (e) => {
-    let file = e.target.files[0];
-    let storageRef = firebaseApp.storage().ref('gallery/' + file.name);
-    let task = storageRef.put(file);
-    this.setState({ isUploading: true });
-    task.on('state_changed',
-      (snapshot) => {
-        let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.uploadProgressBar.current.value = percentage;
-        this.setState({ uploadProgress: percentage });
-      },
+  renderAllItems() {
 
-      (err) => {
-        this.setState({ uploadError: err });
-      },
-
-      () => {
-        this.setState({ isUploading: false });
-      }
-    );
   }
 
   render () {
@@ -59,15 +62,24 @@ class Gallery extends Component {
               <AdminShortcut />
               <CustomNavBar/>
               <h1>{this.state.artistName}</h1>
-              {user &&
-                <div>
-                  <input type='file' onChange={e => this.imageChange(e)} />
-                  <progress ref={this.uploadProgressBar} value='0' max='100'>{this.state.uploadProgress}</progress>
-                  {this.state.isUploading &&
-                    <h4>Uploading, please wait...</h4>
-                  }
-                </div>
-              }
+              <div className='gallery'>
+                {/* this.renderAllItems() */}
+                {
+                  this.state.galleryItemArray.map((item, index) => {
+                    console.log('item', item);
+                    return (
+                      <GalleryItem
+                        key={index}
+                        name={item[0]}
+                        artist={item[1]}
+                        description={item[2]}
+                        sold={item[3]}
+                        imagePath={item[4]}
+                        />
+                    )
+                  })
+                }
+              </div>
               <Footer />
             </div>
           )

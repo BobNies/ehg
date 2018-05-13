@@ -18,8 +18,7 @@ class AdminPanel extends Component {
         name: '',
         artist: 'Select Artist...',
         description: '',
-        sold: false,
-        imageRef: ''
+        sold: false
       },
       igiImage: null,
       isUploading: false,
@@ -92,6 +91,7 @@ class AdminPanel extends Component {
 
       () => {
         this.setState({ isUploading: false });
+        //const imageUrl = imageRef.toString();
         firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath });
 
         produceNotification('Gallery Item Added', 'Successfully', 'success');
