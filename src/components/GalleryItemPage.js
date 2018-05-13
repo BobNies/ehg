@@ -13,21 +13,20 @@ class GalleryItemPage extends Component {
     this.state = {
       itemKey: this.props.match.params.itemKey,
       artistName: this.props.match.params.artistName,
-      imageSrc: ''
+      imageSrc: '',
+      item: null
     };
   }
 
   componentDidMount() {
     firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).once('value', snapshot => {
-      console.log(snapshot.val());
-    })
+      this.setState({ item: snapshot.val() });
 
-    /*
-    const storageRef = firebaseApp.storage().ref('');
-    storageRef.child(this.props.imagePath).getDownloadURL().then((url) => {
-      this.setState({ imageSrc: url });
+      const storageRef = firebaseApp.storage().ref('');
+      storageRef.child(this.state.item.imagePath).getDownloadURL().then((url) => {
+        this.setState({ imageSrc: url });
+      })
     })
-    */
   }
 
   componentWillUpdate(nextProps, nextState) {
