@@ -6,6 +6,7 @@ import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import Img from 'react-image'
 import PaypalExpressBtn from 'react-paypal-express-checkout'
+import Request from 'react-http-request'
 
 class GalleryItemPage extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class GalleryItemPage extends Component {
       editMode: false,
       editedName: '',
       editedDescription: '',
-      editedPrice: ''
+      editedPrice: '',
+      checkoutMode: false
     };
   }
 
@@ -113,7 +115,20 @@ class GalleryItemPage extends Component {
                               <h1 className='gallery-page-price'>${this.state.item.price}</h1>
                             </Col>
                             <Col xs={12} md={6}>
-                              {/* <Button bsStyle='default'>PURCHASE</Button> */}
+                              <Button
+                                bsStyle='default'
+                                onClick={() => this.setState({ checkoutMode: true })}
+                                >
+                                PURCHASE
+                              </Button>
+                            </Col>
+                          </Row>
+                        }
+                        { this.state.checkoutMode &&
+                          <Row className='gallery-page-row-1'>
+                            <Col xs={12} md={6}>
+                            </Col>
+                            <Col xs={12} md={6}>
                               <PaypalExpressBtn
                                 env={env}
                                 client={client}
@@ -128,6 +143,55 @@ class GalleryItemPage extends Component {
                         }
                         <Row className='gallery-page-row-2'>
                           <p>{this.state.item.description}</p>
+                            <Request
+                              url='https://api.goshippo.com/shipments/'
+                              method='post'
+                              accept='application/json'
+                              verbose={true}
+                              headers={{"Authorization": "ShippoToken shippo_test_b397b68fdf89d83760c765e994901b367b159715"}}
+                              send={{
+                                "address_to": {
+                                    "name": "Mr Hippo",
+                                    "street1": "965 Mission St #572",
+                                    "city": "San Francisco",
+                                    "state": "CA",
+                                    "zip": "94103",
+                                    "country": "US",
+                                    "phone": "4151234567",
+                                    "email": "mrhippo@goshippo.com"
+                                },
+                                "address_from": {
+                                    "name": "Mrs Hippo",
+                                    "street1": "1092 Indian Summer Ct",
+                                    "city": "San Jose",
+                                    "state": "CA",
+                                    "zip": "95122",
+                                    "country": "US",
+                                    "phone": "4159876543",
+                                    "email": "mrshippo@goshippo.com"
+                                },
+                                "parcels": [{
+                                    "length": "10",
+                                    "width": "15",
+                                    "height": "10",
+                                    "distance_unit": "in",
+                                    "weight": "1",
+                                    "mass_unit": "lb"
+                                }],
+                                "async": false
+                            }}
+                            >
+                              {
+                                ({error, result, loading}) => {
+                                  if (loading) {
+                                    return <div>loading...</div>;
+                                  } else {
+                                    console.log(JSON.stringify(result));
+                                    return <div></div>;
+                                  }
+                                }
+                              }
+                            </Request>
                         </Row>
                       </Col>
                     </Row>
