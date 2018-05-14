@@ -50,15 +50,28 @@ class GalleryItemPage extends Component {
     }
   }
 
-  onPaypalSuccess = (payment) => {
-    console.log("The payment has succeeded!", payment);
+  onPaypalSuccess = (payment, produceNotification) => {
+    let originItem = this.state.item;
+    firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).set({
+       name: originItem.name,
+       artist: originItem.artist,
+       description: originItem.description,
+       sold: true,
+       imagePath: originItem.imagePath,
+       timestamp: originItem.timestamp,
+       price: originItem.price
+     });
+
+    produceNotification('Payment Completed', 'Thank you!', 'success');
   }
 
-  onPaypalCancel = (data) => {
+  onPaypalCancel = (data, produceNotification) => {
+    produceNotification('Payment cancelled', '', 'info');
     console.log("The payment was cancelled.", data);
   }
 
-  onPaypalError = (err) => {
+  onPaypalError = (err, produceNotification) => {
+    produceNotification('Payment Failed', err, 'error');
     console.log("Error with Paypal:", err);
   }
 
@@ -66,7 +79,7 @@ class GalleryItemPage extends Component {
     return (
       <Consumer>
         {value => {
-          const { user } = value;
+          const { user, produceNotification } = value;
           const client = {
             sandbox:    'AQkVkiEnuwFClFBi8aP3jhM5UFnn89rimY1KGQ8RznojBLQJVN61CGz2YV8PVt07wZCV73x1z8_EZxCS',
             production: 'Aa7lK2DxyUeSaMlHQYEci59n-FXoodfMLGlyOlxOUQDinqmbAUv9hNP75Flj4iTacT3semOHS9FT5N3P',
@@ -94,23 +107,25 @@ class GalleryItemPage extends Component {
                         ) : (
                           <h4>by Fred Briscoe</h4>
                         )}
-                        <Row className='gallery-page-row-1'>
-                          <Col xs={12} md={6}>
-                            <h1 className='gallery-page-price'>${this.state.item.price}</h1>
-                          </Col>
-                          <Col xs={12} md={6}>
-                            {/* <Button bsStyle='default'>PURCHASE</Button> */}
-                            <PaypalExpressBtn
-                              env={env}
-                              client={client}
-                              currency={currency}
-                              total={this.state.total}
-                              onError={(err) => this.onPaypalError(err)}
-                              onSuccess={(payment) => this.onPaypalSuccess(payment)}
-                              onCancel={(data) => this.onPaypalCancel(data)}
-                              />
-                          </Col>
-                        </Row>
+                        { this.state.item.sold === false &&
+                          <Row className='gallery-page-row-1'>
+                            <Col xs={12} md={6}>
+                              <h1 className='gallery-page-price'>${this.state.item.price}</h1>
+                            </Col>
+                            <Col xs={12} md={6}>
+                              {/* <Button bsStyle='default'>PURCHASE</Button> */}
+                              <PaypalExpressBtn
+                                env={env}
+                                client={client}
+                                currency={currency}
+                                total={this.state.total}
+                                onError={(err) => this.onPaypalError(err, produceNotification)}
+                                onSuccess={(payment) => this.onPaypalSuccess(payment, produceNotification)}
+                                onCancel={(data) => this.onPaypalCancel(data, produceNotification)}
+                                />
+                            </Col>
+                          </Row>
+                        }
                         <Row className='gallery-page-row-2'>
                           <p>{this.state.item.description}</p>
                         </Row>
