@@ -18,7 +18,8 @@ class AdminPanel extends Component {
         name: '',
         artist: 'Select Artist...',
         description: '',
-        sold: false
+        sold: false,
+        price: ''
       },
       igiImage: null,
       isUploading: false,
@@ -38,6 +39,12 @@ class AdminPanel extends Component {
   updateGalleryItemDescription(newDesc) {
     let igi = this.state.inputGalleryItem;
     igi.description = newDesc;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemDescription(newPrice) {
+    let igi = this.state.inputGalleryItem;
+    igi.price = newPrice;
     this.setState({ inputGalleryItem: igi });
   }
 
@@ -69,7 +76,7 @@ class AdminPanel extends Component {
   }
 
   addGalleryItem(produceNotification) {
-    const { name, artist, description, sold } = this.state.inputGalleryItem;
+    const { name, artist, description, sold, price } = this.state.inputGalleryItem;
 
     // File image upload
     let file = this.state.igiImage;
@@ -92,7 +99,7 @@ class AdminPanel extends Component {
         let d = new Date();
         let timestamp = d.getTime();
 
-        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath, timestamp });
+        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath, timestamp, price });
 
         produceNotification('Gallery Item Added', 'Successfully', 'success');
       }
@@ -140,7 +147,6 @@ class AdminPanel extends Component {
                     </Col>
                     <Col xs={6} md={4}>
                       <FormControl
-                        ref={this.instagramPostControl}
                         type='text'
                         placeholder='Name'
                         onChange={event => this.updateGalleryItemName(event.target.value)}
@@ -170,10 +176,21 @@ class AdminPanel extends Component {
                     </Col>
                     <Col xs={6} md={4}>
                       <FormControl
-                        ref={this.instagramPostControl}
                         type='text'
                         placeholder='Description'
                         onChange={event => this.updateGalleryItemDescription(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Price</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Price'
+                        onChange={event => this.updateGalleryItemPrice(event.target.value)}
                         />
                     </Col>
                   </Row>
