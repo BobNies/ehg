@@ -73,7 +73,12 @@ class GalleryItemPage extends Component {
                         ) : (
                           <h4>by Fred Briscoe</h4>
                         )}
-                        <Button bsStyle='default'>PURCHASE</Button>
+                        <Col xs={12} md={6}>
+                          <p className='gallery-page-price'>$450</p>
+                        </Col>
+                        <Col xs={12} md={6}>
+                          <Button bsStyle='default'>PURCHASE</Button>
+                        </Col>
                         <p>{this.state.item.description}</p>
                       </Col>
                     </Row>
