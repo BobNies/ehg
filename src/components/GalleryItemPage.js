@@ -41,50 +41,51 @@ class GalleryItemPage extends Component {
       })
 
       this.setState({ loading: false });
-    })
 
-    request
-      .post('https://api.goshippo.com/shipments/')
-      .set('Authorization', 'ShippoToken shippo_test_b397b68fdf89d83760c765e994901b367b159715')
-      .set('Accept', 'application/json')
-      .send({
-        "address_to": {
-            "name": "Mr Hippo",
-            "street1": "965 Mission St #572",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94103",
-            "country": "US",
-            "phone": "4151234567",
-            "email": "mrhippo@goshippo.com"
-        },
-        "address_from": {
-            "name": "Mrs Hippo",
-            "street1": "1092 Indian Summer Ct",
-            "city": "San Jose",
-            "state": "CA",
-            "zip": "95122",
-            "country": "US",
-            "phone": "4159876543",
-            "email": "mrshippo@goshippo.com"
-        },
-        "parcels": [{
-            "length": "10",
-            "width": "15",
-            "height": "10",
-            "distance_unit": "in",
-            "weight": "1",
-            "mass_unit": "lb"
-        }],
-        "async": false
-      })
-      .end((err, res) => {
-        if (res != null) {
-          this.setState({ rates: JSON.parse(res.text).rates });
-          this.setState({ selectedRate: JSON.parse(res.text).rates[0].servicelevel.name })
-          console.log(JSON.parse(res.text).rates);
-        }
-      });
+      request
+        .post('https://api.goshippo.com/shipments/')
+        .set('Authorization', 'ShippoToken shippo_test_b397b68fdf89d83760c765e994901b367b159715')
+        .set('Accept', 'application/json')
+        .send({
+          "address_to": {
+              "name": "Mr Hippo",
+              "street1": "965 Mission St #572",
+              "city": "San Francisco",
+              "state": "CA",
+              "zip": "94103",
+              "country": "US",
+              "phone": "4151234567",
+              "email": "mrhippo@goshippo.com"
+          },
+          "address_from": {
+              "name": "Mrs Hippo",
+              "street1": "1092 Indian Summer Ct",
+              "city": "San Jose",
+              "state": "CA",
+              "zip": "95122",
+              "country": "US",
+              "phone": "4159876543",
+              "email": "mrshippo@goshippo.com"
+          },
+          "parcels": [{
+              "length": "10",
+              "width": "15",
+              "height": "10",
+              "distance_unit": "in",
+              "weight": "1",
+              "mass_unit": "lb"
+          }],
+          "async": false
+        })
+        .end((err, res) => {
+          if (res != null) {
+            const parsedRes = JSON.parse(res.text).rates;
+            this.setState({ rates: parsedRes });
+            this.setState({ selectedRate: parsedRes[0].amount });
+            this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+          }
+        });
+    })
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -115,7 +116,7 @@ class GalleryItemPage extends Component {
 
   onPaypalCancel = (data, produceNotification) => {
     produceNotification('Payment cancelled', '', 'info');
-    console.log("The payment was cancelled.", data);
+    console.log("The payment was cancelled.");
   }
 
   onPaypalError = (err, produceNotification) => {
@@ -125,6 +126,8 @@ class GalleryItemPage extends Component {
 
   updateSelectedRate = (val) => {
     this.setState({ selectedRate: val })
+    this.setState({ total: parseFloat(this.state.item.price) + parseFloat(val) });
+    console.log(this.state.total);
   }
 
   render () {
@@ -181,8 +184,8 @@ class GalleryItemPage extends Component {
                                 this.state.rates.map((rate, index) => {
                                   return (
                                     <div key={index} className='shipping-rate-option'>
-                                      <Radio value={rate.servicelevel.name}/>
-                                      <p>{rate.servicelevel.name} (${rate.amount} {rate.currency})</p>
+                                      <Radio value={rate.amount}/>
+                                      <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency})</p>
                                     </div>
                                   )
                                 })
