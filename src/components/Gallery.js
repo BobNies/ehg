@@ -50,8 +50,8 @@ class Gallery extends Component {
 
       if (galleryItems != null) {
         Object.keys(galleryItems).map((item, index) => {
-          const { name, artist, description, sold, imagePath, timestamp } = galleryItems[item];
-          newItems.push([name, artist, description, sold, imagePath, timestamp, item]);
+          const { name, artist, description, sold, imagePath, timestamp, price } = galleryItems[item];
+          newItems.push([name, artist, description, sold, imagePath, timestamp, item, price]);
         })
       }
 
@@ -86,6 +86,7 @@ class Gallery extends Component {
                         imagePath={item[4]}
                         timestamp={item[5]}
                         itemKey={item[6]}
+                        price={item[7]}
                         />
                     )
                   })
