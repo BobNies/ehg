@@ -31,7 +31,6 @@ class Gallery extends Component {
 
   componentDidMount() {
     this.updateGallery();
-    console.log('did mount');
   }
 
   componentWillUpdate(nextProps, nextState) {
