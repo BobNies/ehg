@@ -111,7 +111,10 @@ class GalleryItemPage extends Component {
        price: originItem.price
      });
 
-    produceNotification('Payment Completed', 'Thank you!', 'success');
+     let soldItem = originItem;
+     soldItem.sold = true;
+     this.setState({ item: soldItem, checkoutMode: false });
+     produceNotification('Payment Completed', 'Thank you!', 'success');
   }
 
   onPaypalCancel = (data, produceNotification) => {
