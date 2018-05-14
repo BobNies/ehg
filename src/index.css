@@ -611,6 +611,7 @@ body {
 
 .gallery-page-main p {
   font-size: 1.5rem;
+  margin-left: 1.5rem;
 }
 
 .gallery-page-row-1 {
@@ -618,7 +619,14 @@ body {
 }
 
 .gallery-page-row-2 {
-  margin-top: 2rem;
+  background-color: #fafafa;
+  border-radius: 1rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.gallery-page-row-3 {
+
 }
 
 .gallery-page-main img {
@@ -630,7 +638,7 @@ body {
 .gallery-page-main .btn-default {
   margin-bottom: 3rem;
   width: 100%;
-  height: 5rem;
+  height: 4.5rem;
   border: 0;
   background-color: #c7a891;
   color: #fff;
@@ -660,6 +668,28 @@ body {
   border-radius: 1rem !important;
   margin: 0 !important;
 }
+
+.paypal-btn {
+  margin-left: 3rem;
+}
+
+.shipping-rate-option {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.shipping-rate-option input {
+  display: inline;
+}
+
+.shipping-rate-option p {
+  font-size: 15px;
+  font-weight: 300;
+  color: #444;
+  display: inline;
+}
+
+/* GALLERY EDIT MODE (ADMIN) */
 
 .gallery-page-edit {
   margin-top: 3rem;

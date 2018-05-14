@@ -6,8 +6,8 @@ import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import Img from 'react-image'
 import PaypalExpressBtn from 'react-paypal-express-checkout'
-//import Request from 'react-http-request'
 import request from 'superagent'
+import { RadioGroup, Radio } from 'react-radio-group'
 
 class GalleryItemPage extends Component {
   constructor(props) {
@@ -25,7 +25,8 @@ class GalleryItemPage extends Component {
       editedDescription: '',
       editedPrice: '',
       checkoutMode: false,
-      rates: null
+      rates: null,
+      selectedRate: ''
     };
   }
 
@@ -80,6 +81,7 @@ class GalleryItemPage extends Component {
       .end((err, res) => {
         if (res != null) {
           this.setState({ rates: JSON.parse(res.text).rates });
+          this.setState({ selectedRate: JSON.parse(res.text).rates[0].servicelevel.name })
           console.log(JSON.parse(res.text).rates);
         }
       });
@@ -119,6 +121,10 @@ class GalleryItemPage extends Component {
   onPaypalError = (err, produceNotification) => {
     produceNotification('Payment Failed', err, 'error');
     console.log("Error with Paypal:", err);
+  }
+
+  updateSelectedRate = (val) => {
+    this.setState({ selectedRate: val })
   }
 
   render () {
@@ -168,38 +174,40 @@ class GalleryItemPage extends Component {
                             </Col>
                           </Row>
                         }
-                        { this.state.checkoutMode &&
-                          <Row className='gallery-page-row-1'>
-                            <Col xs={12} md={6}>
-                            </Col>
-                            <Col xs={12} md={6}>
-                              <PaypalExpressBtn
-                                env={env}
-                                client={client}
-                                currency={currency}
-                                total={this.state.total}
-                                onError={(err) => this.onPaypalError(err, produceNotification)}
-                                onSuccess={(payment) => this.onPaypalSuccess(payment, produceNotification)}
-                                onCancel={(data) => this.onPaypalCancel(data, produceNotification)}
-                                />
-                            </Col>
+                        { this.state.checkoutMode && this.state.selectedRate !== null &&
+                          <Row className='gallery-page-row-2'>
+                            <RadioGroup name='SHIPPING OPTIONS' selectedValue={this.state.selectedRate} onChange={(val) => this.updateSelectedRate(val)}>
+                              { this.state.rates !== null ? (
+                                this.state.rates.map((rate, index) => {
+                                  return (
+                                    <div key={index} className='shipping-rate-option'>
+                                      <Radio value={rate.servicelevel.name}/>
+                                      <p>{rate.servicelevel.name} (${rate.amount} {rate.currency})</p>
+                                    </div>
+                                  )
+                                })
+                              ) : (
+                                <p>LOADING SHIPPING RATES...</p>
+                              )}
+                            </RadioGroup>
+                            <div>
+                              <hr />
+                              <div className='paypal-btn'>
+                                <PaypalExpressBtn
+                                  env={env}
+                                  client={client}
+                                  currency={currency}
+                                  total={this.state.total}
+                                  onError={(err) => this.onPaypalError(err, produceNotification)}
+                                  onSuccess={(payment) => this.onPaypalSuccess(payment, produceNotification)}
+                                  onCancel={(data) => this.onPaypalCancel(data, produceNotification)}
+                                  />
+                              </div>
+                            </div>
                           </Row>
                         }
-                        <Row className='gallery-page-row-2'>
+                        <Row className='gallery-page-row-3'>
                           <p>{this.state.item.description}</p>
-                          { this.state.rates !== null ? (
-                            this.state.rates.map((rate, index) => {
-                              return (
-                                <div key={index}>
-                                  <p>{rate.duration_terms}</p>
-                                </div>
-                              )
-                            })
-                          ) : (
-                            <div>
-                              LOADING SHIPPING RATES...
-                            </div>
-                          )}
                         </Row>
                       </Col>
                     </Row>
