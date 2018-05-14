@@ -32,59 +32,71 @@ class GalleryItemPage extends Component {
 
   componentDidMount() {
     firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).once('value', snapshot => {
-      this.setState({ item: snapshot.val() });
-      this.setState({ total: parseFloat(snapshot.val().price) });
+      if (snapshot.val() !== null) {
+        this.setState({ item: snapshot.val() });
+        this.setState({ total: parseFloat(snapshot.val().price) });
 
-      const storageRef = firebaseApp.storage().ref('');
-      storageRef.child(this.state.item.imagePath).getDownloadURL().then((url) => {
-        this.setState({ imageSrc: url });
-      })
-
-      this.setState({ loading: false });
-
-      request
-        .post('https://api.goshippo.com/shipments/')
-        .set('Authorization', 'ShippoToken shippo_test_b397b68fdf89d83760c765e994901b367b159715')
-        .set('Accept', 'application/json')
-        .send({
-          "address_to": {
-              "name": "Mr Hippo",
-              "street1": "965 Mission St #572",
-              "city": "San Francisco",
-              "state": "CA",
-              "zip": "94103",
-              "country": "US",
-              "phone": "4151234567",
-              "email": "mrhippo@goshippo.com"
-          },
-          "address_from": {
-              "name": "Mrs Hippo",
-              "street1": "1092 Indian Summer Ct",
-              "city": "San Jose",
-              "state": "CA",
-              "zip": "95122",
-              "country": "US",
-              "phone": "4159876543",
-              "email": "mrshippo@goshippo.com"
-          },
-          "parcels": [{
-              "length": "10",
-              "width": "15",
-              "height": "10",
-              "distance_unit": "in",
-              "weight": "1",
-              "mass_unit": "lb"
-          }],
-          "async": false
+        const storageRef = firebaseApp.storage().ref('');
+        storageRef.child(this.state.item.imagePath).getDownloadURL().then((url) => {
+          this.setState({ imageSrc: url });
         })
-        .end((err, res) => {
-          if (res != null) {
-            const parsedRes = JSON.parse(res.text).rates;
-            this.setState({ rates: parsedRes });
-            this.setState({ selectedRate: parsedRes[0].amount });
-            this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
-          }
+
+        this.setState({ loading: false });
+
+        // Admin edit mode - starting values
+        this.setState({
+          editedName: snapshot.val().name,
+          editedDescription: snapshot.val().description,
+          editedPrice: snapshot.val().price
         });
+
+        // Shippo shipping rates request
+        request
+          .post('https://api.goshippo.com/shipments/')
+          .set('Authorization', 'ShippoToken shippo_test_b397b68fdf89d83760c765e994901b367b159715')
+          .set('Accept', 'application/json')
+          .send({
+            "address_to": {
+                "name": "Mr Hippo",
+                "street1": "965 Mission St #572",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip": "94103",
+                "country": "US",
+                "phone": "4151234567",
+                "email": "mrhippo@goshippo.com"
+            },
+            "address_from": {
+                "name": "Mrs Hippo",
+                "street1": "1092 Indian Summer Ct",
+                "city": "San Jose",
+                "state": "CA",
+                "zip": "95122",
+                "country": "US",
+                "phone": "4159876543",
+                "email": "mrshippo@goshippo.com"
+            },
+            "parcels": [{
+                "length": "10",
+                "width": "15",
+                "height": "10",
+                "distance_unit": "in",
+                "weight": "1",
+                "mass_unit": "lb"
+            }],
+            "async": false
+          })
+          .end((err, res) => {
+            if (res != null) {
+              const parsedRes = JSON.parse(res.text).rates;
+              this.setState({ rates: parsedRes });
+              this.setState({ selectedRate: parsedRes[0].amount });
+              this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+            }
+          });
+        } else {
+          this.props.history.push('/404');
+        }
     })
   }
 
@@ -133,6 +145,27 @@ class GalleryItemPage extends Component {
     console.log(this.state.total);
   }
 
+  deleteItem = (produceNotification) => {
+    firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).remove();
+
+    produceNotification('Gallery Item Deleted', 'Successfully', 'success');
+  }
+
+  applyUpdate = (produceNotification) => {
+    firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey)
+      .set({
+        name: this.state.editedName,
+        description: this.state.editedDescription,
+        price: this.state.editedPrice,
+        sold: this.state.item.sold,
+        artist: this.state.item.artist,
+        imagePath: this.state.item.imagePath,
+        timestamp: this.state.item.timestamp
+      });
+
+      produceNotification('Update Applied', 'Successfully', 'success');
+  }
+
   render () {
     return (
       <Consumer>
@@ -150,7 +183,7 @@ class GalleryItemPage extends Component {
               <Grid>
                 { this.state.loading ? (
                   <div className='loading'>
-                    <h1>LOADING, PLEASE WAIT...</h1>
+                    <h1 className='noselect'>LOADING, PLEASE WAIT...</h1>
                   </div>
                 ) : (
                   <div>
@@ -168,7 +201,7 @@ class GalleryItemPage extends Component {
                         { this.state.item.sold === false &&
                           <Row className='gallery-page-row-1'>
                             <Col xs={12} md={6}>
-                              <h1 className='gallery-page-price'>${this.state.item.price}</h1>
+                              <h1 className='gallery-page-price noselect'>${this.state.item.price}</h1>
                             </Col>
                             <Col xs={12} md={6}>
                               <Button
@@ -245,7 +278,7 @@ class GalleryItemPage extends Component {
                             <FormControl
                               type='text'
                               placeholder='Description'
-                              onChange={event => this.setState({ editedName: event.target.value })}
+                              onChange={event => this.setState({ editedDescription: event.target.value })}
                               />
                           </Col>
                         </Row>
@@ -265,6 +298,7 @@ class GalleryItemPage extends Component {
                           <Col xs={12} md={2} mdOffset={3}>
                             <Button
                               bsStyle='danger'
+                              onClick={() => this.deleteItem(produceNotification)}
                               >
                               Delete
                             </Button>
@@ -272,6 +306,7 @@ class GalleryItemPage extends Component {
                           <Col xs={12} md={4}>
                             <Button
                               bsStyle='warning'
+                              onClick={() => this.applyUpdate(produceNotification)}
                               >
                               Apply Update
                             </Button>

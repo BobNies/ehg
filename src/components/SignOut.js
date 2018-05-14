@@ -16,7 +16,7 @@ class SignOut extends Component {
           const { user } = value;
           return user ? (
             <div>
-              <Redirect to='/' />
+              <Redirect to='/admin' />
             </div>
           ) : (
             <div>

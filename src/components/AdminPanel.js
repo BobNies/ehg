@@ -42,7 +42,7 @@ class AdminPanel extends Component {
     this.setState({ inputGalleryItem: igi });
   }
 
-  updateGalleryItemDescription(newPrice) {
+  updateGalleryItemPrice(newPrice) {
     let igi = this.state.inputGalleryItem;
     igi.price = newPrice;
     this.setState({ inputGalleryItem: igi });
