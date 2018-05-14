@@ -19,6 +19,7 @@ class GalleryItemPage extends Component {
       editMode: false,
       editedName: '',
       editedDescription: '',
+      editedPrice: ''
     };
   }
 
@@ -90,7 +91,6 @@ class GalleryItemPage extends Component {
                           </Col>
                           <Col xs={12} md={4}>
                             <FormControl
-                              ref={this.instagramPostControl}
                               type='text'
                               placeholder='Name'
                               onChange={event => this.setState({ editedName: event.target.value })}
@@ -103,11 +103,38 @@ class GalleryItemPage extends Component {
                           </Col>
                           <Col xs={12} md={4}>
                             <FormControl
-                              ref={this.instagramPostControl}
                               type='text'
                               placeholder='Description'
                               onChange={event => this.setState({ editedName: event.target.value })}
                               />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={12} md={2} mdOffset={3}>
+                            <h3>Price</h3>
+                          </Col>
+                          <Col xs={12} md={4}>
+                            <FormControl
+                              type='text'
+                              placeholder='Price'
+                              onChange={event => this.setState({ editedPrice: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
+                        <Row className='gallery-page-edit-final'>
+                          <Col xs={12} md={2} mdOffset={3}>
+                            <Button
+                              bsStyle='danger'
+                              >
+                              Delete
+                            </Button>
+                          </Col>
+                          <Col xs={12} md={4}>
+                            <Button
+                              bsStyle='warning'
+                              >
+                              Apply Update
+                            </Button>
                           </Col>
                         </Row>
                       </div>
