@@ -52,7 +52,6 @@ body {
 
 .dropdown-toggle {
   color: #555;
-  /*font-size: 15px;*/
   font-size: 2rem;
   font-weight: 300;
 
@@ -156,7 +155,6 @@ body {
 }
 
 .home-title-1 {
-  /*font-size: 60px;*/
   font-size: 6rem;
   font-weight: 300;
   margin-top: 140px;
@@ -222,8 +220,6 @@ body {
 .artist-divider-left {
   height: 400px;
   overflow: hidden;
-  /*background-image: url('images/artist-portrait-fred-briscoe.JPG');
-  background-size: cover;*/
   z-index: 0;
 }
 .artist-divider-left:hover .artist-divider-left-overlay {
@@ -253,8 +249,6 @@ body {
 .artist-divider-right {
   height: 400px;
   overflow: hidden;
-  /*background-image: url('images/artist-portrait-michael-roser.JPG');
-  background-size: cover;*/
   z-index: 0;
 }
 .artist-divider-right:hover .artist-divider-right-overlay {
@@ -422,7 +416,6 @@ body {
   position: absolute;
   bottom: 5px;
   left: 50%;
-  /*font-size: 30px;*/
   font-size: 4rem;
   animation-name: scrollIndicator;
   animation-duration: 2s;
@@ -620,6 +613,14 @@ body {
   font-size: 1.5rem;
 }
 
+.gallery-page-row-1 {
+
+}
+
+.gallery-page-row-2 {
+  margin-top: 2rem;
+}
+
 .gallery-page-main img {
   width: 100%;
   height: auto;
@@ -657,7 +658,7 @@ body {
   background-color: #fafafa !important;
   padding: 0.5rem !important;
   border-radius: 1rem !important;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .gallery-page-edit {

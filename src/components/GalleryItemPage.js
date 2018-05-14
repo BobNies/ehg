@@ -5,6 +5,7 @@ import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import Img from 'react-image'
+import PaypalExpressBtn from 'react-paypal-express-checkout'
 
 class GalleryItemPage extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class GalleryItemPage extends Component {
       artistName: this.props.match.params.artistName,
       imageSrc: '',
       item: null,
+      total: 0,
       loading: true,
       editMode: false,
       editedName: '',
@@ -26,6 +28,7 @@ class GalleryItemPage extends Component {
   componentDidMount() {
     firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).once('value', snapshot => {
       this.setState({ item: snapshot.val() });
+      this.setState({ total: parseFloat(snapshot.val().price) });
 
       const storageRef = firebaseApp.storage().ref('');
       storageRef.child(this.state.item.imagePath).getDownloadURL().then((url) => {
@@ -47,11 +50,29 @@ class GalleryItemPage extends Component {
     }
   }
 
+  onPaypalSuccess = (payment) => {
+    console.log("The payment has succeeded!", payment);
+  }
+
+  onPaypalCancel = (data) => {
+    console.log("The payment was cancelled.", data);
+  }
+
+  onPaypalError = (err) => {
+    console.log("Error with Paypal:", err);
+  }
+
   render () {
     return (
       <Consumer>
         {value => {
           const { user } = value;
+          const client = {
+            sandbox:    'AQkVkiEnuwFClFBi8aP3jhM5UFnn89rimY1KGQ8RznojBLQJVN61CGz2YV8PVt07wZCV73x1z8_EZxCS',
+            production: 'Aa7lK2DxyUeSaMlHQYEci59n-FXoodfMLGlyOlxOUQDinqmbAUv9hNP75Flj4iTacT3semOHS9FT5N3P',
+          };
+          let env = 'sandbox';
+          let currency = 'USD';
           return (
             <div>
               <CustomNavBar />
@@ -73,13 +94,26 @@ class GalleryItemPage extends Component {
                         ) : (
                           <h4>by Fred Briscoe</h4>
                         )}
-                        <Col xs={12} md={6}>
-                          <p className='gallery-page-price'>${this.state.item.price}</p>
-                        </Col>
-                        <Col xs={12} md={6}>
-                          <Button bsStyle='default'>PURCHASE</Button>
-                        </Col>
-                        <p>{this.state.item.description}</p>
+                        <Row className='gallery-page-row-1'>
+                          <Col xs={12} md={6}>
+                            <h1 className='gallery-page-price'>${this.state.item.price}</h1>
+                          </Col>
+                          <Col xs={12} md={6}>
+                            {/* <Button bsStyle='default'>PURCHASE</Button> */}
+                            <PaypalExpressBtn
+                              env={env}
+                              client={client}
+                              currency={currency}
+                              total={this.state.total}
+                              onError={(err) => this.onPaypalError(err)}
+                              onSuccess={(payment) => this.onPaypalSuccess(payment)}
+                              onCancel={(data) => this.onPaypalCancel(data)}
+                              />
+                          </Col>
+                        </Row>
+                        <Row className='gallery-page-row-2'>
+                          <p>{this.state.item.description}</p>
+                        </Row>
                       </Col>
                     </Row>
                     { user !== null &&
