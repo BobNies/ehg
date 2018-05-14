@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
-import { Grid, Row, Col, Button } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import Img from 'react-image'
@@ -15,7 +15,10 @@ class GalleryItemPage extends Component {
       artistName: this.props.match.params.artistName,
       imageSrc: '',
       item: null,
-      loading: true
+      loading: true,
+      editMode: false,
+      editedName: '',
+      editedDescription: '',
     };
   }
 
@@ -57,21 +60,59 @@ class GalleryItemPage extends Component {
                     <h1>LOADING, PLEASE WAIT...</h1>
                   </div>
                 ) : (
-                  <Row className='gallery-page-main'>
-                    <Col xs={12} md={8}>
-                      <Img src={this.state.imageSrc} />
-                    </Col>
-                    <Col xs={12} md={4}>
-                      <h3>{this.state.item.name}</h3>
-                      { this.state.artistName === 'michael-roser' ? (
-                        <h4>by Michael Roser</h4>
-                      ) : (
-                        <h4>by Fred Briscoe</h4>
-                      )}
-                      <Button bsStyle='default'>PURCHASE</Button>
-                      <p>{this.state.item.description}</p>
-                    </Col>
-                  </Row>
+                  <div>
+                    <Row className='gallery-page-main'>
+                      <Col xs={12} md={8}>
+                        <Img src={this.state.imageSrc} />
+                      </Col>
+                      <Col xs={12} md={4}>
+                        <h3>{this.state.item.name}</h3>
+                        { this.state.artistName === 'michael-roser' ? (
+                          <h4>by Michael Roser</h4>
+                        ) : (
+                          <h4>by Fred Briscoe</h4>
+                        )}
+                        <Button bsStyle='default'>PURCHASE</Button>
+                        <p>{this.state.item.description}</p>
+                      </Col>
+                    </Row>
+                    { user !== null &&
+                      <div className='gallery-page-edit'>
+                        <Row>
+                          <Col xs={6} md={6} mdOffset={3}>
+                            <h1>ADMIN EDIT</h1>
+                            <h2>(Leave fields empty to skip them)</h2>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={12} md={2} mdOffset={3}>
+                            <h3>Name</h3>
+                          </Col>
+                          <Col xs={12} md={4}>
+                            <FormControl
+                              ref={this.instagramPostControl}
+                              type='text'
+                              placeholder='Name'
+                              onChange={event => this.setState({ editedName: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={12} md={2} mdOffset={3}>
+                            <h3>Description</h3>
+                          </Col>
+                          <Col xs={12} md={4}>
+                            <FormControl
+                              ref={this.instagramPostControl}
+                              type='text'
+                              placeholder='Description'
+                              onChange={event => this.setState({ editedName: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
+                      </div>
+                    }
+                  </div>
                 )}
               </Grid>
               <Footer />

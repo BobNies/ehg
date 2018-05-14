@@ -28,11 +28,6 @@ export class Provider extends Component {
         window.scrollTo(0, 0);
       }
 
-      // If signed in
-      if (user !== null && this.state.user === null) {
-        this.produceNotification('Signed In', 'Successfully', 'success');
-      }
-
       this.setState({ user });
     })
 

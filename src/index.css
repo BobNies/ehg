@@ -649,6 +649,48 @@ body {
   background-color: #a89282;
 }
 
+.gallery-page-edit {
+  margin-top: 3rem;
+  background-color: #fafafa;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.gallery-page-edit .btn {
+  width: 100%;
+}
+
+.gallery-page-edit h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.2rem;
+}
+
+.gallery-page-edit h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #555;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 3rem;
+}
+
+.gallery-page-edit h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #444;
+  padding: 0;
+  margin: 0;
+  padding-top: 1rem;
+}
+
+.gallery-page-edit .row {
+  margin-bottom: 1rem;
+}
+
 .loading {
   margin-top: 20rem;
 }
