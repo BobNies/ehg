@@ -378,6 +378,7 @@ class GalleryItemPage extends Component {
                         }
                         <Row className='gallery-page-row-3'>
                           <p>{this.state.item.description}</p>
+                          <p className='gallery-item-dim'>Dimensions: {this.state.item.width} x {this.state.item.height} in</p>
                         </Row>
                       </Col>
                     </Row>
