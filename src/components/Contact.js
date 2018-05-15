@@ -3,6 +3,7 @@ import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
 import { Grid, Row, Col, FormControl, Button } from 'react-bootstrap'
+import request from 'superagent'
 
 class Contact extends Component {
 
@@ -25,7 +26,32 @@ class Contact extends Component {
   }
 
   sendEmail = () => {
-
+    request
+      .post('https://api.mailjet.com/v3.1/send')
+      .auth('5a076f80f30ee53f618636f9185a527d', '8b70ac19d539da0506c0c1c401b648ee')
+      .set('Accept', 'application/json')
+      .send({
+        "Messages":[
+          {
+            "From": {
+              "Email": "ehg11240@gmail.com",
+              "Name": "Eucalpyus Hills Gallery"
+            },
+            "To": [
+              {
+                "Email": "whatsthatfunction@gmail.com",
+                "Name": "Josh Nies"
+              }
+            ],
+            "Subject": "My first Mailjet Email!",
+            "TextPart": "Greetings from Mailjet."
+          }
+        ]
+      })
+      .end((err, res) => {
+        console.log('Response', res);
+        console.log('Error (if any)', err);
+      })
   }
 
   render () {
