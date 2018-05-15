@@ -34,6 +34,9 @@ class Contact extends Component {
         <AdminShortcut />
         <CustomNavBar/>
         <Grid className='contact'>
+          <div className='contact-header'>
+            <h1>CONTACT {this.state.artistName.toUpperCase().replace('-', ' ')}</h1>
+          </div>
           <div className='contact-form'>
             <Row>
               <Col xs={12} md={2} mdOffset={3}>

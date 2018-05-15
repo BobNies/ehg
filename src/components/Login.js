@@ -18,11 +18,18 @@ class Login extends Component {
     window.scrollTo(0, 0);
   }
 
+  attemptSubmit = (e, logIn, produceNotification) => {
+    if (e.key === 'Enter') {
+      logIn(this.state.email, this.state.password);
+      produceNotification('Signing in...', 'Please wait', 'info');
+    }
+  }
+
   render () {
     return(
       <Consumer>
         {value => {
-          const { user, logIn, error } = value;
+          const { user, logIn, error, produceNotification } = value;
           return user && user.email != null ? (
             <div>
               <CustomNavBar/>
@@ -56,6 +63,7 @@ class Login extends Component {
                       type='password'
                       placeholder='Password'
                       onChange={event => this.setState({ password: event.target.value })}
+                      onKeyPress={event => this.attemptSubmit(event, logIn, produceNotification)}
                       />
                     <Button
                       bsStyle='primary'

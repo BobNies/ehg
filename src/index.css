@@ -549,7 +549,7 @@ body {
 }
 
 .gallery-title {
-  font-size: 40px;
+  font-size: 4rem;
   font-weight: 300;
   color: #222;
   margin-left: 3rem;
@@ -839,6 +839,19 @@ body {
   border-radius: 1rem;
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+
+.contact-header{
+
+}
+
+.contact-header h1 {
+  font-size: 4rem;
+  font-weight: 300;
+  color: #222;
+  margin: 0;
+  margin-bottom: 5rem;
+  margin-left: 3rem;
 }
 
 /* 404 (NOT FOUND) */
