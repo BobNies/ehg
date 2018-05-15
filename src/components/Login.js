@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Row, Col, FormControl, Button } from 'react-bootstrap'
+import { Grid, Row, Col, FormControl, Button, Alert } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import { Consumer } from '../MyContext'
@@ -30,9 +30,6 @@ class Login extends Component {
                 <Row className='login'>
                   <Col className='login-form' xs={12} md={4} mdOffset={4}>
                     <h1 className='noselect'>Welcome back, {user.email}.</h1>
-                    {error &&
-                      <p>{error.message}</p>
-                    }
                   </Col>
                 </Row>
               </Grid>
@@ -45,8 +42,10 @@ class Login extends Component {
                 <Row className='login'>
                   <Col className='login-form' xs={12} md={4} mdOffset={4}>
                     <h1 className='noselect'>ADMIN LOGIN</h1>
-                    {error &&
-                      <p>{error.message}</p>
+                    {error.message !== '' &&
+                      <Alert bsStyle='danger'>
+                        <p>{error.message}</p>
+                      </Alert>
                     }
                     <FormControl
                       type='email'
