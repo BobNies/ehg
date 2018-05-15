@@ -8,6 +8,7 @@ import Login from '../components/Login'
 import SignOut from '../components/SignOut'
 import AdminPanel from '../components/AdminPanel'
 import GalleryItemPage from '../components/GalleryItemPage'
+import About from '../components/About'
 
 export default () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ export default () => (
       <Route exact path='/' component={Home} />
       <Route exact path='/artists/:artistName/gallery' component={Gallery} />
       <Route exact path='/artists/:artistName/gallery/:itemKey' component={GalleryItemPage} />
+      <Route path='/artists/:artistName/about' component={About} />
       <Route path='/artists/:artistName/contact' component={Contact} />
       <Route path='/login' component={Login} />
       <Route path='/signout' component={SignOut} />

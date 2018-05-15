@@ -794,6 +794,19 @@ body {
   }
 }
 
+/* ABOUT */
+
+.about {
+
+}
+
+.about h1 {
+  font-size: 4rem;
+  font-weight: 300;
+  color: #222;
+  margin-left: 3rem;
+}
+
 /* CONTACT */
 
 .contact {
@@ -861,7 +874,7 @@ body {
 }
 
 .not-found h1 {
-  font-size: 50rem;
+  font-size: 40rem;
   font-weight: 500;
   color: #c7c7c7;
   margin: 0;
@@ -869,7 +882,7 @@ body {
 }
 
 .not-found h2 {
-  font-size: 7rem;
+  font-size: 5rem;
   font-weight: 500;
   color: #888;
   text-align: center;
