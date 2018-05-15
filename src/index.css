@@ -619,7 +619,23 @@ body {
 }
 
 .gallery-page-row-checkout-prepare {
-  
+
+}
+
+.gallery-page-row-checkout-prepare .row{
+  margin-bottom: 1rem;
+}
+
+.gallery-page-row-checkout-prepare h3 {
+  font-size: 15px;
+  font-weight: 300;
+  color: #222;
+  margin-left: 2rem;
+  padding-top: 1rem;
+}
+
+.gallery-page-row-checkout-prepare .btn {
+  height: 4rem !important;
 }
 
 .gallery-page-row-checkout-final {

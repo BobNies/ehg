@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
-import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormControl, Alert } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import Img from 'react-image'
@@ -31,8 +31,13 @@ class GalleryItemPage extends Component {
       checkoutMode: false,
       rates: null,
       selectedRate: '',
-      zipcode: '',
-      didPrepare: false
+      didPrepare: false,
+      shipDetName: '',
+      shipDetStreet1: '',
+      shipDetCity: '',
+      shipDetState: '',
+      shipDetZipcode: '',
+      shipDetError: ''
     };
   }
 
@@ -77,9 +82,18 @@ class GalleryItemPage extends Component {
   }
 
   findShippingRates = () => {
-    this.setState({ didPrepare: true });
-
     const { length, width, height, weight } = this.state.item;
+    const { shipDetName, shipDetStreet1, shipDetCity, shipDetState, shipDetZipcode } = this.state;
+
+    if (shipDetName === '' || shipDetStreet1 === '' || shipDetCity === '' ||
+        shipDetState === '' || shipDetZipcode === '') {
+      this.setState({ error: 'Please fill in all fields.' });
+      this.setState({ didPrepare: false });
+      return;
+    } else {
+      this.setState({ error: '' });
+      this.setState({ didPrepare: true });
+    }
 
     request
       .post('https://api.goshippo.com/shipments/')
@@ -87,11 +101,11 @@ class GalleryItemPage extends Component {
       .set('Accept', 'application/json')
       .send({
         "address_to": {
-            "name": "Mr Hippo",
-            "street1": "965 Mission St #572",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94103",
+            "name": shipDetName,
+            "street1": shipDetStreet1,
+            "city": shipDetCity,
+            "state": shipDetState,
+            "zip": shipDetZipcode,
             "country": "US",
             "phone": "4151234567",
             "email": "mrhippo@goshippo.com"
@@ -134,7 +148,11 @@ class GalleryItemPage extends Component {
        sold: true,
        imagePath: originItem.imagePath,
        timestamp: originItem.timestamp,
-       price: originItem.price
+       price: originItem.price,
+       length: originItem.length,
+       width: originItem.width,
+       height: originItem.height,
+       weight: originItem.weight
      });
 
      let soldItem = originItem;
@@ -232,21 +250,81 @@ class GalleryItemPage extends Component {
                         }
                         { this.state.checkoutMode &&
                           <Row className='gallery-page-row-checkout-prepare'>
-                            <Col xs={12} md={6}>
-                              <FormControl
-                                type='text'
-                                placeholder='Zipcode'
-                                onChange={event => this.setState({ zipcode: event.target.value })}
-                                />
-                            </Col>
-                            <Col xs={12} md={6}>
-                              <Button
-                                bsStyle='default'
-                                onClick={() => this.findShippingRates()}
-                                >
-                                NEXT
-                              </Button>
-                            </Col>
+                            { this.state.error &&
+                              <Alert bsStyle='danger'>
+                                <p>{this.state.error}</p>
+                              </Alert>
+                            }
+                            <Row>
+                              <Col xs={12} md={4}>
+                                <h3>Name</h3>
+                              </Col>
+                              <Col xs={12} md={8}>
+                                <FormControl
+                                  type='text'
+                                  placeholder='Name'
+                                  onChange={event => this.setState({ shipDetName: event.target.value })}
+                                  />
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col xs={12} md={4}>
+                                <h3>Address</h3>
+                              </Col>
+                              <Col xs={12} md={8}>
+                                <FormControl
+                                  type='text'
+                                  placeholder='Address'
+                                  onChange={event => this.setState({ shipDetStreet1: event.target.value })}
+                                  />
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col xs={12} md={4}>
+                                <h3>City</h3>
+                              </Col>
+                              <Col xs={12} md={8}>
+                                <FormControl
+                                  type='text'
+                                  placeholder='City'
+                                  onChange={event => this.setState({ shipDetCity: event.target.value })}
+                                  />
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col xs={12} md={4}>
+                                <h3>State</h3>
+                              </Col>
+                              <Col xs={12} md={3}>
+                                <FormControl
+                                  type='text'
+                                  placeholder='State'
+                                  onChange={event => this.setState({ shipDetState: event.target.value })}
+                                  />
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col xs={12} md={4}>
+                                <h3>Zipcode</h3>
+                              </Col>
+                              <Col xs={12} md={8}>
+                                <FormControl
+                                  type='text'
+                                  placeholder='Zipcode'
+                                  onChange={event => this.setState({ shipDetZipcode: event.target.value })}
+                                  />
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col xs={12} md={12}>
+                                <Button
+                                  bsStyle='default'
+                                  onClick={() => this.findShippingRates()}
+                                  >
+                                  CONTINUE
+                                </Button>
+                              </Col>
+                            </Row>
                           </Row>
                         }
                         { this.state.didPrepare && this.state.checkoutMode && this.state.selectedRate !== null &&
