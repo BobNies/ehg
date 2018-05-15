@@ -454,7 +454,7 @@ class GalleryItemPage extends Component {
                         </Row>
                         <Row>
                           <Col xs={6} md={2} mdOffset={3}>
-                            <h3>Weight</h3>
+                            <h3>Weight (lb)</h3>
                           </Col>
                           <Col xs={6} md={4}>
                             <FormControl
