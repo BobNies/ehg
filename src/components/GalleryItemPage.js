@@ -30,7 +30,9 @@ class GalleryItemPage extends Component {
       editedWeight: '',
       checkoutMode: false,
       rates: null,
-      selectedRate: ''
+      selectedRate: '',
+      zipcode: '',
+      didPrepare: false
     };
   }
 
@@ -57,55 +59,9 @@ class GalleryItemPage extends Component {
           editedHeight: snapshot.val().height,
           editedWeight: snapshot.val().weight
         });
-
-        // Shippo shipping rates request
-        const { length, width, height, weight } = this.state.item;
-
-        request
-          .post('https://api.goshippo.com/shipments/')
-          .set('Authorization', 'ShippoToken shippo_live_3c9fc3cee381c8f7b2ea08e279bdb98a411081e9')
-          .set('Accept', 'application/json')
-          .send({
-            "address_to": {
-                "name": "Mr Hippo",
-                "street1": "965 Mission St #572",
-                "city": "San Francisco",
-                "state": "CA",
-                "zip": "94103",
-                "country": "US",
-                "phone": "4151234567",
-                "email": "mrhippo@goshippo.com"
-            },
-            "address_from": {
-                "name": "Patrica Hom",
-                "street1": "11240 Manzanita Rd",
-                "city": "Lakeside",
-                "state": "CA",
-                "zip": "92040",
-                "country": "US",
-                "phone": "8582456799",
-                "email": "ehg11240@gmail.com"
-            },
-            "parcels": [{
-                "length": length,
-                "width": width,
-                "height": height,
-                "distance_unit": "in",
-                "weight": weight,
-                "mass_unit": "lb"
-            }],
-            "async": false
-          })
-          .end((err, res) => {
-            console.log('Heres the parsed text result', JSON.parse(res.text));
-            const parsedRes = JSON.parse(res.text).rates;
-            this.setState({ rates: parsedRes });
-            this.setState({ selectedRate: parsedRes[0].amount });
-            this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
-          });
-        } else {
-          this.props.history.push('/404');
-        }
+      } else {
+        this.props.history.push('/404');
+      }
     })
   }
 
@@ -118,6 +74,55 @@ class GalleryItemPage extends Component {
     if (nextProps.match.params.artistName !== this.state.artistName) {
       this.setState({ artistName: nextProps.match.params.artistName });
     }
+  }
+
+  findShippingRates = () => {
+    this.setState({ didPrepare: true });
+
+    const { length, width, height, weight } = this.state.item;
+
+    request
+      .post('https://api.goshippo.com/shipments/')
+      .set('Authorization', 'ShippoToken shippo_live_3c9fc3cee381c8f7b2ea08e279bdb98a411081e9')
+      .set('Accept', 'application/json')
+      .send({
+        "address_to": {
+            "name": "Mr Hippo",
+            "street1": "965 Mission St #572",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "94103",
+            "country": "US",
+            "phone": "4151234567",
+            "email": "mrhippo@goshippo.com"
+        },
+        "address_from": {
+            "name": "Patrica Hom",
+            "street1": "11240 Manzanita Rd",
+            "city": "Lakeside",
+            "state": "CA",
+            "zip": "92040",
+            "country": "US",
+            "phone": "8582456799",
+            "email": "ehg11240@gmail.com"
+        },
+        "parcels": [{
+            "length": length,
+            "width": width,
+            "height": height,
+            "distance_unit": "in",
+            "weight": weight,
+            "mass_unit": "lb"
+        }],
+        "async": false
+      })
+      .end((err, res) => {
+        console.log('Heres the parsed text result', JSON.parse(res.text));
+        const parsedRes = JSON.parse(res.text).rates;
+        this.setState({ rates: parsedRes });
+        this.setState({ selectedRate: parsedRes[0].amount });
+        this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+      });
   }
 
   onPaypalSuccess = (payment, produceNotification) => {
@@ -225,8 +230,27 @@ class GalleryItemPage extends Component {
                             </Col>
                           </Row>
                         }
-                        { this.state.checkoutMode && this.state.selectedRate !== null &&
-                          <Row className='gallery-page-row-2'>
+                        { this.state.checkoutMode &&
+                          <Row className='gallery-page-row-checkout-prepare'>
+                            <Col xs={12} md={6}>
+                              <FormControl
+                                type='text'
+                                placeholder='Zipcode'
+                                onChange={event => this.setState({ zipcode: event.target.value })}
+                                />
+                            </Col>
+                            <Col xs={12} md={6}>
+                              <Button
+                                bsStyle='default'
+                                onClick={() => this.findShippingRates()}
+                                >
+                                NEXT
+                              </Button>
+                            </Col>
+                          </Row>
+                        }
+                        { this.state.didPrepare && this.state.checkoutMode && this.state.selectedRate !== null &&
+                          <Row className='gallery-page-row-checkout-final'>
                             <RadioGroup name='SHIPPING OPTIONS' selectedValue={this.state.selectedRate} onChange={(val) => this.updateSelectedRate(val)}>
                               { this.state.rates !== null ? (
                                 this.state.rates.map((rate, index) => {
