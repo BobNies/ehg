@@ -131,11 +131,26 @@ class GalleryItemPage extends Component {
         "async": false
       })
       .end((err, res) => {
-        console.log('Heres the parsed text result', JSON.parse(res.text));
-        const parsedRes = JSON.parse(res.text).rates;
-        this.setState({ rates: parsedRes });
-        this.setState({ selectedRate: parsedRes[0].amount });
-        this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+        if (err !== null) {
+          this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false });
+        }
+        if (res !== null) {
+          const parsedRes = JSON.parse(res.text).rates;
+          if (parsedRes !== undefined && parsedRes !== null) {
+            if (parsedRes[0] !== undefined) {
+              this.setState({ rates: parsedRes });
+              this.setState({ selectedRate: parsedRes[0].amount });
+              this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+              this.setState({ error: '' })
+            } else {
+              this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
+            }
+          } else {
+            this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
+          }
+        } else {
+          this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
+        }
       });
   }
 
@@ -250,7 +265,7 @@ class GalleryItemPage extends Component {
                         }
                         { this.state.checkoutMode &&
                           <Row className='gallery-page-row-checkout-prepare'>
-                            { this.state.error &&
+                            { this.state.error && this.state.error !== '' &&
                               <Alert bsStyle='danger'>
                                 <p>{this.state.error}</p>
                               </Alert>
@@ -330,7 +345,7 @@ class GalleryItemPage extends Component {
                         { this.state.didPrepare && this.state.checkoutMode && this.state.selectedRate !== null &&
                           <Row className='gallery-page-row-checkout-final'>
                             <RadioGroup name='SHIPPING OPTIONS' selectedValue={this.state.selectedRate} onChange={(val) => this.updateSelectedRate(val)}>
-                              { this.state.rates !== null ? (
+                              { this.state.rates !== null && this.state.rates !== '' ? (
                                 this.state.rates.map((rate, index) => {
                                   if (rate.provider === 'FedEx') {
                                     return (
