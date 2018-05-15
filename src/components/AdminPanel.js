@@ -19,7 +19,11 @@ class AdminPanel extends Component {
         artist: 'Select Artist...',
         description: '',
         sold: false,
-        price: ''
+        price: '',
+        length: '',
+        width: '',
+        height: '',
+        weight: ''
       },
       igiImage: null,
       isUploading: false,
@@ -45,6 +49,30 @@ class AdminPanel extends Component {
   updateGalleryItemPrice(newPrice) {
     let igi = this.state.inputGalleryItem;
     igi.price = newPrice;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemLength(newSize) {
+    let igi = this.state.inputGalleryItem;
+    igi.length = newSize;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemWidth(newSize) {
+    let igi = this.state.inputGalleryItem;
+    igi.width = newSize;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemHeight(newSize) {
+    let igi = this.state.inputGalleryItem;
+    igi.height = newSize;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemWeight(newWeight) {
+    let igi = this.state.inputGalleryItem;
+    igi.weight = newWeight;
     this.setState({ inputGalleryItem: igi });
   }
 
@@ -76,7 +104,7 @@ class AdminPanel extends Component {
   }
 
   addGalleryItem(produceNotification) {
-    const { name, artist, description, sold, price } = this.state.inputGalleryItem;
+    const { name, artist, description, sold, price, length, width, height, weight } = this.state.inputGalleryItem;
 
     // File image upload
     let file = this.state.igiImage;
@@ -99,7 +127,7 @@ class AdminPanel extends Component {
         let d = new Date();
         let timestamp = d.getTime();
 
-        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath, timestamp, price });
+        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath, timestamp, price, length, width, height, weight });
 
         produceNotification('Gallery Item Added', 'Successfully', 'success');
       }
@@ -191,6 +219,44 @@ class AdminPanel extends Component {
                         type='text'
                         placeholder='Price'
                         onChange={event => this.updateGalleryItemPrice(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Size (in)</h4>
+                    </Col>
+                    <Col xs={2} md={1}>
+                      <FormControl
+                        type='text'
+                        placeholder='Length'
+                        onChange={event => this.updateGalleryItemLength(event.target.value)}
+                        />
+                    </Col>
+                    <Col xs={2} md={1}>
+                      <FormControl
+                        type='text'
+                        placeholder='Width'
+                        onChange={event => this.updateGalleryItemWidth(event.target.value)}
+                        />
+                    </Col>
+                    <Col xs={2} md={1}>
+                      <FormControl
+                        type='text'
+                        placeholder='Height'
+                        onChange={event => this.updateGalleryItemHeight(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Weight (lb)</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Weight'
+                        onChange={event => this.updateGalleryItemWeight(event.target.value)}
                         />
                     </Col>
                   </Row>

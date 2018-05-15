@@ -24,6 +24,10 @@ class GalleryItemPage extends Component {
       editedName: '',
       editedDescription: '',
       editedPrice: '',
+      editedLength: '',
+      editedWidth: '',
+      editedHeight: '',
+      editedWeight: '',
       checkoutMode: false,
       rates: null,
       selectedRate: ''
@@ -47,13 +51,19 @@ class GalleryItemPage extends Component {
         this.setState({
           editedName: snapshot.val().name,
           editedDescription: snapshot.val().description,
-          editedPrice: snapshot.val().price
+          editedPrice: snapshot.val().price,
+          editedLength: snapshot.val().length,
+          editedWidth: snapshot.val().width,
+          editedHeight: snapshot.val().height,
+          editedWeight: snapshot.val().weight
         });
 
         // Shippo shipping rates request
+        const { length, width, height, weight } = this.state.item;
+
         request
           .post('https://api.goshippo.com/shipments/')
-          .set('Authorization', 'ShippoToken shippo_test_b397b68fdf89d83760c765e994901b367b159715')
+          .set('Authorization', 'ShippoToken shippo_live_3c9fc3cee381c8f7b2ea08e279bdb98a411081e9')
           .set('Accept', 'application/json')
           .send({
             "address_to": {
@@ -67,32 +77,31 @@ class GalleryItemPage extends Component {
                 "email": "mrhippo@goshippo.com"
             },
             "address_from": {
-                "name": "Mrs Hippo",
-                "street1": "1092 Indian Summer Ct",
-                "city": "San Jose",
+                "name": "Patrica Hom",
+                "street1": "11240 Manzanita Rd",
+                "city": "Lakeside",
                 "state": "CA",
-                "zip": "95122",
+                "zip": "92040",
                 "country": "US",
-                "phone": "4159876543",
-                "email": "mrshippo@goshippo.com"
+                "phone": "8582456799",
+                "email": "ehg11240@gmail.com"
             },
             "parcels": [{
-                "length": "10",
-                "width": "15",
-                "height": "10",
+                "length": "8",
+                "width": "8",
+                "height": "8",
                 "distance_unit": "in",
-                "weight": "1",
+                "weight": "5",
                 "mass_unit": "lb"
             }],
             "async": false
           })
           .end((err, res) => {
-            if (res != null) {
-              const parsedRes = JSON.parse(res.text).rates;
-              this.setState({ rates: parsedRes });
-              this.setState({ selectedRate: parsedRes[0].amount });
-              this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
-            }
+            console.log('Heres the parsed text result', JSON.parse(res.text));
+            const parsedRes = JSON.parse(res.text).rates;
+            this.setState({ rates: parsedRes });
+            this.setState({ selectedRate: parsedRes[0].amount });
+            this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
           });
         } else {
           this.props.history.push('/404');
@@ -142,7 +151,6 @@ class GalleryItemPage extends Component {
   updateSelectedRate = (val) => {
     this.setState({ selectedRate: val })
     this.setState({ total: parseFloat(this.state.item.price) + parseFloat(val) });
-    console.log(this.state.total);
   }
 
   deleteItem = (produceNotification) => {
@@ -160,7 +168,11 @@ class GalleryItemPage extends Component {
         sold: this.state.item.sold,
         artist: this.state.item.artist,
         imagePath: this.state.item.imagePath,
-        timestamp: this.state.item.timestamp
+        timestamp: this.state.item.timestamp,
+        length: this.state.editedLength,
+        width: this.state.editedWidth,
+        height: this.state.editedHeight,
+        weight: this.state.editedWeight
       });
 
       produceNotification('Update Applied', 'Successfully', 'success');
@@ -221,7 +233,7 @@ class GalleryItemPage extends Component {
                                   return (
                                     <div key={index} className='shipping-rate-option'>
                                       <Radio value={rate.amount}/>
-                                      <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency})</p>
+                                      <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency}) - {rate.provider}</p>
                                     </div>
                                   )
                                 })
@@ -259,10 +271,10 @@ class GalleryItemPage extends Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs={12} md={2} mdOffset={3}>
+                          <Col xs={6} md={2} mdOffset={3}>
                             <h3>Name</h3>
                           </Col>
-                          <Col xs={12} md={4}>
+                          <Col xs={6} md={4}>
                             <FormControl
                               type='text'
                               placeholder='Name'
@@ -271,10 +283,10 @@ class GalleryItemPage extends Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs={12} md={2} mdOffset={3}>
+                          <Col xs={6} md={2} mdOffset={3}>
                             <h3>Description</h3>
                           </Col>
-                          <Col xs={12} md={4}>
+                          <Col xs={6} md={4}>
                             <FormControl
                               type='text'
                               placeholder='Description'
@@ -283,10 +295,10 @@ class GalleryItemPage extends Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs={12} md={2} mdOffset={3}>
+                          <Col xs={6} md={2} mdOffset={3}>
                             <h3>Price</h3>
                           </Col>
-                          <Col xs={12} md={4}>
+                          <Col xs={6} md={4}>
                             <FormControl
                               type='text'
                               placeholder='Price'
@@ -294,8 +306,46 @@ class GalleryItemPage extends Component {
                               />
                           </Col>
                         </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Size (in)</h3>
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Length'
+                              onChange={event => this.setState({ editedLength: event.target.value })}
+                              />
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Width'
+                              onChange={event => this.setState({ editedWidth: event.target.value })}
+                              />
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Height'
+                              onChange={event => this.setState({ editedHeight: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Weight</h3>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <FormControl
+                              type='text'
+                              placeholder='Weight'
+                              onChange={event => this.setState({ editedWeight: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
                         <Row className='gallery-page-edit-final'>
-                          <Col xs={12} md={2} mdOffset={3}>
+                          <Col xs={4} md={2} mdOffset={3}>
                             <Button
                               bsStyle='danger'
                               onClick={() => this.deleteItem(produceNotification)}
@@ -303,7 +353,7 @@ class GalleryItemPage extends Component {
                               Delete
                             </Button>
                           </Col>
-                          <Col xs={12} md={4}>
+                          <Col xs={8} md={4}>
                             <Button
                               bsStyle='warning'
                               onClick={() => this.applyUpdate(produceNotification)}

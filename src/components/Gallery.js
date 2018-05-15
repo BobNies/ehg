@@ -43,19 +43,21 @@ class Gallery extends Component {
 
   updateGallery() {
     firebaseApp.database().ref('gallery').once('value').then((snapshot) => {
-      this.setState({ galleryItems: snapshot.val() });
+      if (snapshot.val() !== null) {
+        this.setState({ galleryItems: snapshot.val() });
 
-      const galleryItems = this.state.galleryItems[this.state.artistName];
-      let newItems = [];
+        const galleryItems = this.state.galleryItems[this.state.artistName];
+        let newItems = [];
 
-      if (galleryItems != null) {
-        Object.keys(galleryItems).map((item, index) => {
-          const { name, artist, description, sold, imagePath, timestamp, price } = galleryItems[item];
-          newItems.push([name, artist, description, sold, imagePath, timestamp, item, price]);
-        })
+        if (galleryItems != null) {
+          Object.keys(galleryItems).map((item, index) => {
+            const { name, artist, description, sold, imagePath, timestamp, price } = galleryItems[item];
+            newItems.push([name, artist, description, sold, imagePath, timestamp, item, price]);
+          })
+        }
+
+        this.setState({ galleryItemArray: newItems });
       }
-
-      this.setState({ galleryItemArray: newItems });
     })
   }
 
