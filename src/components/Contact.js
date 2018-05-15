@@ -35,7 +35,7 @@ class Contact extends Component {
           {
             "From": {
               "Email": "ehg11240@gmail.com",
-              "Name": "Eucalpyus Hills Gallery"
+              "Name": "Eucalyptus Hills Gallery"
             },
             "To": [
               {
@@ -44,7 +44,8 @@ class Contact extends Component {
               }
             ],
             "Subject": "My first Mailjet Email!",
-            "TextPart": "Greetings from Mailjet."
+            "TextPart": "Greetings from Mailjet.",
+            "HTMLPart": "<h3>Greetings from Mailjet.</h3>"
           }
         ]
       })
