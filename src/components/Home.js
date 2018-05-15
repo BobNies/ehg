@@ -18,7 +18,7 @@ class Home extends Component {
     return(
       <Consumer>
         {value => {
-          const { user, instagramPost } = value;
+          const { instagramPost } = value;
           return (
             <div>
               <AdminShortcut />
@@ -83,7 +83,7 @@ class Home extends Component {
                     <h2 className='noselect'>See what we're up to.</h2>
                   </Col>
                   <Col className='social-widget-instagram' xs={12} md={6}>
-                    { instagramPost != '' &&
+                    { instagramPost !== '' &&
                       <InstagramEmbed
                         url={instagramPost}
                         maxWidth={400}

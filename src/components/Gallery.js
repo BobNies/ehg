@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
-import { Grid, Row, Col } from 'react-bootstrap'
-import Masonry from 'react-masonry-component'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
 import GalleryItem from './GalleryItem'
-
-const masonryOptions = {
-  transitionDuration: 0
-};
 
 class Gallery extends Component {
 
@@ -65,7 +59,6 @@ class Gallery extends Component {
     return(
       <Consumer>
         {value => {
-          const { user } = value;
           return (
             <div>
               <AdminShortcut />

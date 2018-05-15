@@ -354,6 +354,8 @@ class GalleryItemPage extends Component {
                                         <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency}) - {rate.provider}</p>
                                       </div>
                                     )
+                                  } else {
+                                    return <div></div>;
                                   }
                                 })
                               ) : (

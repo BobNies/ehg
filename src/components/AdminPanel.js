@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
 import { Redirect } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
 import { Grid, Row, Col, Button, FormControl, DropdownButton, MenuItem, ProgressBar } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
-import NotificationSystem from 'react-notification-system'
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -138,7 +136,7 @@ class AdminPanel extends Component {
     return (
       <Consumer>
         {value => {
-          const { user, logOut, produceNotification, setIntagramPost } = value;
+          const { user, produceNotification, setIntagramPost } = value;
           return user ? (
             <div>
               <CustomNavBar />
