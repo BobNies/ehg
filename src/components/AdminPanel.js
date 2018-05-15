@@ -227,13 +227,6 @@ class AdminPanel extends Component {
                     <Col xs={2} md={1}>
                       <FormControl
                         type='text'
-                        placeholder='Length'
-                        onChange={event => this.updateGalleryItemLength(event.target.value)}
-                        />
-                    </Col>
-                    <Col xs={2} md={1}>
-                      <FormControl
-                        type='text'
                         placeholder='Width'
                         onChange={event => this.updateGalleryItemWidth(event.target.value)}
                         />
@@ -243,6 +236,13 @@ class AdminPanel extends Component {
                         type='text'
                         placeholder='Height'
                         onChange={event => this.updateGalleryItemHeight(event.target.value)}
+                        />
+                    </Col>
+                    <Col xs={2} md={1}>
+                      <FormControl
+                        type='text'
+                        placeholder='Depth'
+                        onChange={event => this.updateGalleryItemLength(event.target.value)}
                         />
                     </Col>
                   </Row>

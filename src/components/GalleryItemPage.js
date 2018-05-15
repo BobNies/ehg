@@ -435,13 +435,6 @@ class GalleryItemPage extends Component {
                           <Col xs={2} md={1}>
                             <FormControl
                               type='text'
-                              placeholder='Length'
-                              onChange={event => this.setState({ editedLength: event.target.value })}
-                              />
-                          </Col>
-                          <Col xs={2} md={1}>
-                            <FormControl
-                              type='text'
                               placeholder='Width'
                               onChange={event => this.setState({ editedWidth: event.target.value })}
                               />
@@ -451,6 +444,13 @@ class GalleryItemPage extends Component {
                               type='text'
                               placeholder='Height'
                               onChange={event => this.setState({ editedHeight: event.target.value })}
+                              />
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Depth'
+                              onChange={event => this.setState({ editedLength: event.target.value })}
                               />
                           </Col>
                         </Row>
