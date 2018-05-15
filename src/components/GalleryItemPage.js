@@ -87,11 +87,11 @@ class GalleryItemPage extends Component {
                 "email": "ehg11240@gmail.com"
             },
             "parcels": [{
-                "length": "8",
-                "width": "8",
-                "height": "8",
+                "length": length,
+                "width": width,
+                "height": height,
                 "distance_unit": "in",
-                "weight": "5",
+                "weight": weight,
                 "mass_unit": "lb"
             }],
             "async": false
@@ -230,12 +230,14 @@ class GalleryItemPage extends Component {
                             <RadioGroup name='SHIPPING OPTIONS' selectedValue={this.state.selectedRate} onChange={(val) => this.updateSelectedRate(val)}>
                               { this.state.rates !== null ? (
                                 this.state.rates.map((rate, index) => {
-                                  return (
-                                    <div key={index} className='shipping-rate-option'>
-                                      <Radio value={rate.amount}/>
-                                      <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency}) - {rate.provider}</p>
-                                    </div>
-                                  )
+                                  if (rate.provider === 'FedEx') {
+                                    return (
+                                      <div key={index} className='shipping-rate-option'>
+                                        <Radio value={rate.amount}/>
+                                        <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency}) - {rate.provider}</p>
+                                      </div>
+                                    )
+                                  }
                                 })
                               ) : (
                                 <p>LOADING SHIPPING RATES...</p>
