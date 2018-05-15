@@ -794,6 +794,53 @@ body {
   }
 }
 
+/* CONTACT */
+
+.contact {
+ margin-top: 10rem;
+}
+
+.contact .row {
+  margin-bottom: 1rem;
+}
+
+.contact h4 {
+  font-size: 15px;
+  font-weight: 300;
+  color: #222;
+}
+
+.contact .btn-default {
+  width: 100%;
+  height: 4.5rem;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: #c7a891;
+  color: #fff;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.contact .btn-default:hover {
+  background-color: #a89282;
+}
+.contact .btn-default:focus,
+.contact .btn-default:active {
+  color: #fff;
+  background-color: #a89282;
+}
+
+.contact-form {
+  background-color: #fafafa;
+  border-radius: 1rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 /* 404 (NOT FOUND) */
 
 .not-found {
