@@ -571,8 +571,14 @@ body {
   -webkit-box-flex: auto;
   -ms-flex: auto;
   flex: auto;
+
   width: 30rem;
-  margin: .5vw;
+  height: 30rem;
+  overflow: hidden;
+  position: relative;
+
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 
   -o-transition: 0.25s;
   -ms-transition: 0.25s;
@@ -582,11 +588,19 @@ body {
 }
 .gallery-item:hover {
   transform: scale(1.05);
+  z-index: 100;
 }
 
 .gallery-item img {
-  width: 100%;
-  height: auto;
+  position: absolute;
+  left: -1000%;
+  right: -1000%;
+  top: -1000%;
+  bottom: -1000%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  width: 50%;
 }
 
 @media screen and (max-width: 400px) {
@@ -664,7 +678,7 @@ body {
 .gallery-page-main img {
   width: 100%;
   height: auto;
-  border-radius: 1rem;
+  border: 0.5rem solid #444;
 }
 
 .gallery-page-main .btn-default {
