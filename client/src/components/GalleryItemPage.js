@@ -41,6 +41,12 @@ class GalleryItemPage extends Component {
       printPrice: '',
       buyingPrint: false
     };
+
+    this.shipNameInput = React.createRef();
+    this.shipStreet1Input = React.createRef();
+    this.shipCityInput = React.createRef();
+    this.shipStateInput = React.createRef();
+    this.shipZipcodeInput = React.createRef();
   }
 
   componentDidMount() {
@@ -89,7 +95,22 @@ class GalleryItemPage extends Component {
     }
   }
 
+  onPurchaseBtn = () => {
+    this.setState({ checkoutMode: true, buyingPrint: false, rates: null, didPrepare: false });
+  }
+
+  onBuyPrintBtn = () => {
+    this.setState({ checkoutMode: true, buyingPrint: true, rates: null, didPrepare: false });
+  }
+
   findShippingRates = () => {
+    this.setState({ rates: null });
+
+    if (this.state.buyingPrint) {
+      this.findShippingRatesForPrint();
+      return;
+    }
+
     const { length, width, height, weight } = this.state.item;
     const { shipDetName, shipDetStreet1, shipDetCity, shipDetState, shipDetZipcode } = this.state;
 
@@ -221,7 +242,7 @@ class GalleryItemPage extends Component {
             if (parsedRes[0] !== undefined) {
               this.setState({ rates: parsedRes });
               this.setState({ selectedRate: parsedRes[0].amount });
-              this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+              this.setState({ total: parseFloat(this.state.printPrice) + parseFloat(parsedRes[0].amount) });
               this.setState({ error: '' })
             } else {
               this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
@@ -236,25 +257,29 @@ class GalleryItemPage extends Component {
   }
 
   onPaypalSuccess = (payment, produceNotification) => {
-    let originItem = this.state.item;
-    firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).set({
-       name: originItem.name,
-       artist: originItem.artist,
-       description: originItem.description,
-       sold: true,
-       imagePath: originItem.imagePath,
-       timestamp: originItem.timestamp,
-       price: originItem.price,
-       length: originItem.length,
-       width: originItem.width,
-       height: originItem.height,
-       weight: originItem.weight
-     });
+    if (!this.state.buyingPrint) {
+      let originItem = this.state.item;
+      firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).set({
+         name: originItem.name,
+         artist: originItem.artist,
+         description: originItem.description,
+         sold: true,
+         imagePath: originItem.imagePath,
+         timestamp: originItem.timestamp,
+         price: originItem.price,
+         length: originItem.length,
+         width: originItem.width,
+         height: originItem.height,
+         weight: originItem.weight
+       });
 
-     let soldItem = originItem;
-     soldItem.sold = true;
-     this.setState({ item: soldItem, checkoutMode: false });
-     produceNotification('Payment Completed', 'Thank you!', 'success');
+       let soldItem = originItem;
+       soldItem.sold = true;
+       this.setState({ item: soldItem });
+    }
+
+    this.setState({ checkoutMode: false });
+    produceNotification('Payment Completed', 'Thank you!', 'success');
   }
 
   onPaypalCancel = (data, produceNotification) => {
@@ -269,7 +294,11 @@ class GalleryItemPage extends Component {
 
   updateSelectedRate = (val) => {
     this.setState({ selectedRate: val })
-    this.setState({ total: parseFloat(this.state.item.price) + parseFloat(val) });
+    if (this.state.buyingPrint) {
+      this.setState({ total: parseFloat(this.state.printPrice) + parseFloat(val) });
+    } else {
+      this.setState({ total: parseFloat(this.state.item.price) + parseFloat(val) });
+    }
   }
 
   deleteItem = (produceNotification) => {
@@ -337,7 +366,7 @@ class GalleryItemPage extends Component {
                             <Col xs={12} md={6}>
                               <Button
                                 bsStyle='default'
-                                onClick={() => this.setState({ checkoutMode: true, buyingPrint: false })}
+                                onClick={() => this.onPurchaseBtn()}
                                 >
                                 PURCHASE
                               </Button>
@@ -352,7 +381,7 @@ class GalleryItemPage extends Component {
                             <Col xs={12} md={6}>
                               <Button
                                 bsStyle='default'
-                                onClick={() => this.setState({ checkoutMode: true, buyingPrint: true })}
+                                onClick={() => this.onBuyPrintBtn()}
                                 >
                                 BUY PRINT
                               </Button>
@@ -372,6 +401,7 @@ class GalleryItemPage extends Component {
                               </Col>
                               <Col xs={12} md={8}>
                                 <FormControl
+                                  ref={this.shipNameInput}
                                   type='text'
                                   placeholder='Name'
                                   onChange={event => this.setState({ shipDetName: event.target.value })}
@@ -384,6 +414,7 @@ class GalleryItemPage extends Component {
                               </Col>
                               <Col xs={12} md={8}>
                                 <FormControl
+                                  ref={this.shipStreet1Input}
                                   type='text'
                                   placeholder='Address'
                                   onChange={event => this.setState({ shipDetStreet1: event.target.value })}
@@ -396,6 +427,7 @@ class GalleryItemPage extends Component {
                               </Col>
                               <Col xs={12} md={8}>
                                 <FormControl
+                                  ref={this.shipCityInput}
                                   type='text'
                                   placeholder='City'
                                   onChange={event => this.setState({ shipDetCity: event.target.value })}
@@ -408,6 +440,7 @@ class GalleryItemPage extends Component {
                               </Col>
                               <Col xs={12} md={3}>
                                 <FormControl
+                                  ref={this.shipStateInput}
                                   type='text'
                                   placeholder='State'
                                   onChange={event => this.setState({ shipDetState: event.target.value })}
@@ -420,6 +453,7 @@ class GalleryItemPage extends Component {
                               </Col>
                               <Col xs={12} md={8}>
                                 <FormControl
+                                  ref={this.shipZipcodeInput}
                                   type='text'
                                   placeholder='Zipcode'
                                   onChange={event => this.setState({ shipDetZipcode: event.target.value })}
@@ -438,7 +472,52 @@ class GalleryItemPage extends Component {
                             </Row>
                           </Row>
                         }
-                        { this.state.didPrepare && this.state.checkoutMode && this.state.selectedRate !== null &&
+                        { !this.state.buyingPrint && this.state.didPrepare && this.state.checkoutMode && this.state.selectedRate !== null &&
+                          <Row className='gallery-page-row-checkout-final'>
+                            <RadioGroup name='SHIPPING OPTIONS' selectedValue={this.state.selectedRate} onChange={(val) => this.updateSelectedRate(val)}>
+                              { this.state.rates !== null && this.state.rates !== '' ? (
+                                this.state.rates.map((rate, index) => {
+                                  if (this.state.buyingPrint) {
+                                    return (
+                                      <div key={index} className='shipping-rate-option'>
+                                        <Radio value={rate.amount}/>
+                                        <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency}) - {rate.provider}</p>
+                                      </div>
+                                    )
+                                  } else {
+                                    if (rate.provider === 'FedEx') {
+                                      return (
+                                        <div key={index} className='shipping-rate-option'>
+                                          <Radio value={rate.amount}/>
+                                          <p className='noselect'>{rate.servicelevel.name} (${rate.amount} {rate.currency}) - {rate.provider}</p>
+                                        </div>
+                                      )
+                                    } else {
+                                      return <div key={index}></div>;
+                                    }
+                                  }
+                                })
+                              ) : (
+                                <p>LOADING SHIPPING RATES...</p>
+                              )}
+                            </RadioGroup>
+                            <div>
+                              <hr />
+                              <div className='paypal-btn'>
+                                <PaypalExpressBtn
+                                  env={env}
+                                  client={client}
+                                  currency={currency}
+                                  total={this.state.total}
+                                  onError={(err) => this.onPaypalError(err, produceNotification)}
+                                  onSuccess={(payment) => this.onPaypalSuccess(payment, produceNotification)}
+                                  onCancel={(data) => this.onPaypalCancel(data, produceNotification)}
+                                  />
+                              </div>
+                            </div>
+                          </Row>
+                        }
+                        { this.state.buyingPrint && this.state.didPrepare && this.state.checkoutMode && this.state.selectedRate !== null &&
                           <Row className='gallery-page-row-checkout-final'>
                             <RadioGroup name='SHIPPING OPTIONS' selectedValue={this.state.selectedRate} onChange={(val) => this.updateSelectedRate(val)}>
                               { this.state.rates !== null && this.state.rates !== '' ? (
@@ -476,7 +555,8 @@ class GalleryItemPage extends Component {
                         }
                         <Row className='gallery-page-row-3'>
                           <p>{this.state.item.description}</p>
-                          <p className='gallery-item-dim'>Dimensions: {this.state.item.width} x {this.state.item.height} in</p>
+                          <p className='gallery-item-dim'>Artwork dimensions: {this.state.item.width} x {this.state.item.height} in</p>
+                          <p className='gallery-item-dim'>Print dimensions: {this.state.item.printWidth} x {this.state.item.printHeight} in</p>
                         </Row>
                       </Col>
                     </Row>
