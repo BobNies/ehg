@@ -9,6 +9,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.2.1",
+    "body-parser": "^1.18.3",
     "express": "^4.16.2",
     "webpack": "^4.8.3"
   },

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
-import { Grid, Row, Col, FormControl, Button } from 'react-bootstrap'
+import { Grid, Row, Col, FormControl, Button, Alert } from 'react-bootstrap'
 import request from 'superagent'
 
 class Contact extends Component {
@@ -15,24 +15,9 @@ class Contact extends Component {
       name: '',
       email: '',
       message: '',
-      response: ''
+      error: ''
     };
   }
-
-  componentDidMount() {
-    this.callApi()
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-  }
-
-  callApi = async () => {
-    const response = await fetch('/api/hello');
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  };
 
   componentWillUpdate(nextProps, nextState) {
     // Update state to sync with router changes
@@ -42,68 +27,40 @@ class Contact extends Component {
   }
 
   sendEmail = () => {
-    /*
+    if (this.state.name === '') {
+      this.setState({ error: 'Please enter your name.' });
+      return;
+    }
+
+    if (this.state.email === '') {
+      this.setState({ error: 'Please enter your email so we can get back to you.' });
+      return;
+    }
+
+    if (this.state.message === '') {
+      this.setState({ error: 'Please enter a message.' });
+      return;
+    }
+
+    const artist = this.state.artistName.toUpperCase().replace('-', ' ');
+
     request
-      .post('https://api.sendgrid.com/v3/mail/send')
+      .post('/api/sendContactMail')
       .set('Accept', 'application/json')
-      .set('Authorization', 'Bearer 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')
+      .query({ to: 'ehg11240@gmail.com' })
+      .query({ from: 'ehg11240@gmail.com' })
+      .query({ subject: 'New Contact Message' })
+      .query({ text: 'The following message was sent from ' + this.state.email + ' to ' + artist + ': ' + this.state.message })
+      .query({ html: '<h3>The following message was sent from ' + this.state.email + ' to ' + artist + ': </h3><hr /><p>' + this.state.message + '</p>' })
       .send({
-        "personalizations": [
-          {
-            "to": [
-              {
-                "email": "whatsthatfunction@gmail.com"
-              }
-            ]
-          }
-        ],
-        "from": {
-          "email": "whatsthatfunction@gmail.com"
-        },
-        "subject": "Sending with SendGrid is Fun",
-        "content": [
-          {
-            "type": "text/plain",
-            "value": "and easy to do anywhere, even with http requests."
-          }
-        ]
+        "message": "The message"
       })
       .end((err, res) => {
-        console.log('Response', res);
-        console.log('Error (if any)', err);
-      })
-    */
 
+      });
 
-    /*
-    request
-      .post('https://api.mailjet.com/v3.1/send')
-      .set('Accept', 'application/json')
-      .set('Authorization', '5a076f80f30ee53f618636f9185a527d:8b70ac19d539da0506c0c1c401b648ee')
-      .send({
-        "Messages":[
-          {
-            "From": {
-              "Email": "ehg11240@gmail.com",
-              "Name": "Eucalyptus Hills Gallery"
-            },
-            "To": [
-              {
-                "Email": "whatsthatfunction@gmail.com",
-                "Name": "Josh Nies"
-              }
-            ],
-            "Subject": "My first Mailjet Email!",
-            "TextPart": "Greetings from Mailjet.",
-            "HTMLPart": "<h3>Greetings from Mailjet.</h3>"
-          }
-        ]
-      })
-      .end((err, res) => {
-        console.log('Response', res);
-        console.log('Error (if any)', err);
-      })
-      */
+      // Reset error message
+      this.setState({ error: '' });
   }
 
   render () {
@@ -116,6 +73,13 @@ class Contact extends Component {
             <h1>CONTACT {this.state.artistName.toUpperCase().replace('-', ' ')}</h1>
           </div>
           <div className='contact-form'>
+            { this.state.error !== '' &&
+              <Col xs={12} md={6} mdOffset={3}>
+                <Alert bsStyle='danger'>
+                  <p>{this.state.error}</p>
+                </Alert>
+              </Col>
+            }
             <Row>
               <Col xs={12} md={2} mdOffset={3}>
                 <h4>Name</h4>
@@ -149,7 +113,7 @@ class Contact extends Component {
                   type='text'
                   componentClass='textarea'
                   placeholder='Message'
-                  onChange={event => this.setState({ email: event.target.value })}
+                  onChange={event => this.setState({ message: event.target.value })}
                   />
               </Col>
             </Row>
