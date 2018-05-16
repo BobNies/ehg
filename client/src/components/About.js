@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Row, Col, FormControl, Button } from 'react-bootstrap'
+import { Grid, Col } from 'react-bootstrap'
 import Img from 'react-image'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
@@ -48,7 +48,7 @@ class About extends Component {
             <Col xs={12} md={6} className='about-desc'>
               { this.state.artistName === 'michael-roser' ? (
                 <div>
-                  <h4>"Artwork should be great, not just good."</h4>
+                  <h4>"Art is an expression of the mind."</h4>
                   <p>Michael Roser bio.</p>
                 </div>
               ) : (

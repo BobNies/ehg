@@ -1146,6 +1146,55 @@ body {
   .admin-link {
     margin-top: 5rem;
   }
+
+  .about-desc h4 {
+    margin-top: 2rem
+  }
+
+  .contact-form .row {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .gallery-page-main h3 {
+    margin-top: 3rem;
+  }
+
+  .gallery-page-main h4 {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .gallery-page-price {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    background-color: #f2efef;
+  }
+
+  .gallery-page-price-print {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    background-color: #f2efef;
+  }
+
+  .gallery-page-row-checkout-prepare .row {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .gallery-page-row-checkout-prepare h3 {
+    margin-left: 0;
+    margin-bottom: 1rem;
+  }
+
+  .gallery-page-row-checkout-final {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
 }
 
 /* LARGE MONITOR OVERRIDES */
