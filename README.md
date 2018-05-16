@@ -39,7 +39,7 @@ involved in deploying the project.
 
 Create optimized client build:
 ```
-cd /client
+cd client
 npm run-script build
 ```
 
