@@ -52,8 +52,8 @@ class Contact extends Component {
     request
       .post('/api/sendContactMail')
       .set('Accept', 'application/json')
-      .query({ to: 'whatsthatfunction@gmail.com' })
-      .query({ from: 'whatsthatfunction@gmail.com' })
+      .query({ to: 'ehg11240@gmail.com' })
+      .query({ from: 'ehg11240@gmail.com' })
       .query({ subject: 'New Contact Message' })
       .query({ text: 'The following message was sent from ' + this.state.email + ' to ' + artist + ': ' + this.state.message })
       .query({ html: '<h3>The following message was sent from ' + this.state.email + ' to ' + artist + ': </h3><hr /><p>' + this.state.message + '</p>' })
