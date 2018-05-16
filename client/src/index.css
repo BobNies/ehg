@@ -701,6 +701,20 @@ body {
   margin: 0 !important;
 }
 
+.gallery-page-price-print {
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  color: #777 !important;
+  background-color: #fafafa !important;
+  padding: 0.5rem !important;
+  border-radius: 1rem !important;
+  margin: 0 !important;
+}
+
+.gallery-page-row-prints {
+
+}
+
 .paypal-btn {
   margin-left: 3rem;
 }
@@ -1003,6 +1017,11 @@ body {
   font-size: 25px;
   font-weight: 400;
   color: #444;
+}
+
+.admin-col-triple {
+  padding: 0;
+  padding-right: 0.3rem;
 }
 
 /* MOBILE OVERRIDES */

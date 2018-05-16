@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { Grid, Row, Col, FormControl, Button, Alert } from 'react-bootstrap'
+import request from 'superagent'
+import { Consumer } from '../MyContext'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
-import { Grid, Row, Col, FormControl, Button, Alert } from 'react-bootstrap'
-import request from 'superagent'
 
 class Contact extends Component {
 
@@ -26,7 +27,7 @@ class Contact extends Component {
     }
   }
 
-  sendEmail = () => {
+  sendEmail = (produceNotification) => {
     if (this.state.name === '') {
       this.setState({ error: 'Please enter your name.' });
       return;
@@ -61,76 +62,85 @@ class Contact extends Component {
 
       // Reset error message
       this.setState({ error: '' });
+
+      produceNotification('Message sent!', 'We will get back to you soon!', 'success');
   }
 
   render () {
     return(
-      <div>
-        <AdminShortcut />
-        <CustomNavBar/>
-        <Grid className='contact'>
-          <div className='contact-header'>
-            <h1>CONTACT {this.state.artistName.toUpperCase().replace('-', ' ')}</h1>
-          </div>
-          <div className='contact-form'>
-            { this.state.error !== '' &&
-              <Col xs={12} md={6} mdOffset={3}>
-                <Alert bsStyle='danger'>
-                  <p>{this.state.error}</p>
-                </Alert>
-              </Col>
-            }
-            <Row>
-              <Col xs={12} md={2} mdOffset={3}>
-                <h4>Name</h4>
-              </Col>
-              <Col xs={12} md={4}>
-                <FormControl
-                  type='text'
-                  placeholder='Name'
-                  onChange={event => this.setState({ name: event.target.value })}
-                  />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={2} mdOffset={3}>
-                <h4>Email</h4>
-              </Col>
-              <Col xs={12} md={4}>
-                <FormControl
-                  type='email'
-                  placeholder='Email'
-                  onChange={event => this.setState({ email: event.target.value })}
-                  />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={2} mdOffset={3}>
-                <h4>Message</h4>
-              </Col>
-              <Col xs={12} md={4}>
-                <FormControl
-                  type='text'
-                  componentClass='textarea'
-                  placeholder='Message'
-                  onChange={event => this.setState({ message: event.target.value })}
-                  />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={6} mdOffset={3}>
-                <Button
-                  bsStyle='default'
-                  onClick={() => this.sendEmail()}
-                  >
-                  SEND
-                </Button>
-              </Col>
-            </Row>
-          </div>
-        </Grid>
-        <Footer />
-      </div>
+      <Consumer>
+        {value => {
+          const { produceNotification } = value;
+          return(
+            <div>
+              <AdminShortcut />
+              <CustomNavBar/>
+              <Grid className='contact'>
+                <div className='contact-header'>
+                  <h1>CONTACT {this.state.artistName.toUpperCase().replace('-', ' ')}</h1>
+                </div>
+                <div className='contact-form'>
+                  { this.state.error !== '' &&
+                    <Col xs={12} md={6} mdOffset={3}>
+                      <Alert bsStyle='danger'>
+                        <p>{this.state.error}</p>
+                      </Alert>
+                    </Col>
+                  }
+                  <Row>
+                    <Col xs={12} md={2} mdOffset={3}>
+                      <h4>Name</h4>
+                    </Col>
+                    <Col xs={12} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Name'
+                        onChange={event => this.setState({ name: event.target.value })}
+                        />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12} md={2} mdOffset={3}>
+                      <h4>Email</h4>
+                    </Col>
+                    <Col xs={12} md={4}>
+                      <FormControl
+                        type='email'
+                        placeholder='Email'
+                        onChange={event => this.setState({ email: event.target.value })}
+                        />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12} md={2} mdOffset={3}>
+                      <h4>Message</h4>
+                    </Col>
+                    <Col xs={12} md={4}>
+                      <FormControl
+                        type='text'
+                        componentClass='textarea'
+                        placeholder='Message'
+                        onChange={event => this.setState({ message: event.target.value })}
+                        />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12} md={6} mdOffset={3}>
+                      <Button
+                        bsStyle='default'
+                        onClick={() => this.sendEmail(produceNotification)}
+                        >
+                        SEND
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              </Grid>
+              <Footer />
+            </div>
+          )
+        }}
+      </Consumer>
     );
   }
 }

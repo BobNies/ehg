@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
 import { Redirect } from 'react-router-dom'
-import { Grid, Row, Col, Button, FormControl, DropdownButton, MenuItem, ProgressBar } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormControl, DropdownButton, MenuItem, ProgressBar, InputGroup, Checkbox } from 'react-bootstrap'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 
@@ -12,6 +12,7 @@ class AdminPanel extends Component {
 
     this.state = {
       inputInstaPost: '',
+      inputPrintPrice: '',
       inputGalleryItem: {
         name: '',
         artist: 'Select Artist...',
@@ -21,7 +22,12 @@ class AdminPanel extends Component {
         length: '',
         width: '',
         height: '',
-        weight: ''
+        weight: '',
+        hasPrints: false,
+        printWidth: '',
+        printHeight: '',
+        printLength: '',
+        printWeight: ''
       },
       igiImage: null,
       isUploading: false,
@@ -78,6 +84,36 @@ class AdminPanel extends Component {
     this.setState({ igiImage: newImage });
   }
 
+  updateGalleryItemHasPrints(newHasPrints) {
+    let igi = this.state.inputGalleryItem;
+    igi.hasPrints = newHasPrints;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemPrintWidth(newPrintSize) {
+    let igi = this.state.inputGalleryItem;
+    igi.printWidth = newPrintSize;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemPrintHeight(newPrintSize) {
+    let igi = this.state.inputGalleryItem;
+    igi.printHeight = newPrintSize;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemPrintLength(newPrintSize) {
+    let igi = this.state.inputGalleryItem;
+    igi.printLength = newPrintSize;
+    this.setState({ inputGalleryItem: igi });
+  }
+
+  updateGalleryItemPrintWeight(newPrintWeight) {
+    let igi = this.state.inputGalleryItem;
+    igi.printWeight = newPrintWeight;
+    this.setState({ inputGalleryItem: igi });
+  }
+
   artistSelect(eventKey) {
     if (eventKey === 1) {
       let igi = this.state.inputGalleryItem;
@@ -91,10 +127,15 @@ class AdminPanel extends Component {
     }
   }
 
-  applySettings(produceNotification, setIntagramPost) {
+  applySettings(produceNotification, setIntagramPost, setPrintPrice) {
     // Update instagram post
     if (this.state.inputInstaPost !== null && this.state.inputInstaPost !== '') {
       setIntagramPost(this.state.inputInstaPost);
+    }
+
+    // Update print Price
+    if (this.state.inputPrintPrice !== null && this.state.inputPrintPrice !== '') {
+      setPrintPrice(this.state.inputPrintPrice);
     }
 
     // Produce notification
@@ -102,7 +143,22 @@ class AdminPanel extends Component {
   }
 
   addGalleryItem(produceNotification) {
-    const { name, artist, description, sold, price, length, width, height, weight } = this.state.inputGalleryItem;
+    const {
+      name,
+      artist,
+      description,
+      sold,
+      price,
+      length,
+      width,
+      height,
+      weight,
+      hasPrints,
+      printWidth,
+      printHeight,
+      printLength,
+      printWeight
+    } = this.state.inputGalleryItem;
 
     // File image upload
     let file = this.state.igiImage;
@@ -125,7 +181,24 @@ class AdminPanel extends Component {
         let d = new Date();
         let timestamp = d.getTime();
 
-        firebaseApp.database().ref('gallery/' + artist).push({ name, artist, description, sold, imagePath, timestamp, price, length, width, height, weight });
+        firebaseApp.database().ref('gallery/' + artist).push({
+          name,
+          artist,
+          description,
+          sold,
+          imagePath,
+          timestamp,
+          price,
+          length,
+          width,
+          height,
+          weight,
+          hasPrints,
+          printWidth,
+          printHeight,
+          printLength,
+          printWeight
+        });
 
         produceNotification('Gallery Item Added', 'Successfully', 'success');
       }
@@ -136,7 +209,7 @@ class AdminPanel extends Component {
     return (
       <Consumer>
         {value => {
-          const { user, produceNotification, setIntagramPost } = value;
+          const { user, produceNotification, setIntagramPost, setPrintPrice } = value;
           return user ? (
             <div>
               <CustomNavBar />
@@ -213,37 +286,51 @@ class AdminPanel extends Component {
                       <h4>Price</h4>
                     </Col>
                     <Col xs={6} md={4}>
-                      <FormControl
-                        type='text'
-                        placeholder='Price'
-                        onChange={event => this.updateGalleryItemPrice(event.target.value)}
-                        />
+                      <InputGroup>
+                        <InputGroup.Addon>$</InputGroup.Addon>
+                        <FormControl
+                          type='text'
+                          placeholder='Price'
+                          onChange={event => this.updateGalleryItemPrice(event.target.value)}
+                          />
+                      </InputGroup>
                     </Col>
                   </Row>
                   <Row className='admin-row'>
                     <Col xs={6} md={4} mdOffset={2}>
                       <h4>Size (in)</h4>
                     </Col>
-                    <Col xs={2} md={1}>
-                      <FormControl
-                        type='text'
-                        placeholder='Width'
-                        onChange={event => this.updateGalleryItemWidth(event.target.value)}
-                        />
-                    </Col>
-                    <Col xs={2} md={1}>
-                      <FormControl
-                        type='text'
-                        placeholder='Height'
-                        onChange={event => this.updateGalleryItemHeight(event.target.value)}
-                        />
-                    </Col>
-                    <Col xs={2} md={1}>
-                      <FormControl
-                        type='text'
-                        placeholder='Depth'
-                        onChange={event => this.updateGalleryItemLength(event.target.value)}
-                        />
+                    <Col xs={6} md={4}>
+                      <Col xs={4} md={4} className='admin-col-triple'>
+                        <InputGroup>
+                          <FormControl
+                            type='text'
+                            placeholder='Width'
+                            onChange={event => this.updateGalleryItemWidth(event.target.value)}
+                            />
+                          <InputGroup.Addon>in</InputGroup.Addon>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={4} md={4} className='admin-col-triple'>
+                        <InputGroup>
+                          <FormControl
+                            type='text'
+                            placeholder='Height'
+                            onChange={event => this.updateGalleryItemHeight(event.target.value)}
+                            />
+                          <InputGroup.Addon>in</InputGroup.Addon>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={4} md={4} className='admin-col-triple'>
+                        <InputGroup>
+                          <FormControl
+                            type='text'
+                            placeholder='Depth'
+                            onChange={event => this.updateGalleryItemLength(event.target.value)}
+                            />
+                          <InputGroup.Addon>in</InputGroup.Addon>
+                        </InputGroup>
+                      </Col>
                     </Col>
                   </Row>
                   <Row className='admin-row'>
@@ -251,11 +338,14 @@ class AdminPanel extends Component {
                       <h4>Weight (lb)</h4>
                     </Col>
                     <Col xs={6} md={4}>
-                      <FormControl
-                        type='text'
-                        placeholder='Weight'
-                        onChange={event => this.updateGalleryItemWeight(event.target.value)}
-                        />
+                      <InputGroup>
+                        <FormControl
+                          type='text'
+                          placeholder='Weight'
+                          onChange={event => this.updateGalleryItemWeight(event.target.value)}
+                          />
+                        <InputGroup.Addon>lb</InputGroup.Addon>
+                      </InputGroup>
                     </Col>
                   </Row>
                   <Row className='admin-row'>
@@ -264,6 +354,66 @@ class AdminPanel extends Component {
                     </Col>
                     <Col xs={6} md={4}>
                       <input type='file' onChange={event => this.updateGalleryItemImage(event.target.files[0])} />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Has Prints?</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <Checkbox checked={this.state.inputGalleryItem.hasPrints} onChange={() => this.updateGalleryItemHasPrints(!this.state.inputGalleryItem.hasPrints)}/>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Print Size (in)</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <Col xs={4} md={4} className='admin-col-triple'>
+                        <InputGroup>
+                          <FormControl
+                            type='text'
+                            placeholder='Width'
+                            onChange={event => this.updateGalleryItemPrintWidth(event.target.value)}
+                            />
+                          <InputGroup.Addon>in</InputGroup.Addon>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={4} md={4} className='admin-col-triple'>
+                        <InputGroup>
+                          <FormControl
+                            type='text'
+                            placeholder='Height'
+                            onChange={event => this.updateGalleryItemPrintHeight(event.target.value)}
+                            />
+                          <InputGroup.Addon>in</InputGroup.Addon>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={4} md={4} className='admin-col-triple'>
+                        <InputGroup>
+                          <FormControl
+                            type='text'
+                            placeholder='Depth'
+                            onChange={event => this.updateGalleryItemPrintLength(event.target.value)}
+                            />
+                          <InputGroup.Addon>in</InputGroup.Addon>
+                        </InputGroup>
+                      </Col>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Print Weight (lb)</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <InputGroup>
+                        <FormControl
+                          type='text'
+                          placeholder='Weight'
+                          onChange={event => this.updateGalleryItemPrintWeight(event.target.value)}
+                          />
+                        <InputGroup.Addon>lb</InputGroup.Addon>
+                      </InputGroup>
                     </Col>
                   </Row>
                   { this.state.isUploading &&
@@ -284,10 +434,32 @@ class AdminPanel extends Component {
                     </Col>
                   </Row>
                   <hr />
+                  <Row className='admin-row admin-row-header'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h2>Prints</h2>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Print Price</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <InputGroup>
+                        <InputGroup.Addon>$</InputGroup.Addon>
+                        <FormControl
+                          ref={this.instagramPostControl}
+                          type='text'
+                          placeholder='Price'
+                          onChange={event => this.setState({ inputPrintPrice: event.target.value })}
+                          />
+                      </InputGroup>
+                    </Col>
+                  </Row>
+                  <hr />
                   <Row className='admin-row-end'>
                     <Button
                       bsStyle='primary'
-                      onClick={() => this.applySettings(produceNotification, setIntagramPost)}
+                      onClick={() => this.applySettings(produceNotification, setIntagramPost, setPrintPrice)}
                       >
                       Update
                     </Button>

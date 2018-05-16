@@ -37,7 +37,9 @@ class GalleryItemPage extends Component {
       shipDetCity: '',
       shipDetState: '',
       shipDetZipcode: '',
-      shipDetError: ''
+      shipDetError: '',
+      printPrice: '',
+      buyingPrint: false
     };
   }
 
@@ -66,6 +68,12 @@ class GalleryItemPage extends Component {
         });
       } else {
         this.props.history.push('/404');
+      }
+    })
+
+    firebaseApp.database().ref('settings').once('value', snapshot => {
+      if (snapshot.val() !== null) {
+        this.setState({ printPrice: snapshot.val().printPrice });
       }
     })
   }
@@ -126,6 +134,79 @@ class GalleryItemPage extends Component {
             "height": height,
             "distance_unit": "in",
             "weight": weight,
+            "mass_unit": "lb"
+        }],
+        "async": false
+      })
+      .end((err, res) => {
+        if (err !== null) {
+          this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false });
+        }
+        if (res !== null) {
+          const parsedRes = JSON.parse(res.text).rates;
+          if (parsedRes !== undefined && parsedRes !== null) {
+            if (parsedRes[0] !== undefined) {
+              this.setState({ rates: parsedRes });
+              this.setState({ selectedRate: parsedRes[0].amount });
+              this.setState({ total: parseFloat(this.state.item.price) + parseFloat(parsedRes[0].amount) });
+              this.setState({ error: '' })
+            } else {
+              this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
+            }
+          } else {
+            this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
+          }
+        } else {
+          this.setState({ error: 'There was an error, please ensure your information is correct.', didPrepare: false })
+        }
+      });
+  }
+
+  findShippingRatesForPrint = () => {
+    const { printLength, printWidth, printHeight, printWeight } = this.state.item;
+    const { shipDetName, shipDetStreet1, shipDetCity, shipDetState, shipDetZipcode } = this.state;
+
+    if (shipDetName === '' || shipDetStreet1 === '' || shipDetCity === '' ||
+        shipDetState === '' || shipDetZipcode === '') {
+      this.setState({ error: 'Please fill in all fields.' });
+      this.setState({ didPrepare: false });
+      return;
+    } else {
+      this.setState({ error: '' });
+      this.setState({ didPrepare: true });
+    }
+
+    request
+      .post('https://api.goshippo.com/shipments/')
+      .set('Authorization', 'ShippoToken shippo_live_3c9fc3cee381c8f7b2ea08e279bdb98a411081e9')
+      .set('Accept', 'application/json')
+      .send({
+        "address_to": {
+            "name": shipDetName,
+            "street1": shipDetStreet1,
+            "city": shipDetCity,
+            "state": shipDetState,
+            "zip": shipDetZipcode,
+            "country": "US",
+            "phone": "4151234567",
+            "email": "mrhippo@goshippo.com"
+        },
+        "address_from": {
+            "name": "Patrica Hom",
+            "street1": "11240 Manzanita Rd",
+            "city": "Lakeside",
+            "state": "CA",
+            "zip": "92040",
+            "country": "US",
+            "phone": "8582456799",
+            "email": "ehg11240@gmail.com"
+        },
+        "parcels": [{
+            "length": printLength,
+            "width": printWidth,
+            "height": printHeight,
+            "distance_unit": "in",
+            "weight": printWeight,
             "mass_unit": "lb"
         }],
         "async": false
@@ -256,9 +337,24 @@ class GalleryItemPage extends Component {
                             <Col xs={12} md={6}>
                               <Button
                                 bsStyle='default'
-                                onClick={() => this.setState({ checkoutMode: true })}
+                                onClick={() => this.setState({ checkoutMode: true, buyingPrint: false })}
                                 >
                                 PURCHASE
+                              </Button>
+                            </Col>
+                          </Row>
+                        }
+                        { this.state.printPrice !== '' &&
+                          <Row className='gallery-page-row-1'>
+                            <Col xs={12} md={6}>
+                              <h1 className='gallery-page-price-print noselect'>${this.state.printPrice}</h1>
+                            </Col>
+                            <Col xs={12} md={6}>
+                              <Button
+                                bsStyle='default'
+                                onClick={() => this.setState({ checkoutMode: true, buyingPrint: true })}
+                                >
+                                BUY PRINT
                               </Button>
                             </Col>
                           </Row>

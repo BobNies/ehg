@@ -64,7 +64,15 @@ export class Provider extends Component {
   }
 
   setIntagramPost = (newInstaPost) => {
-    firebaseApp.database().ref('settings').set({ instagramPost: newInstaPost });
+    firebaseApp.database().ref('settings').once('value', snapshot => {
+      firebaseApp.database().ref('settings').set({ instagramPost: newInstaPost, printPrice: snapshot.val().printPrice });
+    })
+  }
+
+  setPrintPrice = (newPrintPrice) => {
+    firebaseApp.database().ref('settings').once('value', snapshot => {
+      firebaseApp.database().ref('settings').set({ instagramPost: snapshot.val().instagramPost, printPrice: newPrintPrice });
+    })
   }
 
   render() {
@@ -77,6 +85,7 @@ export class Provider extends Component {
           produceNotification: this.produceNotification,
           instagramPost: this.state.instagramPost,
           setIntagramPost: this.setIntagramPost,
+          setPrintPrice: this.setPrintPrice,
         }}>
         <NotificationSystem ref={this.notificationSystem} />
         {this.props.children}
