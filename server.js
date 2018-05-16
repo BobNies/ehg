@@ -20,6 +20,7 @@ app.post('/api/sendContactMail', (req, res) => {
   };
   sgMail.send(msg);
   res.send(msg);
+  console.log('Sent sendgrid email:', msg);
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
