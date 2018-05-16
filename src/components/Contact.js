@@ -26,6 +26,7 @@ class Contact extends Component {
   }
 
   sendEmail = () => {
+    
     /*
     request
       .post('https://api.mailjet.com/v3.1/send')
