@@ -3,6 +3,10 @@ import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 
 class NotFound extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render () {
     return(
       <div>

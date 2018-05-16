@@ -14,6 +14,10 @@ import HeaderImg from '../images/header.jpg'
 import AdminShortcut from '../components/AdminShortcut'
 
 class Home extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render () {
     return(
       <Consumer>

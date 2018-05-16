@@ -20,6 +20,10 @@ class Contact extends Component {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   componentWillUpdate(nextProps, nextState) {
     // Update state to sync with router changes
     if (nextProps.match.params.artistName !== this.state.artistName) {

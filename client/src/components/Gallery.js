@@ -25,6 +25,7 @@ class Gallery extends Component {
 
   componentDidMount() {
     this.updateGallery();
+    window.scrollTo(0, 0);
   }
 
   componentWillUpdate(nextProps, nextState) {

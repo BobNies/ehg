@@ -38,6 +38,10 @@ class AdminPanel extends Component {
     this.instagramPostControl = React.createRef();
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   updateGalleryItemName(newName) {
     let igi = this.state.inputGalleryItem;
     igi.name = newName;
