@@ -26,10 +26,11 @@ class Contact extends Component {
   }
 
   sendEmail = () => {
+    /*
     request
       .post('https://api.mailjet.com/v3.1/send')
-      .auth('5a076f80f30ee53f618636f9185a527d', '8b70ac19d539da0506c0c1c401b648ee')
       .set('Accept', 'application/json')
+      .set('Authorization', '5a076f80f30ee53f618636f9185a527d:8b70ac19d539da0506c0c1c401b648ee')
       .send({
         "Messages":[
           {
@@ -53,6 +54,7 @@ class Contact extends Component {
         console.log('Response', res);
         console.log('Error (if any)', err);
       })
+      */
   }
 
   render () {
