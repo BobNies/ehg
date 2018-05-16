@@ -26,7 +26,39 @@ class Contact extends Component {
   }
 
   sendEmail = () => {
-    
+    /*
+    request
+      .post('https://api.sendgrid.com/v3/mail/send')
+      .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer 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')
+      .send({
+        "personalizations": [
+          {
+            "to": [
+              {
+                "email": "whatsthatfunction@gmail.com"
+              }
+            ]
+          }
+        ],
+        "from": {
+          "email": "whatsthatfunction@gmail.com"
+        },
+        "subject": "Sending with SendGrid is Fun",
+        "content": [
+          {
+            "type": "text/plain",
+            "value": "and easy to do anywhere, even with http requests."
+          }
+        ]
+      })
+      .end((err, res) => {
+        console.log('Response', res);
+        console.log('Error (if any)', err);
+      })
+    */
+
+
     /*
     request
       .post('https://api.mailjet.com/v3.1/send')
