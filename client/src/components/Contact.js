@@ -61,7 +61,8 @@ class Contact extends Component {
         "message": "The message"
       })
       .end((err, res) => {
-
+        console.log('Response', res);
+        console.log('Error (if any)', err);
       });
 
       // Reset error message
