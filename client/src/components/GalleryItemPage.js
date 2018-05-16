@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
 import { Grid, Row, Col, Button, FormControl, Alert } from 'react-bootstrap'
-import CustomNavBar from './CustomNavBar'
-import Footer from './Footer'
 import Img from 'react-image'
 import PaypalExpressBtn from 'react-paypal-express-checkout'
 import request from 'superagent'
 import { RadioGroup, Radio } from 'react-radio-group'
+import CustomNavBar from './CustomNavBar'
+import Footer from './Footer'
 
 class GalleryItemPage extends Component {
   constructor(props) {
@@ -276,6 +276,36 @@ class GalleryItemPage extends Component {
        let soldItem = originItem;
        soldItem.sold = true;
        this.setState({ item: soldItem });
+
+       request
+         .post('/api/sendContactMail')
+         .set('Accept', 'application/json')
+         .query({ to: 'ehg11240@gmail.com' })
+         .query({ from: 'ehg11240@gmail.com' })
+         .query({ subject: 'You Sold a Painting!' })
+         .query({ text: this.state.shipDetName + ' bought your ' + this.state.item.name + ' painting for $' + this.state.item.price + '!  Ship to: ' + this.state.shipDetName + ', ' + this.state.shipDetStreet1 + ', ' + this.state.shipDetCity + ', ' + this.state.shipDetState + ' ' + this.state.shipDetZipcode })
+         .query({ html: '<h3>' + this.state.shipDetName + ' bought your ' + this.state.item.name + ' painting for $' + this.state.item.price + '!</h3> <hr/> <h4>Ship to:</h4> <hr/> <p>' + this.state.shipDetName + ', ' + this.state.shipDetStreet1 + ', ' + this.state.shipDetCity + ', ' + this.state.shipDetState + ' ' + this.state.shipDetZipcode + '</p>' })
+         .send({
+           "message": "The message"
+         })
+         .end((err, res) => {
+
+         });
+    } else {
+      request
+        .post('/api/sendContactMail')
+        .set('Accept', 'application/json')
+        .query({ to: 'ehg11240@gmail.com' })
+        .query({ from: 'ehg11240@gmail.com' })
+        .query({ subject: 'You Sold a Print!' })
+        .query({ text: this.state.shipDetName + ' bought your ' + this.state.item.name + ' print for $' + this.state.item.price + '!  Ship to: ' + this.state.shipDetName + ', ' + this.state.shipDetStreet1 + ', ' + this.state.shipDetCity + ', ' + this.state.shipDetState + ' ' + this.state.shipDetZipcode })
+        .query({ html: '<h3>' + this.state.shipDetName + ' bought your ' + this.state.item.name + ' print for $' + this.state.item.price + '!</h3> <hr/> <h4>Ship to:</h4> <hr/> <p>' + this.state.shipDetName + ', ' + this.state.shipDetStreet1 + ', ' + this.state.shipDetCity + ', ' + this.state.shipDetState + ' ' + this.state.shipDetZipcode + '</p>' })
+        .send({
+          "message": "The message"
+        })
+        .end((err, res) => {
+
+        });
     }
 
     this.setState({ checkoutMode: false });
