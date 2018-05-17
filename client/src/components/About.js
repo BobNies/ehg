@@ -59,8 +59,20 @@ class About extends Component {
                   </div>
                 ) : (
                   <div>
-                    <h4>"Sculpture is all about precision and quality."</h4>
-                    <p>Fred Briscoe bio.</p>
+                    <h4>"each new stone is a new adventure, unfettered and
+                      unattached to known form"</h4>
+                    <p>My earliest sculptures were 3D realizations of my fairly
+                      detailed drawings.  This approach led to developing a personal
+                      language and evolved into a more direct process where I
+                      entered into a dialogue with the stone with no preconceived
+                      direction, only to speak this language through this rock.
+                      This method is most akin to play- free-spirited exploring
+                      form, wherever it leads; like a child digging tunnels or
+                      building castles in the sand.  Beauty matters - classical
+                      elements are significant components of this language - line,
+                      curve, edge, proportion, negative space, texture…  How they
+                      some to be in a new unique combination, that is my fun, my
+                      joy.  On a good day, that joy is shared.</p>
                   </div>
                 )}
               </Col>
@@ -94,30 +106,7 @@ class About extends Component {
                 </Col>
               </Row>
             ) : (
-              <Row className='testimonial-section'>
-                <h2>TESTIMONIALS</h2>
-                <Col xs={12} md={4} className='testimonial-col'>
-                  <Testimonial
-                    quote='Fred did an amazing job at.... here is the rest of the
-                    testimonial here.  It&apos;s pretty cool, here is some more text.'
-                    author='Sal Hochum'
-                    />
-                </Col>
-                <Col xs={12} md={4} className='testimonial-col'>
-                  <Testimonial
-                    quote='What a great job he did. here is the rest of the
-                    testimonial here.  It&apos;s pretty cool, here is some more text.'
-                    author='Will Cluff'
-                    />
-                </Col>
-                <Col xs={12} md={4} className='testimonial-col'>
-                  <Testimonial
-                    quote='Here is a guy who knows how to make sculpture! here is the rest of the
-                    testimonial here.  It&apos;s pretty cool, here is some more text.'
-                    author='Sharman Sanders'
-                    />
-                </Col>
-              </Row>
+              <div></div>
             )}
           </div>
         </Grid>
