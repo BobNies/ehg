@@ -37,7 +37,14 @@ class Home extends Component {
                   </Col>
                   <Col xs={12} md={6}>
                     <h2 className='home-title-1 noselect'>A collective <span className='home-title-1-bold'>gallery</span> of mixed media art.</h2>
-                  </Col>
+                    <LinkContainer to='/shows'>
+                      <Button
+                        bsStyle='default'
+                        >
+                        SEE SHOWS
+                      </Button>
+                    </LinkContainer>
+                </Col>
                 </Row>
                 <Row className='home-sec-2'>
                   <h1 className='noselect'>Our Artists</h1>

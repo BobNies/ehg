@@ -30,7 +30,7 @@ class Footer extends Component {
                     <Link to='/artists/fred-briscoe/gallery'><h4>GALLERY</h4></Link>
                     <Link to='/artists/fred-briscoe/about'><h4>ABOUT</h4></Link>
                     <Link to='/artists/fred-briscoe/contact'><h4>CONTACT</h4></Link>
-                    <Link to='/shows'><h4 className='footer-link-shows'>SHOW COLLECTION</h4></Link>
+                    <Link to='/shows'><h4 className='footer-link-shows'>SHOWS COLLECTION</h4></Link>
                   </Col>
                   <Col xs={12} md={6}>
                     {user ? (
