@@ -65,29 +65,32 @@ class About extends Component {
                 )}
               </Col>
             </Row>
-            { this.artistName === 'michael-roser' ? (
+            { this.state.artistName === 'michael-roser' ? (
               <Row className='testimonial-section'>
                 <h2>TESTIMONIALS</h2>
                 <Col xs={12} md={4} className='testimonial-col'>
                   <Testimonial
-                    quote='Michael did an amazing job at.... here is the rest of the
-                    testimonial here.  It&apos;s pretty cool, here is some more text.'
-                    author='John Smith'
+                    quote='Mike&apos;s work is bold and captivating with its many
+                    textures and layers that engage the viewer.  He has a multifaceted
+                    talent with visual appeal that works well on small as well as
+                    large scale.'
+                    author='Jane Wheeler'
+                    authorDetails='Art Curator for The Bird Rock Art Cooperative'
                     />
                 </Col>
                 <Col xs={12} md={4} className='testimonial-col'>
                   <Testimonial
-                    quote='What a great job he did. here is the rest of the
-                    testimonial here.  It&apos;s pretty cool, here is some more text.'
-                    author='Truman Huffle'
+                    quote='Mike is a talented artist who produces a diverse variety
+                    of evocative and visually appealing artwork...  I absolutely
+                    fell in love with one of Mike&apos;s patriotic pieces, a painting
+                    I bought as a surprise for my husband, who happens to be a collector
+                    of Americana.'
+                    author='Charlene Dangel'
+                    authorDetails='La Jolla'
                     />
                 </Col>
                 <Col xs={12} md={4} className='testimonial-col'>
-                  <Testimonial
-                    quote='Here is a guy who knows how to make art! here is the rest of the
-                    testimonial here.  It&apos;s pretty cool, here is some more text.'
-                    author='Sally Sue'
-                    />
+
                 </Col>
               </Row>
             ) : (

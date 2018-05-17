@@ -6,6 +6,7 @@ class Testimonial extends Component {
       <div className='testimonial'>
         <p>&quot;{this.props.quote}&quot;</p>
         <h3>- {this.props.author}</h3>
+        <h4>{this.props.authorDetails}</h4>
       </div>
     )
   }
