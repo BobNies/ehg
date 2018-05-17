@@ -61,6 +61,12 @@ class AdminPanel extends Component {
     this.setState({ inputGalleryItem: igi });
   }
 
+  updateGalleryItemSold(newSold) {
+    let igi = this.state.inputGalleryItem;
+    igi.sold = newSold;
+    this.setState({ inputGalleryItem: igi });
+  }
+
   updateGalleryItemPrice(newPrice) {
     let igi = this.state.inputGalleryItem;
     igi.price = newPrice;
@@ -342,6 +348,14 @@ class AdminPanel extends Component {
                         placeholder='Description'
                         onChange={event => this.updateGalleryItemDescription(event.target.value)}
                         />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Available to Sell?</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <Checkbox checked={!this.state.inputGalleryItem.sold} onChange={() => this.updateGalleryItemSold(!this.state.inputGalleryItem.sold)}/>
                     </Col>
                   </Row>
                   <Row className='admin-row'>

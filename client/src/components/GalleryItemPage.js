@@ -641,8 +641,12 @@ class GalleryItemPage extends Component {
                         }
                         <Row className='gallery-page-row-3'>
                           <p>{this.state.item.description}</p>
-                          <p className='gallery-item-dim'>Artwork dimensions: {this.state.item.width} x {this.state.item.height} in</p>
-                          <p className='gallery-item-dim'>Print dimensions: {this.state.item.printWidth} x {this.state.item.printHeight} in</p>
+                          { this.state.item.width !== null && this.state.item.width !== '' &&
+                            <p className='gallery-item-dim'>Artwork dimensions: {this.state.item.width} x {this.state.item.height} in</p>
+                          }
+                          { this.state.item.hasPrints && this.state.item.printWidth !== null && this.state.item.printWidth !== '' &&
+                            <p className='gallery-item-dim'>Print dimensions: {this.state.item.printWidth} x {this.state.item.printHeight} in</p>
+                          }
                         </Row>
                       </Col>
                     </Row>
