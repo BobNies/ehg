@@ -76,7 +76,7 @@ class ShowDisplayPage extends Component {
       const imageRef = firebaseApp.storage().ref('shows/' + file.name);
       let task = imageRef.put(file);
       let imagePath = imageRef.fullPath;
-      this.setState({ isUploadingShow: true });
+      this.setState({ isUploading: true });
       task.on('state_changed',
         (snapshot) => {
           let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -88,7 +88,7 @@ class ShowDisplayPage extends Component {
         },
 
         () => {
-          this.setState({ isUploadingShow: false });
+          this.setState({ isUploading: false });
 
           firebaseApp.storage().ref(this.state.originImagePath).delete();
 

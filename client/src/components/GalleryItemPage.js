@@ -23,6 +23,8 @@ class GalleryItemPage extends Component {
       editMode: false,
       editedName: '',
       editedDescription: '',
+      editedImagePath: '',
+      originImagePath: '',
       editedPrice: '',
       editedLength: '',
       editedWidth: '',
@@ -33,6 +35,7 @@ class GalleryItemPage extends Component {
       editedPrintHeight: '',
       editedPrintWeight: '',
       editedHasPrints: false,
+      galleryImage: null,
       checkoutMode: false,
       rates: null,
       selectedRate: '',
@@ -80,7 +83,9 @@ class GalleryItemPage extends Component {
           editedPrintHeight: snapshot.val().printHeight,
           editedPrintLength: snapshot.val().printLength,
           editedPrintWeight: snapshot.val().printWeight,
-          editedHasPrints: snapshot.val().hasPrints
+          editedHasPrints: snapshot.val().hasPrints,
+          editedImagePath: snapshot.val().imagePath,
+          originImagePath: snapshot.val().imagePath
         });
       } else {
         this.props.history.push('/404');
@@ -341,6 +346,10 @@ class GalleryItemPage extends Component {
     }
   }
 
+  updateGalleryImage(newImage) {
+    this.setState({ galleryImage: newImage });
+  }
+
   deleteItem = (produceNotification) => {
     firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey).remove();
 
@@ -348,6 +357,38 @@ class GalleryItemPage extends Component {
   }
 
   applyUpdate = (produceNotification) => {
+    // Upload Image (if edited)
+    if (this.state.galleryImage !== null && this.state.galleryImage !== '') {
+      let file = this.state.galleryImage;
+      const imageRef = firebaseApp.storage().ref('gallery/' + this.state.artistName + '/' + file.name);
+      let task = imageRef.put(file);
+      let imagePath = imageRef.fullPath;
+      this.setState({ isUploading: true });
+      task.on('state_changed',
+        (snapshot) => {
+          let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.setState({ uploadProgress: percentage });
+        },
+
+        (err) => {
+          this.setState({ uploadError: err });
+        },
+
+        () => {
+          this.setState({ isUploading: false });
+
+          firebaseApp.storage().ref(this.state.originImagePath).delete();
+
+          // Finish actual update
+          this.finishUpdate(produceNotification, imagePath);
+        }
+      );
+    } else {
+      this.finishUpdate(produceNotification, this.state.originImagePath);
+    }
+  }
+
+  finishUpdate = (produceNotification, imagePath) => {
     firebaseApp.database().ref('gallery/' + this.state.artistName + '/' + this.state.itemKey)
       .set({
         name: this.state.editedName,
@@ -355,7 +396,7 @@ class GalleryItemPage extends Component {
         price: this.state.editedPrice,
         sold: this.state.item.sold,
         artist: this.state.item.artist,
-        imagePath: this.state.item.imagePath,
+        imagePath: imagePath,
         timestamp: this.state.item.timestamp,
         length: this.state.editedLength,
         width: this.state.editedWidth,
@@ -685,6 +726,14 @@ class GalleryItemPage extends Component {
                               placeholder='Weight'
                               onChange={event => this.setState({ editedWeight: event.target.value })}
                               />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Image</h3>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <input type='file' onChange={event => this.updateGalleryImage(event.target.files[0])} />
                           </Col>
                         </Row>
                         <Row>
