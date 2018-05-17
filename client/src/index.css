@@ -941,6 +941,43 @@ body {
   color: #444;
 }
 
+/* TESTIMONIALS */
+
+.testimonial-section {
+  margin-top: 5rem;
+}
+
+.testimonial-section h2 {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #222;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+}
+
+.testimonial {
+  background-color: #222;
+  padding: 2rem;
+  border-top: 1rem solid #c7a891;
+}
+
+.testimonial p {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #eee;
+}
+
+.testimonial h3 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #fff;
+  margin-left: 2rem;
+}
+
+.testimonial-col {
+  padding: 1rem;
+}
+
 /* CONTACT */
 
 .contact {
