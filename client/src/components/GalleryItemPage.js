@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
-import { Grid, Row, Col, Button, FormControl, Alert } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormControl, Alert, Checkbox, ProgressBar } from 'react-bootstrap'
 import Img from 'react-image'
 import PaypalExpressBtn from 'react-paypal-express-checkout'
 import request from 'superagent'
@@ -28,6 +28,11 @@ class GalleryItemPage extends Component {
       editedWidth: '',
       editedHeight: '',
       editedWeight: '',
+      editedPrintLength: '',
+      editedPrintWidth: '',
+      editedPrintHeight: '',
+      editedPrintWeight: '',
+      editedHasPrints: false,
       checkoutMode: false,
       rates: null,
       selectedRate: '',
@@ -70,7 +75,12 @@ class GalleryItemPage extends Component {
           editedLength: snapshot.val().length,
           editedWidth: snapshot.val().width,
           editedHeight: snapshot.val().height,
-          editedWeight: snapshot.val().weight
+          editedWeight: snapshot.val().weight,
+          editedPrintWidth: snapshot.val().printWidth,
+          editedPrintHeight: snapshot.val().printHeight,
+          editedPrintLength: snapshot.val().printLength,
+          editedPrintWeight: snapshot.val().printWeight,
+          editedHasPrints: snapshot.val().hasPrints
         });
       } else {
         this.props.history.push('/404');
@@ -350,7 +360,12 @@ class GalleryItemPage extends Component {
         length: this.state.editedLength,
         width: this.state.editedWidth,
         height: this.state.editedHeight,
-        weight: this.state.editedWeight
+        weight: this.state.editedWeight,
+        hasPrints: this.state.editedHasPrints,
+        printWidth: this.state.editedPrintWidth,
+        printHeight: this.state.editedPrintHeight,
+        printLength: this.state.editedPrintLength,
+        printWeight: this.state.editedPrintWeight
       });
 
       produceNotification('Update Applied', 'Successfully', 'success');
@@ -403,7 +418,7 @@ class GalleryItemPage extends Component {
                             </Col>
                           </Row>
                         }
-                        { this.state.printPrice !== '' &&
+                        { this.state.item.hasPrints && this.state.printPrice !== '' &&
                           <Row className='gallery-page-row-1'>
                             <Col xs={12} md={6}>
                               <h1 className='gallery-page-price-print noselect'>${this.state.printPrice}</h1>
@@ -672,6 +687,59 @@ class GalleryItemPage extends Component {
                               />
                           </Col>
                         </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Has Prints</h3>
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <Checkbox checked={this.state.editedHasPrints} onChange={() => this.setState({ editedHasPrints: !this.state.editedHasPrints })}/>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Print Size (in)</h3>
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Width'
+                              onChange={event => this.setState({ editedPrintWidth: event.target.value })}
+                              />
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Height'
+                              onChange={event => this.setState({ editedPrintHeight: event.target.value })}
+                              />
+                          </Col>
+                          <Col xs={2} md={1}>
+                            <FormControl
+                              type='text'
+                              placeholder='Depth'
+                              onChange={event => this.setState({ editedPrintLength: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Print Weight (lb)</h3>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <FormControl
+                              type='text'
+                              placeholder='Weight'
+                              onChange={event => this.setState({ editedPrintWeight: event.target.value })}
+                              />
+                          </Col>
+                        </Row>
+                        { this.state.isUploading &&
+                          <Row>
+                            <Col xs={6} md={4} mdOffset={3}>
+                              <ProgressBar active now={this.state.uploadProgress} />
+                            </Col>
+                          </Row>
+                        }
                         <Row className='gallery-page-edit-final'>
                           <Col xs={4} md={2} mdOffset={3}>
                             <Button
