@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Consumer } from '../MyContext'
 import { firebaseApp } from '../firebase'
-import { Grid, Row, Col, FormControl, Button } from 'react-bootstrap'
+import { Grid, Row, Col, FormControl, Button, ProgressBar } from 'react-bootstrap'
 import Img from 'react-image'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
@@ -17,7 +17,13 @@ class ShowDisplayPage extends Component {
       loading: true,
       editMode: false,
       editedDescription: '',
-      editedName: ''
+      editedName: '',
+      editedImagePath: '',
+      originImagePath: '',
+      showImage: null,
+      isUploading: false,
+      uploadProgress: 0,
+      uploadError: null
     };
   }
 
@@ -36,7 +42,9 @@ class ShowDisplayPage extends Component {
         // Admin edit mode - starting values
         this.setState({
           editedDescription: snapshot.val().description,
-          editedName: snapshot.val().name
+          editedName: snapshot.val().name,
+          editedImagePath: snapshot.val().imagePath,
+          originImagePath: snapshot.val().imagePath
         });
       } else {
         this.props.history.push('/404');
@@ -51,6 +59,10 @@ class ShowDisplayPage extends Component {
     }
   }
 
+  updateShowImage(newImage) {
+    this.setState({ showImage: newImage });
+  }
+
   deleteShow = (produceNotification) => {
     firebaseApp.database().ref('shows/' + this.state.showKey).remove();
 
@@ -58,9 +70,41 @@ class ShowDisplayPage extends Component {
   }
 
   applyUpdate = (produceNotification) => {
+    // Upload Image (if edited)
+    if (this.state.showImage !== null && this.state.showImage !== '') {
+      let file = this.state.showImage;
+      const imageRef = firebaseApp.storage().ref('shows/' + file.name);
+      let task = imageRef.put(file);
+      let imagePath = imageRef.fullPath;
+      this.setState({ isUploadingShow: true });
+      task.on('state_changed',
+        (snapshot) => {
+          let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.setState({ uploadProgress: percentage });
+        },
+
+        (err) => {
+          this.setState({ uploadError: err });
+        },
+
+        () => {
+          this.setState({ isUploadingShow: false });
+
+          firebaseApp.storage().ref(this.state.originImagePath).delete();
+
+          // Finish actual update
+          this.finishUpdate(produceNotification, imagePath);
+        }
+      );
+    } else {
+      this.finishUpdate(produceNotification, this.state.originImagePath);
+    }
+  }
+
+  finishUpdate = (produceNotification, imagePath) => {
     firebaseApp.database().ref('shows/' + this.state.showKey)
       .set({
-        imagePath: this.state.show.imagePath,
+        imagePath: imagePath,
         description: this.state.editedDescription,
         name: this.state.editedName
       });
@@ -126,6 +170,21 @@ class ShowDisplayPage extends Component {
                               />
                           </Col>
                         </Row>
+                        <Row>
+                          <Col xs={6} md={2} mdOffset={3}>
+                            <h3>Image</h3>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <input type='file' onChange={event => this.updateShowImage(event.target.files[0])} />
+                          </Col>
+                        </Row>
+                        { this.state.isUploading &&
+                          <Row>
+                            <Col xs={6} md={4} mdOffset={3}>
+                              <ProgressBar active now={this.state.uploadProgress} />
+                            </Col>
+                          </Row>
+                        }
                         <Row className='gallery-page-edit-final'>
                           <Col xs={4} md={2} mdOffset={3}>
                             <Button
