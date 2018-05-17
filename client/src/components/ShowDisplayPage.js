@@ -16,7 +16,8 @@ class ShowDisplayPage extends Component {
       show: null,
       loading: true,
       editMode: false,
-      editedDescription: ''
+      editedDescription: '',
+      editedName: ''
     };
   }
 
@@ -50,7 +51,7 @@ class ShowDisplayPage extends Component {
     }
   }
 
-  deleteItem = (produceNotification) => {
+  deleteShow = (produceNotification) => {
     firebaseApp.database().ref('shows/' + this.state.showKey).remove();
 
     produceNotification('Show Deleted', 'Successfully', 'success');
@@ -81,7 +82,7 @@ class ShowDisplayPage extends Component {
                   </div>
                 ) : (
                   <div>
-                    <Row className='gallery-page-main'>
+                    <Row className='show-page-main'>
                       <Col xs={12} md={8}>
                         <Img src={this.state.imageSrc} />
                       </Col>
@@ -124,61 +125,11 @@ class ShowDisplayPage extends Component {
                               />
                           </Col>
                         </Row>
-                        <Row>
-                          <Col xs={6} md={2} mdOffset={3}>
-                            <h3>Price</h3>
-                          </Col>
-                          <Col xs={6} md={4}>
-                            <FormControl
-                              type='text'
-                              placeholder='Price'
-                              onChange={event => this.setState({ editedPrice: event.target.value })}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col xs={6} md={2} mdOffset={3}>
-                            <h3>Size (in)</h3>
-                          </Col>
-                          <Col xs={2} md={1}>
-                            <FormControl
-                              type='text'
-                              placeholder='Width'
-                              onChange={event => this.setState({ editedWidth: event.target.value })}
-                              />
-                          </Col>
-                          <Col xs={2} md={1}>
-                            <FormControl
-                              type='text'
-                              placeholder='Height'
-                              onChange={event => this.setState({ editedHeight: event.target.value })}
-                              />
-                          </Col>
-                          <Col xs={2} md={1}>
-                            <FormControl
-                              type='text'
-                              placeholder='Depth'
-                              onChange={event => this.setState({ editedLength: event.target.value })}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col xs={6} md={2} mdOffset={3}>
-                            <h3>Weight (lb)</h3>
-                          </Col>
-                          <Col xs={6} md={4}>
-                            <FormControl
-                              type='text'
-                              placeholder='Weight'
-                              onChange={event => this.setState({ editedWeight: event.target.value })}
-                              />
-                          </Col>
-                        </Row>
                         <Row className='gallery-page-edit-final'>
                           <Col xs={4} md={2} mdOffset={3}>
                             <Button
                               bsStyle='danger'
-                              onClick={() => this.deleteItem(produceNotification)}
+                              onClick={() => this.deleteShow(produceNotification)}
                               >
                               Delete
                             </Button>
