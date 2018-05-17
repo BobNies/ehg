@@ -86,6 +86,7 @@ class ShowDisplayPage extends Component {
                         <Img src={this.state.imageSrc} />
                       </Col>
                       <Col xs={12} md={4}>
+                        <h3>{this.state.show.name}</h3>
                         <Row className='gallery-page-row-3'>
                           <p>{this.state.show.description}</p>
                         </Row>

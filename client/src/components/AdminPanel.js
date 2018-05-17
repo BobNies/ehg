@@ -31,7 +31,8 @@ class AdminPanel extends Component {
       },
       inputShow: {
         imagePath: '',
-        description: ''
+        description: '',
+        name: ''
       },
       igiImage: null,
       showImage: null,
@@ -126,6 +127,12 @@ class AdminPanel extends Component {
 
   updateShowImage(newImage) {
     this.setState({ showImage: newImage });
+  }
+
+  updateShowName(newName) {
+    let show = this.state.inputShow;
+    show.name = newName;
+    this.setState({ inputShow: show });
   }
 
   updateShowDescription(newDesc) {
@@ -227,7 +234,8 @@ class AdminPanel extends Component {
 
   addShow(produceNotification) {
     const {
-      description
+      description,
+      name
     } = this.state.inputShow;
 
     // File image upload
@@ -251,7 +259,8 @@ class AdminPanel extends Component {
 
         firebaseApp.database().ref('shows/').push({
           imagePath,
-          description
+          description,
+          name
         });
 
         produceNotification('New Show Added', 'Successfully', 'success');
@@ -513,6 +522,18 @@ class AdminPanel extends Component {
                   <Row className='admin-row admin-row-header'>
                     <Col xs={6} md={4} mdOffset={2}>
                       <h2>New Show</h2>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Name (Place)</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Name (Place)'
+                        onChange={event => this.updateShowName(event.target.value)}
+                        />
                     </Col>
                   </Row>
                   <Row className='admin-row'>
