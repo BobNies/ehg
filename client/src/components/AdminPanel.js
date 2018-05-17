@@ -29,8 +29,14 @@ class AdminPanel extends Component {
         printLength: '',
         printWeight: ''
       },
+      inputShow: {
+        imagePath: '',
+        description: ''
+      },
       igiImage: null,
-      isUploading: false,
+      showImage: null,
+      isUploadingGalleryItem: false,
+      isUploadingShow: false,
       uploadProgress: 0,
       uploadError: null
     }
@@ -118,6 +124,16 @@ class AdminPanel extends Component {
     this.setState({ inputGalleryItem: igi });
   }
 
+  updateShowImage(newImage) {
+    this.setState({ showImage: newImage });
+  }
+
+  updateShowDescription(newDesc) {
+    let show = this.state.inputShow;
+    show.description = newDesc;
+    this.setState({ inputShow: show });
+  }
+
   artistSelect(eventKey) {
     if (eventKey === 1) {
       let igi = this.state.inputGalleryItem;
@@ -169,7 +185,7 @@ class AdminPanel extends Component {
     const imageRef = firebaseApp.storage().ref('gallery/' + artist + '/' + file.name);
     let task = imageRef.put(file);
     let imagePath = imageRef.fullPath;
-    this.setState({ isUploading: true });
+    this.setState({ isUploadingGalleryItem: true });
     task.on('state_changed',
       (snapshot) => {
         let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -181,7 +197,7 @@ class AdminPanel extends Component {
       },
 
       () => {
-        this.setState({ isUploading: false });
+        this.setState({ isUploadingGalleryItem: false });
         let d = new Date();
         let timestamp = d.getTime();
 
@@ -205,6 +221,40 @@ class AdminPanel extends Component {
         });
 
         produceNotification('Gallery Item Added', 'Successfully', 'success');
+      }
+    );
+  }
+
+  addShow(produceNotification) {
+    const {
+      description
+    } = this.state.inputShow;
+
+    // File image upload
+    let file = this.state.showImage;
+    const imageRef = firebaseApp.storage().ref('shows/' + file.name);
+    let task = imageRef.put(file);
+    let imagePath = imageRef.fullPath;
+    this.setState({ isUploadingShow: true });
+    task.on('state_changed',
+      (snapshot) => {
+        let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        this.setState({ uploadProgress: percentage });
+      },
+
+      (err) => {
+        this.setState({ uploadError: err });
+      },
+
+      () => {
+        this.setState({ isUploadingShow: false });
+
+        firebaseApp.database().ref('shows/').push({
+          imagePath,
+          description
+        });
+
+        produceNotification('New Show Added', 'Successfully', 'success');
       }
     );
   }
@@ -420,7 +470,7 @@ class AdminPanel extends Component {
                       </InputGroup>
                     </Col>
                   </Row>
-                  { this.state.isUploading &&
+                  { this.state.isUploadingGalleryItem &&
                     <Row className='admin-row'>
                       <Col xs={6} md={4} mdOffset={6}>
                         <ProgressBar active now={this.state.uploadProgress} />
@@ -433,7 +483,7 @@ class AdminPanel extends Component {
                         bsStyle='primary'
                         onClick={() => this.addGalleryItem(produceNotification)}
                         >
-                        Add
+                        Add Gallery Item
                       </Button>
                     </Col>
                   </Row>
@@ -457,6 +507,49 @@ class AdminPanel extends Component {
                           onChange={event => this.setState({ inputPrintPrice: event.target.value })}
                           />
                       </InputGroup>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row className='admin-row admin-row-header'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h2>New Show</h2>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Description</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Description'
+                        onChange={event => this.updateShowDescription(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Image</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <input type='file' onChange={event => this.updateShowImage(event.target.files[0])} />
+                    </Col>
+                  </Row>
+                  { this.state.isUploadingShow &&
+                    <Row className='admin-row'>
+                      <Col xs={6} md={4} mdOffset={6}>
+                        <ProgressBar active now={this.state.uploadProgress} />
+                      </Col>
+                    </Row>
+                  }
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={6}>
+                      <Button
+                        bsStyle='primary'
+                        onClick={() => this.addShow(produceNotification)}
+                        >
+                        Add Show
+                      </Button>
                     </Col>
                   </Row>
                   <hr />

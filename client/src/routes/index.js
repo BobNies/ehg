@@ -9,6 +9,8 @@ import SignOut from '../components/SignOut'
 import AdminPanel from '../components/AdminPanel'
 import GalleryItemPage from '../components/GalleryItemPage'
 import About from '../components/About'
+import ShowsPage from '../components/ShowsPage'
+import ShowDisplayPage from '../components/ShowDisplayPage'
 
 export default () => (
   <BrowserRouter>
@@ -18,6 +20,8 @@ export default () => (
       <Route exact path='/artists/:artistName/gallery/:itemKey' component={GalleryItemPage} />
       <Route path='/artists/:artistName/about' component={About} />
       <Route path='/artists/:artistName/contact' component={Contact} />
+      <Route exact path='/shows' component={ShowsPage} />
+      <Route exact path='/shows/:showKey' component={ShowDisplayPage} />
       <Route path='/login' component={Login} />
       <Route path='/signout' component={SignOut} />
       <Route path='/admin' component={AdminPanel} />

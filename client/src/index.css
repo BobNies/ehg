@@ -501,6 +501,10 @@ body {
   margin-left: 20px;
 }
 
+.footer-link-shows {
+  margin-top: 3rem;
+}
+
 .admin-link {
   margin-top: 30rem;
 }
@@ -956,6 +960,114 @@ body {
   margin: 0;
   margin-bottom: 5rem;
   margin-left: 3rem;
+}
+
+/* SHOWS COLLECTION */
+
+.shows {
+  margin-bottom: 100rem;
+  line-height: 0;
+
+  -webkit-column-count: 3;
+  -webkit-column-gap:   0px;
+  -moz-column-count:    3;
+  -moz-column-gap:      0px;
+  column-count:         3;
+  column-gap:           0px;
+}
+
+@media (max-width: 1200px) {
+  .shows {
+  -moz-column-count:    3;
+  -webkit-column-count: 3;
+  column-count:         3;
+  }
+}
+@media (max-width: 1000px) {
+  .shows {
+  -moz-column-count:    3;
+  -webkit-column-count: 3;
+  column-count:         3;
+  }
+}
+@media (max-width: 800px) {
+  .shows {
+  -moz-column-count:    2;
+  -webkit-column-count: 2;
+  column-count:         2;
+  }
+}
+@media (max-width: 400px) {
+  .shows {
+  -moz-column-count:    1;
+  -webkit-column-count: 1;
+  column-count:         1;
+  }
+}
+
+.shows {
+  margin: .5vw;
+  display: -ms-flexbox;
+  -ms-flexbox-wrap: wrap;
+  -ms-flexbox-direction: column;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  display: -webkit-box;
+  display: flex;
+}
+
+.shows-title {
+  font-size: 4rem;
+  font-weight: 300;
+  color: #222;
+  margin-left: 3rem;
+  margin-top: 5rem;
+}
+
+.show {
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+
+  width: 30rem;
+  height: 30rem;
+  overflow: hidden;
+  position: relative;
+
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.show:hover {
+  transform: scale(1.05);
+  z-index: 100;
+}
+
+.show img {
+  position: absolute;
+  left: -1000%;
+  right: -1000%;
+  top: -1000%;
+  bottom: -1000%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  width: 50%;
+}
+
+@media screen and (max-width: 400px) {
+  .show {
+    margin: 0;
+  }
+
+  .shows {
+    padding: 0;
+  }
 }
 
 /* 404 (NOT FOUND) */
