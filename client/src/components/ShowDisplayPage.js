@@ -35,10 +35,10 @@ class ShowDisplayPage extends Component {
 
         // Admin edit mode - starting values
         this.setState({
-          editedDescription: snapshot.val().description
+          editedDescription: snapshot.val().description,
+          editedName: snapshot.val().name
         });
       } else {
-        console.log('Show Key:', this.state.showKey);
         this.props.history.push('/404');
       }
     })
@@ -58,10 +58,11 @@ class ShowDisplayPage extends Component {
   }
 
   applyUpdate = (produceNotification) => {
-    firebaseApp.database().ref('gallery/' + this.state.showKey)
+    firebaseApp.database().ref('shows/' + this.state.showKey)
       .set({
         imagePath: this.state.show.imagePath,
-        description: this.state.editedDescription
+        description: this.state.editedDescription,
+        name: this.state.editedName
       });
 
       produceNotification('Update Applied', 'Successfully', 'success');
