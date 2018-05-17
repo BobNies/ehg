@@ -39,6 +39,8 @@ class ShowsPage extends Component {
           })
         }
 
+        newShows.reverse();
+
         this.setState({ showsArray: newShows });
       }
     })

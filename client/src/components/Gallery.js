@@ -51,6 +51,8 @@ class Gallery extends Component {
           })
         }
 
+        newItems.reverse();
+
         this.setState({ galleryItemArray: newItems });
       }
     })
