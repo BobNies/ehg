@@ -55,7 +55,15 @@ class About extends Component {
                 { this.state.artistName === 'michael-roser' ? (
                   <div>
                     <h4>"Art is an expression of the mind."</h4>
-                    <p>Michael Roser bio.</p>
+                    <p>Michael Roser is an accomplished Fine Artist, Photographer
+                      & Designer residing in Lakeside, CA.  He graduated from the
+                      Art Institute of Pittsburgh specializing in Graphic Design
+                      for Print & Publication.  He has won multiple first place
+                      and best in show awards in art shows all over the country
+                      for his fine art, photography and abstract paintings as well
+                      as being chosen to be the principal artist for the independent
+                      film Pitching Tents. You can see Michael, and more of his
+                      work, at his studio by visiting Eucalyptus Hills Gallery.</p>
                   </div>
                 ) : (
                   <div>
