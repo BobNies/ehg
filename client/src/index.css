@@ -1206,6 +1206,19 @@ body {
   background-color: #a89282;
 }
 
+/* SPINNER */
+
+.custom-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 45%;
+}
+
+.custom-spinner > * {
+
+}
+
 /* 404 (NOT FOUND) */
 
 .not-found {

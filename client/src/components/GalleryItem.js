@@ -44,7 +44,7 @@ class GalleryItem extends Component {
           return (
             <div className='gallery-item'>
               <Link to={'gallery/' + this.props.itemKey}>
-                <Img src={this.state.imageSrc} loader={Spinner}/>
+                <Img src={this.state.imageSrc} loader={<Spinner />}/>
               </Link>
             </div>
           )

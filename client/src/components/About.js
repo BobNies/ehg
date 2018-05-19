@@ -8,6 +8,7 @@ import AdminShortcut from './AdminShortcut'
 import Testimonial from './Testimonial'
 import MichaelRoserImg from '../images/artist-portrait-michael-roser.JPG'
 import FredBriscoeImg from '../images/artist-portrait-fred-briscoe.JPG'
+import { BeatLoader } from 'react-spinners'
 
 class About extends Component {
 
