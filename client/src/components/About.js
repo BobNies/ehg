@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Img from 'react-image'
+import { firebaseApp } from '../firebase'
 import CustomNavBar from './CustomNavBar'
 import Footer from './Footer'
 import AdminShortcut from './AdminShortcut'
@@ -14,11 +15,14 @@ class About extends Component {
     super(props);
 
     this.state = {
-      artistName: this.props.match.params.artistName
+      artistName: this.props.match.params.artistName,
+      testimonials: [],
+      testimonialsArray: []
     };
   }
 
   componentDidMount() {
+    this.updateTestimonials();
     window.scrollTo(0, 0);
   }
 
@@ -26,7 +30,28 @@ class About extends Component {
     // Update state to sync with router changes
     if (nextProps.match.params.artistName !== this.state.artistName) {
       this.setState({ artistName: nextProps.match.params.artistName });
+      this.updateTestimonials();
     }
+  }
+
+  updateTestimonials = () => {
+    firebaseApp.database().ref('testimonials').once('value').then((snapshot) => {
+      if (snapshot.val() !== null) {
+        this.setState({ testimonials: snapshot.val() });
+
+        const testimonials = this.state.testimonials;
+        let newTestimonials = [];
+
+        if (testimonials != null) {
+          Object.keys(testimonials).map((testimonial, index) => {
+            const { artist, quote, author, authorDetails } = testimonials[testimonial];
+            newTestimonials.push([artist, quote, author, authorDetails, testimonial]);
+          })
+        }
+
+        this.setState({ testimonialsArray: newTestimonials });
+      }
+    })
   }
 
   render () {
@@ -85,37 +110,69 @@ class About extends Component {
                 )}
               </Col>
             </Row>
-            { this.state.artistName === 'michael-roser' ? (
-              <Row className='testimonial-section'>
-                <h2>TESTIMONIALS</h2>
-                <Col xs={12} md={4} className='testimonial-col'>
-                  <Testimonial
-                    quote='Mike&apos;s work is bold and captivating with its many
-                    textures and layers that engage the viewer.  He has a multifaceted
-                    talent with visual appeal that works well on small as well as
-                    large scale.'
-                    author='Jane Wheeler'
-                    authorDetails='Art Curator for The Bird Rock Art Cooperative'
-                    />
-                </Col>
-                <Col xs={12} md={4} className='testimonial-col'>
-                  <Testimonial
-                    quote='Mike is a talented artist who produces a diverse variety
-                    of evocative and visually appealing artwork...  I absolutely
-                    fell in love with one of Mike&apos;s patriotic pieces, a painting
-                    I bought as a surprise for my husband, who happens to be a collector
-                    of Americana.'
-                    author='Charlene Dangel'
-                    authorDetails='La Jolla'
-                    />
-                </Col>
-                <Col xs={12} md={4} className='testimonial-col'>
-
-                </Col>
-              </Row>
-            ) : (
-              <div></div>
-            )}
+            <Row className='testimonial-section'>
+              <h2>TESTIMONIALS</h2>
+              <Col xs={12} md={4} className='testimonial-col'>
+                {
+                  this.state.testimonialsArray.map((testimonial, index) => {
+                    if (testimonial[0] === this.state.artistName && index === 0) {
+                      return (
+                        <Testimonial
+                          key={index}
+                          artist={testimonial[0]}
+                          quote={testimonial[1]}
+                          author={testimonial[2]}
+                          authorDetails={testimonial[3]}
+                          testimonialKey={testimonial[4]}
+                          />
+                      )
+                    } else {
+                      return <div key={index}></div>;
+                    }
+                  })
+                }
+              </Col>
+              <Col xs={12} md={4} className='testimonial-col'>
+                {
+                  this.state.testimonialsArray.map((testimonial, index) => {
+                    if (testimonial[0] === this.state.artistName && index === 1) {
+                      return (
+                        <Testimonial
+                          key={index}
+                          artist={testimonial[0]}
+                          quote={testimonial[1]}
+                          author={testimonial[2]}
+                          authorDetails={testimonial[3]}
+                          testimonialKey={testimonial[4]}
+                          />
+                      )
+                    } else {
+                      return <div key={index}></div>;
+                    }
+                  })
+                }
+              </Col>
+              <Col xs={12} md={4} className='testimonial-col'>
+                {
+                  this.state.testimonialsArray.map((testimonial, index) => {
+                    if (testimonial[0] === this.state.artistName && index === 2) {
+                      return (
+                        <Testimonial
+                          key={index}
+                          artist={testimonial[0]}
+                          quote={testimonial[1]}
+                          author={testimonial[2]}
+                          authorDetails={testimonial[3]}
+                          testimonialKey={testimonial[4]}
+                          />
+                      )
+                    } else {
+                      return <div key={index}></div>;
+                    }
+                  })
+                }
+              </Col>
+            </Row>
           </div>
         </Grid>
         <Footer />

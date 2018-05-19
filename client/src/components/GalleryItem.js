@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Consumer } from '../MyContext'
-import { firebaseApp } from '../firebase'
 import Img from 'react-image'
 import { Link } from 'react-router-dom'
+import { Consumer } from '../MyContext'
+import { firebaseApp } from '../firebase'
+import Spinner from './Spinner'
 
 class GalleryItem extends Component {
 
@@ -15,10 +16,25 @@ class GalleryItem extends Component {
   }
 
   componentDidMount() {
+    this.retrieveImage(this.props.imagePath);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // Update image to sync with router changes
+    if (nextProps.imagePath !== this.props.imagePath) {
+      this.retrieveImage(nextProps.imagePath);
+    }
+  }
+
+  retrieveImage = (imagePath) => {
     const storageRef = firebaseApp.storage().ref('');
-    storageRef.child(this.props.imagePath).getDownloadURL().then((url) => {
+    storageRef.child(imagePath).getDownloadURL().then((url) => {
       this.setState({ imageSrc: url });
     })
+  }
+
+  testReplace = () => {
+    this.setState({ imageSrc: '' });
   }
 
   render () {
@@ -28,7 +44,7 @@ class GalleryItem extends Component {
           return (
             <div className='gallery-item'>
               <Link to={'gallery/' + this.props.itemKey}>
-                <Img src={this.state.imageSrc} />
+                <Img src={this.state.imageSrc} loader={Spinner}/>
               </Link>
             </div>
           )

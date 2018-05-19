@@ -13,9 +13,6 @@ class Gallery extends Component {
 
     this.state = {
       artistName: this.props.match.params.artistName,
-      isUploading: false,
-      uploadProgress: 0,
-      uploadError: null,
       galleryItems: [],
       galleryItemArray: []
     };

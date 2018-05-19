@@ -34,6 +34,12 @@ class AdminPanel extends Component {
         description: '',
         name: ''
       },
+      inputTestimonial: {
+        artist: 'Select Artist...',
+        quote: '',
+        author: '',
+        authorDetails: ''
+      },
       igiImage: null,
       showImage: null,
       isUploadingGalleryItem: false,
@@ -147,6 +153,18 @@ class AdminPanel extends Component {
     this.setState({ inputShow: show });
   }
 
+  updateTestimonialQuote(newQuote) {
+    let testimonial = this.state.inputTestimonial;
+    testimonial.quote = newQuote;
+    this.setState({ inputTestimonial: testimonial });
+  }
+
+  updateTestimonialAuthor(newAuthor) {
+    let testimonial = this.state.inputTestimonial;
+    testimonial.author = newAuthor;
+    this.setState({ inputTestimonial: testimonial });
+  }
+
   artistSelect(eventKey) {
     if (eventKey === 1) {
       let igi = this.state.inputGalleryItem;
@@ -157,6 +175,25 @@ class AdminPanel extends Component {
       let igi = this.state.inputGalleryItem;
       igi.artist = 'fred-briscoe';
       this.setState({ inputGalleryItem: igi });
+    }
+  }
+
+  updateTestimonialAuthorDetails(newAuthorDet) {
+    let testimonial = this.state.inputTestimonial;
+    testimonial.authorDetails = newAuthorDet;
+    this.setState({ inputTestimonial: testimonial });
+  }
+
+  artistTestimonialSelect(eventKey) {
+    if (eventKey === 1) {
+      let testimonial = this.state.inputTestimonial;
+      testimonial.artist = 'michael-roser';
+      this.setState({ inputTestimonial: testimonial });
+    }
+    if (eventKey === 2) {
+      let testimonial = this.state.inputTestimonial;
+      testimonial.artist = 'fred-briscoe';
+      this.setState({ inputTestimonial: testimonial });
     }
   }
 
@@ -272,6 +309,24 @@ class AdminPanel extends Component {
         produceNotification('New Show Added', 'Successfully', 'success');
       }
     );
+  }
+
+  addTestimonial(produceNotification) {
+    const {
+      artist,
+      quote,
+      author,
+      authorDetails
+    } = this.state.inputTestimonial;
+
+    firebaseApp.database().ref('testimonials/').push({
+      artist,
+      quote,
+      author,
+      authorDetails
+    });
+
+    produceNotification('New Testimonial Added', 'Successfully', 'success');
   }
 
   render () {
@@ -584,6 +639,75 @@ class AdminPanel extends Component {
                         onClick={() => this.addShow(produceNotification)}
                         >
                         Add Show
+                      </Button>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row className='admin-row admin-row-header'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h2>New Testimonial</h2>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Artist</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <DropdownButton
+                        bsStyle='default'
+                        title={this.state.inputTestimonial.artist}
+                        key={2}
+                        id='dropdown-artist-testimonial'
+                        onSelect={eventKey => this.artistTestimonialSelect(eventKey)}
+                      >
+                        <MenuItem eventKey={1}>Michael Roser</MenuItem>
+                        <MenuItem eventKey={2}>Fred Briscoe</MenuItem>
+                      </DropdownButton>
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Quote</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Quote'
+                        onChange={event => this.updateTestimonialQuote(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Author</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Author'
+                        onChange={event => this.updateTestimonialAuthor(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={2}>
+                      <h4>Author Details (i.e. location, career title, etc)</h4>
+                    </Col>
+                    <Col xs={6} md={4}>
+                      <FormControl
+                        type='text'
+                        placeholder='Author Details'
+                        onChange={event => this.updateTestimonialAuthorDetails(event.target.value)}
+                        />
+                    </Col>
+                  </Row>
+                  <Row className='admin-row'>
+                    <Col xs={6} md={4} mdOffset={6}>
+                      <Button
+                        bsStyle='primary'
+                        onClick={() => this.addTestimonial(produceNotification)}
+                        >
+                        Add Testimonial
                       </Button>
                     </Col>
                   </Row>
