@@ -421,7 +421,7 @@ class GalleryItemPage extends Component {
             sandbox:    'AQkVkiEnuwFClFBi8aP3jhM5UFnn89rimY1KGQ8RznojBLQJVN61CGz2YV8PVt07wZCV73x1z8_EZxCS',
             production: 'Aa7lK2DxyUeSaMlHQYEci59n-FXoodfMLGlyOlxOUQDinqmbAUv9hNP75Flj4iTacT3semOHS9FT5N3P',
           };
-          let env = 'sandbox';
+          let env = 'production';
           let currency = 'USD';
           return (
             <div>
