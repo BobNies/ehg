@@ -15,7 +15,6 @@ body {
 }
 
 .ehg-navbar h1 {
-  /*font-size: 30px;*/
   font-size: 4rem;
   font-weight: 300;
   text-align: center;
@@ -983,6 +982,13 @@ body {
 
 .testimonial-col {
   padding: 1rem;
+}
+
+.testimonial-col .btn-danger {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 25%;
 }
 
 /* CONTACT */
