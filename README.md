@@ -12,10 +12,18 @@ What things you need to install the software and how to install them
 React ^16.3.0
 ```
 
+### Setup
+
+Just install the dependencies.
+
+```
+npm install
+```
+
 ### Starting
 
 This project uses a React front-end with a Node.js / Express back-end.  Thus,
-the typically start methods are not applicable here.
+the typical start methods are not applicable here.
 
 Run both client and server concurrently:
 ```
