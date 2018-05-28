@@ -22,7 +22,6 @@ class Gallery extends Component {
 
   componentDidMount() {
     this.updateGallery();
-    window.scrollTo(0, 0);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -53,6 +52,8 @@ class Gallery extends Component {
         this.setState({ galleryItemArray: newItems });
       }
     })
+
+    window.scrollTo(0, 0);
   }
 
   render () {
